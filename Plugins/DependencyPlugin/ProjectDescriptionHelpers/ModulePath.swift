@@ -25,8 +25,10 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Feature: String, CaseIterable {
-        case main
-        case onboarding
+        case Main
+        case Stat
+        case Profile
+        case Onboarding
 
         public static let name: String = "Feature"
     }
@@ -34,7 +36,7 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Domain: String, CaseIterable {
-        case chat
+        case Chat
 
         public static let name: String = "Domain"
     }
@@ -42,8 +44,8 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Core: String, CaseIterable {
-        case localStorage
-        case network
+        case LocalStorage
+        case Network
 
         public static let name: String = "Core"
     }
@@ -51,9 +53,9 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Shared: String, CaseIterable {
-        case designSystem
-        case thirdPartyLib
-        case util
+        case DesignSystem
+        case ThirdPartyLib
+        case Util
 
         public static let name: String = "Shared"
     }
