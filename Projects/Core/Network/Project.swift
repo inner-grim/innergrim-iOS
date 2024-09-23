@@ -28,7 +28,11 @@ let targets: [Target] = [
     ),
     .core(
         testing: .Network,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .core(interface: .Network)
+            ]
+        )
     ),
     .core(
         tests: .Network,
