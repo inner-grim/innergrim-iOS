@@ -38,7 +38,7 @@ public struct TargetFactory {
     public init(
         name: String = "",
         destinations: Destinations = [.iPhone],
-        product: Product = .staticFramework,
+        product: Product = .staticLibrary,
         productName: String? = nil,
         bundleId: String? = nil,
         deploymentTargets: DeploymentTargets? = Project.Environment.deploymentTargets,
@@ -181,6 +181,7 @@ public extension Target {
 public extension Target {
     static func domain(factory: TargetFactory) -> Self {
         var newFactory = factory
+        newFactory.product = .framework
         newFactory.name = ModulePath.Domain.name
         newFactory.sources = .sources
 
@@ -189,6 +190,7 @@ public extension Target {
 
     static func domain(implements module: ModulePath.Domain, factory: TargetFactory) -> Self {
         var newFactory = factory
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Domain.name + module.rawValue
         newFactory.sources = .sources
 
@@ -215,7 +217,7 @@ public extension Target {
 
     static func domain(testing module: ModulePath.Domain, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .framework
+        newFactory.product = .staticLibrary
         newFactory.name = ModulePath.Domain.name + module.rawValue + "Testing"
         newFactory.sources = .testing
 
@@ -228,6 +230,7 @@ public extension Target {
 public extension Target {
     static func core(factory: TargetFactory) -> Self {
         var newFactory = factory
+        newFactory.product = .framework
         newFactory.name = ModulePath.Core.name
         newFactory.sources = .sources
 
@@ -236,6 +239,7 @@ public extension Target {
 
     static func core(implements module: ModulePath.Core, factory: TargetFactory) -> Self {
         var newFactory = factory
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Core.name + module.rawValue
         newFactory.sources = .sources
 
@@ -262,7 +266,7 @@ public extension Target {
 
     static func core(testing module: ModulePath.Core, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .framework
+        newFactory.product = .staticLibrary
         newFactory.name = ModulePath.Core.name + module.rawValue + "Testing"
         newFactory.sources = .testing
 
