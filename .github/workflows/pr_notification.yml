@@ -1,0 +1,53 @@
+name: PR Notification
+
+on:
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          PR_LINK="${{ github.event.pull_request.html_url }}"
+          REPO_NAME="${{ github.repository }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+          
+          # Convert to Korean time (UTC+9) and format
+          PR_UPDATED_AT=$(TZ='Asia/Seoul' date -d "${{ github.event.pull_request.updated_at }}" "+%Y-%m-%d %H:%M")
+          
+          PAYLOAD=$(cat <<EOF
+          {
+            "embeds": [{
+              "title": "✨ $REPO_NAME: New Pull Request",
+              "url": "$PR_LINK",
+              "color": 3066993,
+              "fields": [
+                {
+                  "name": "PR Title",
+                  "value": "$PR_TITLE"
+                },
+                {
+                  "name": "Author",
+                  "value": "$PR_AUTHOR",
+                  "inline": true
+                },
+                {
+                  "name": "Updated",
+                  "value": "$PR_UPDATED_AT",
+                  "inline": true
+                }
+              ],
+              "footer": {
+                "text": "Click the title to view the pull request details."
+              }
+            }]
+          }
+          EOF
+          )
+          
+          curl -H "Content-Type: application/json" -X POST -d "$PAYLOAD" $DISCORD_WEBHOOK
