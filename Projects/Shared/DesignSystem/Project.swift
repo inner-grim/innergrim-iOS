@@ -12,14 +12,17 @@ import ProjectDescription
 let targets: [Target] = [
     .shared(
         interface: .DesignSystem,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .shared(implements: .ThirdPartyLib)
+            ]
+        )
     ),
     .shared(
         implements: .DesignSystem,
         factory: .init(
             dependencies: [
-                .shared(interface: .DesignSystem),
-                .shared(implements: .Util)
+                .shared(interface: .DesignSystem)
             ]
         )
     )
