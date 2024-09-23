@@ -291,10 +291,15 @@ public extension Target {
         newFactory.product = .framework
         newFactory.name = ModulePath.Shared.name + module.rawValue
 
-        if module == .DesignSystem {
+        switch module {
+        case .DesignSystem:
+            newFactory.product = .staticFramework
             newFactory.resources = ["Resources/**"]
             newFactory.sources = .sources
-        } else if module == .Util {
+        case .ThirdPartyLib:
+            newFactory.product = .staticLibrary
+        case .Util:
+            newFactory.product = .staticFramework
             newFactory.sources = .sources
         }
 
