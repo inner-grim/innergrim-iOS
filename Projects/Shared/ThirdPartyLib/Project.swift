@@ -30,7 +30,7 @@ let targets: [Target] = [
 let project: Project = .makeModule(
     name: ModulePath.Shared.ThirdPartyLib.rawValue,
     packages: [
-        .remote(url: "https://github.com/SnapKit/SnapKit", requirement: .upToNextMajor(from: "5.0.1"))
+        .remote(url: "https://github.com/SnapKit/SnapKit", requirement: .upToNextMajor(from: "5.0.0"))
     ],
     targets: targets
 )

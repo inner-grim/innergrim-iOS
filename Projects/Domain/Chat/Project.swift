@@ -28,7 +28,11 @@ let targets: [Target] = [
     ),
     .domain(
         testing: .Chat,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .domain(interface: .Chat)
+            ]
+        )
     ),
     .domain(
         tests: .Chat,

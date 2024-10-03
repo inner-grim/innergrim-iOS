@@ -12,11 +12,7 @@ import ProjectDescriptionHelpers
 let targets: [Target] = [
     .shared(
         implements: .Util,
-        factory: .init(
-            dependencies: [
-                .shared(implements: .ThirdPartyLib)
-            ]
-        )
+        factory: .init()
     )
 ]
 

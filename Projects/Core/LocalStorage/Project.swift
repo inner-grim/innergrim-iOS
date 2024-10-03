@@ -28,7 +28,11 @@ let targets: [Target] = [
     ),
     .core(
         testing: .LocalStorage,
-        factory: .init()
+        factory: .init(
+            dependencies: [
+                .core(interface: .LocalStorage)
+            ]
+        )
     ),
     .core(
         tests: .LocalStorage,
