@@ -157,7 +157,7 @@ public extension Target {
 
     static func feature(interface module: ModulePath.Feature, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .staticLibrary
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Feature.name + module.rawValue + "Interface"
         newFactory.sources = .interface
 
@@ -199,7 +199,7 @@ public extension Target {
 
     static func domain(interface module: ModulePath.Domain, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .staticLibrary
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Domain.name + module.rawValue + "Interface"
         newFactory.sources = .interface
 
@@ -217,7 +217,7 @@ public extension Target {
 
     static func domain(testing module: ModulePath.Domain, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .staticLibrary
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Domain.name + module.rawValue + "Testing"
         newFactory.sources = .testing
 
@@ -248,7 +248,7 @@ public extension Target {
 
     static func core(interface module: ModulePath.Core, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .staticLibrary
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Core.name + module.rawValue + "Interface"
         newFactory.sources = .interface
 
@@ -266,7 +266,7 @@ public extension Target {
 
     static func core(testing module: ModulePath.Core, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .staticLibrary
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Core.name + module.rawValue + "Testing"
         newFactory.sources = .testing
 
@@ -296,7 +296,7 @@ public extension Target {
             newFactory.product = .staticFramework
             newFactory.resources = ["Resources/**"]
         case .ThirdPartyLib:
-            newFactory.product = .staticLibrary
+            newFactory.product = .staticFramework
         case .Util:
             newFactory.product = .staticFramework
         }
@@ -306,7 +306,7 @@ public extension Target {
 
     static func shared(interface module: ModulePath.Shared, factory: TargetFactory) -> Self {
         var newFactory = factory
-        newFactory.product = .staticLibrary
+        newFactory.product = .staticFramework
         newFactory.name = ModulePath.Shared.name + module.rawValue + "Interface"
         newFactory.sources = .interface
 
