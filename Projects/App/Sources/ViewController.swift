@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        let provider = NetworkingService()
+        let provider = NetworkService()
         let target = TestAPI.getUser(username: "noeyiz")
         provider.request(target, responseType: GitHubUser.self)
             .sink(receiveCompletion: { completion in

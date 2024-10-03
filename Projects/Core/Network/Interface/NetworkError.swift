@@ -1,5 +1,5 @@
 //
-//  NetworkingError.swift
+//  NetworkError.swift
 //  CoreNetwork
 //
 //  Created by 지연 on 9/24/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkingError: Error {
+public enum NetworkError: Error {
     case invalidRequest
     case invalidResponse
     case decodingError
