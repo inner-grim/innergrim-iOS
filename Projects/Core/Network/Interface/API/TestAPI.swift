@@ -18,7 +18,7 @@ extension TestAPI: TargetType {
     
     public var path: String {
         switch self {
-        case .getUser(let username): "/user/\(username)"
+        case .getUser(let username): "/users/\(username)"
         }
     }
     
