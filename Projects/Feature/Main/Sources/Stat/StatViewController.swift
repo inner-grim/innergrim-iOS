@@ -7,6 +7,10 @@
 
 import UIKit
 
-final class StatViewController: UIViewController {
+public final class StatViewController: UIViewController {
+    // MARK: - Life Cycle
     
+    public override func loadView() {
+        view = StatView()
+    }
 }

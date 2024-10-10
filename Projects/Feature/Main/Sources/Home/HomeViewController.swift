@@ -8,5 +8,9 @@
 import UIKit
 
 public final class HomeViewController: UIViewController {
+    // MARK: - Life Cycle
     
+    public override func loadView() {
+        view = HomeView()
+    }
 }
