@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  FeatureOnboardingExample
+//  FeatureMainExample
 //
 //  Created by 지연 on 10/10/24.
 //

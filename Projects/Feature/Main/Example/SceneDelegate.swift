@@ -1,13 +1,13 @@
 //
 //  SceneDelegate.swift
-//  FeatureOnboardingExample
+//  FeatureMainExample
 //
 //  Created by 지연 on 10/10/24.
 //
 
 import UIKit
 
-import FeatureOnboarding
+import FeatureMain
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = LoginViewController()
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
     }
 
