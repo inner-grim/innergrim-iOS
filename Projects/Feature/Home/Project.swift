@@ -11,7 +11,7 @@ import ProjectDescriptionHelpers
 
 let targets: [Target] = [
     .feature(
-        interface: .Main,
+        interface: .Home,
         factory: .init(
             dependencies: [
                 .domain
@@ -19,20 +19,20 @@ let targets: [Target] = [
         )
     ),
     .feature(
-        implements: .Main,
+        implements: .Home,
         factory: .init(
             dependencies: [
-                .feature(interface: .Main)
+                .feature(interface: .Home)
             ],
             settings: Project.Environment.defaultSettings
         )
     ),
     .feature(
-        example: .Main,
+        example: .Home,
         factory: .init(
             infoPlist: Project.Environment.appInfoPlist,
             dependencies: [
-                .feature(implements: .Main)
+                .feature(implements: .Home)
             ],
             settings: Project.Environment.defaultSettings
         )
@@ -40,6 +40,6 @@ let targets: [Target] = [
 ]
 
 let project = Project.makeModule(
-    name: ModulePath.Feature.Main.rawValue,
+    name: ModulePath.Feature.Home.rawValue,
     targets: targets
 )

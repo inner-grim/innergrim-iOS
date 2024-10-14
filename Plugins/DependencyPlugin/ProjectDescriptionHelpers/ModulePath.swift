@@ -25,7 +25,7 @@ public extension ModulePath {
 
 public extension ModulePath {
     enum Feature: String, CaseIterable {
-        case Main
+        case Home
         case Stat
         case Profile
         case Onboarding

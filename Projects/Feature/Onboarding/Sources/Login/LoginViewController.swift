@@ -49,7 +49,7 @@ public final class LoginViewController: UIViewController {
     
     @objc private func handleAppleLoginButtonTap() {
         print("애플")
-//        delegate?.loginViewControllerDidFinish()
+        delegate?.loginViewControllerDidFinish()
     }
 }
 

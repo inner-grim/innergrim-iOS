@@ -43,7 +43,10 @@ class AppCoordinator: Coordinator {
     }
 
     private func showMain() {
-        let mainCoordinator = MainCoordinator(window: window)
+        let mainCoordinator = MainCoordinator(
+            window: window,
+            factory: MainFactory()
+        )
         mainCoordinator.start()
         self.mainCoordinator = mainCoordinator
     }

@@ -1,8 +1,8 @@
 //
 //  StatViewController.swift
-//  FeatureMain
+//  FeatureStat
 //
-//  Created by 지연 on 10/10/24.
+//  Created by 지연 on 10/15/24.
 //
 
 import UIKit

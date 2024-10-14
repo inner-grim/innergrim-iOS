@@ -1,20 +1,20 @@
 //
-//  StatView.swift
-//  FeatureMain
+//  ProfileView.swift
+//  FeatureProfile
 //
-//  Created by 지연 on 10/10/24.
+//  Created by 지연 on 10/15/24.
 //
 
 import UIKit
 
 import Shared
 
-public final class StatView: UIView {
+public final class ProfileView: UIView {
     // MARK: - UI Components
     
     private let label = {
         let label = UILabel()
-        label.text = "전시"
+        label.text = "프로필"
         label.textAlignment = .center
         return label
     }()
