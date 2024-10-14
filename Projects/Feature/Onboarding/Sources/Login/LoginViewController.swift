@@ -12,8 +12,21 @@ public protocol LoginViewControllerDelegate: AnyObject {
 }
 
 public final class LoginViewController: UIViewController {
+    private let viewModel: LoginViewModel
     private let loginView = LoginView()
     weak var delegate: LoginViewControllerDelegate?
+    
+    // MARK: - Init
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
@@ -43,13 +56,11 @@ public final class LoginViewController: UIViewController {
     }
     
     @objc private func handleKakaoLoginButtonTap() {
-        print("카카오")
-//        delegate?.loginViewControllerDidFinish()
+        viewModel.login(provider: .kakao)
     }
     
     @objc private func handleAppleLoginButtonTap() {
-        print("애플")
-        delegate?.loginViewControllerDidFinish()
+        viewModel.login(provider: .apple)
     }
 }
 

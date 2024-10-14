@@ -7,12 +7,17 @@
 
 import UIKit
 
+import Domain
+
 public final class OnboardingFactory {
-    public init() {
-        
+    private let authUseCase: AuthUseCase
+    
+    public init(authUseCase: AuthUseCase) {
+        self.authUseCase = authUseCase
     }
     
     public func makeLoginViewController() -> LoginViewController {
-        return LoginViewController()
+        let viewModel = LoginViewModel(authUseCase: authUseCase)
+        return LoginViewController(viewModel: viewModel)
     }
 }

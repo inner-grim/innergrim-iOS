@@ -13,6 +13,8 @@ import DomainAuthInterface
 public final class AppleLoginService: AuthService {
     public let provider: AuthProvider = .apple
     
+    public init() {}
+    
     public func login() -> AnyPublisher<UserEntity, AuthError> {
         return Future { promise in
             // 실제 Apple 로그인 로직 구현

@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Domain
 import Feature
 import Shared
 
@@ -33,9 +34,15 @@ class AppCoordinator: Coordinator {
     }
 
     private func showOnboarding() {
+        let authServices: [AuthService] = [
+            KakaoLoginService(),
+            AppleLoginService(),
+            GoogleLoginService()
+        ]
+        let authUseCase = AuthUseCaseImpl(authServices: authServices)
         let onboardingCoordinator = OnboardingCoordinator(
             window: window,
-            factory: OnboardingFactory()
+            factory: OnboardingFactory(authUseCase: authUseCase)
         )
         onboardingCoordinator.delegate = self
         onboardingCoordinator.start()

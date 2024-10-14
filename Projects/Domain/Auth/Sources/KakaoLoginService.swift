@@ -13,6 +13,8 @@ import DomainAuthInterface
 public final class KakaoLoginService: AuthService {
     public let provider: AuthProvider = .kakao
     
+    public init() {}
+    
     public func login() -> AnyPublisher<UserEntity, AuthError> {
         return Future { promise in
             // 실제 Kakao 로그인 로직 구현

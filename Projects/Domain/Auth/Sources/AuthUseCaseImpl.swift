@@ -13,7 +13,7 @@ import DomainAuthInterface
 public final class AuthUseCaseImpl: AuthUseCase {
     private let authServices: [AuthService]
     
-    init(authServices: [AuthService]) {
+    public init(authServices: [AuthService]) {
         self.authServices = authServices
     }
     
