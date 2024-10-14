@@ -18,7 +18,6 @@ public final class MainCoordinator: Coordinator {
     
     public func start() {
         showMainTabBarController()
-        window.makeKeyAndVisible()
     }
     
     private func showMainTabBarController() {

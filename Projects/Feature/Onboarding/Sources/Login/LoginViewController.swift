@@ -43,11 +43,13 @@ public final class LoginViewController: UIViewController {
     }
     
     @objc private func handleKakaoLoginButtonTap() {
-        delegate?.loginViewControllerDidFinish()
+        print("카카오")
+//        delegate?.loginViewControllerDidFinish()
     }
     
     @objc private func handleAppleLoginButtonTap() {
-        delegate?.loginViewControllerDidFinish()
+        print("애플")
+//        delegate?.loginViewControllerDidFinish()
     }
 }
 

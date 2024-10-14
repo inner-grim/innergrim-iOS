@@ -12,8 +12,8 @@ import Shared
 
 class AppCoordinator: Coordinator {
     private let window: UIWindow
-    private var onboardingCoordinator: OnboardingCoordinator?
-    private var mainCoordinator: MainCoordinator?
+    private var onboardingCoordinator: Coordinator?
+    private var mainCoordinator: Coordinator?
 
     init(window: UIWindow) {
         self.window = window
@@ -33,7 +33,10 @@ class AppCoordinator: Coordinator {
     }
 
     private func showOnboarding() {
-        let onboardingCoordinator = OnboardingCoordinator(window: window)
+        let onboardingCoordinator = OnboardingCoordinator(
+            window: window,
+            factory: OnboardingFactory()
+        )
         onboardingCoordinator.delegate = self
         onboardingCoordinator.start()
         self.onboardingCoordinator = onboardingCoordinator
