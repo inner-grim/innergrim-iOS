@@ -10,7 +10,7 @@ import Foundation
 
 import CoreNetworkInterface
 
-public class NetworkService: NetworkProvider {
+public class NetworkService: NetworkServiceProtocol {
     private let session: URLSession
     
     public init(session: URLSession = .shared) {

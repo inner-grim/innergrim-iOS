@@ -1,6 +1,6 @@
 //
 //  HomeViewController.swift
-//  FeatureMain
+//  FeatureHome
 //
 //  Created by 지연 on 10/10/24.
 //

@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  FeatureMainExample
+//  FeatureHomeExample
 //
 //  Created by 지연 on 10/10/24.
 //
