@@ -1,5 +1,5 @@
 //
-//  NetworkService.swift
+//  NetworkServiceImpl.swift
 //  CoreNetwork
 //
 //  Created by 지연 on 9/24/24.
@@ -10,7 +10,7 @@ import Foundation
 
 import CoreNetworkInterface
 
-public class NetworkService: NetworkServiceProtocol {
+public class NetworkServiceImpl: NetworkService {
     private let session: URLSession
     
     public init(session: URLSession = .shared) {

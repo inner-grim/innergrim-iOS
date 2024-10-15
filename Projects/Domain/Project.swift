@@ -14,7 +14,7 @@ let domainTargets: [Target] = [
         factory: .init(
             dependencies: [
                 .core,
-                .domain(implements: .Auth),
+                .domain(implements: .OAuth),
                 .domain(implements: .Chat)
             ]
         )

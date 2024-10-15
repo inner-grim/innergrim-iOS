@@ -34,15 +34,15 @@ class AppCoordinator: Coordinator {
     }
 
     private func showOnboarding() {
-        let authServices: [AuthService] = [
+        let loginServices: [OAuthLoginService] = [
             KakaoLoginService(),
             AppleLoginService(),
             GoogleLoginService()
         ]
-        let authUseCase = AuthUseCaseImpl(authServices: authServices)
+        let loginUseCase = OAuthUseCaseImpl(loginServices: loginServices)
         let onboardingCoordinator = OnboardingCoordinator(
             window: window,
-            factory: OnboardingFactory(authUseCase: authUseCase)
+            factory: OnboardingFactory(loginUseCase: loginUseCase)
         )
         onboardingCoordinator.delegate = self
         onboardingCoordinator.start()

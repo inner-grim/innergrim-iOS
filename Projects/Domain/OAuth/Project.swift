@@ -11,7 +11,7 @@ import ProjectDescriptionHelpers
 
 let targets: [Target] = [
     .domain(
-        interface: .Auth,
+        interface: .OAuth,
         factory: .init(
             dependencies: [
                 .core
@@ -19,33 +19,33 @@ let targets: [Target] = [
         )
     ),
     .domain(
-        implements: .Auth,
+        implements: .OAuth,
         factory: .init(
             dependencies: [
-                .domain(interface: .Auth)
+                .domain(interface: .OAuth)
             ]
         )
     ),
     .domain(
-        testing: .Auth,
+        testing: .OAuth,
         factory: .init(
             dependencies: [
-                .domain(interface: .Auth)
+                .domain(interface: .OAuth)
             ]
         )
     ),
     .domain(
-        tests: .Auth,
+        tests: .OAuth,
         factory: .init(
             dependencies: [
-                .domain(implements: .Auth),
-                .domain(testing: .Auth)
+                .domain(implements: .OAuth),
+                .domain(testing: .OAuth)
             ]
         )
     )
 ]
 
 let project = Project.makeModule(
-    name: ModulePath.Domain.Auth.rawValue,
+    name: ModulePath.Domain.OAuth.rawValue,
     targets: targets
 )

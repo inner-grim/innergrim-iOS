@@ -8,14 +8,14 @@
 import Combine
 import Foundation
 
-import DomainAuthInterface
+import DomainOAuthInterface
 
-public final class GoogleLoginService: AuthService {
-    public let provider: AuthProvider = .google
+public final class GoogleLoginService: OAuthLoginService {
+    public let provider: OAuthProvider = .google
     
     public init() {}
     
-    public func login() -> AnyPublisher<UserEntity, AuthError> {
+    public func login() -> AnyPublisher<UserEntity, OAuthError> {
         return Future { promise in
             // 실제 Google 로그인 로직 구현
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -23,6 +23,7 @@ public final class GoogleLoginService: AuthService {
                     UserEntity(
                         id: "google123",
                         name: "Google User",
+                        email: "",
                         provider: .google
                     )
                 ))
