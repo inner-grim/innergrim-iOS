@@ -22,8 +22,6 @@ public final class KakaoLoginService: OAuthLoginService {
                 promise(.success(
                     UserEntity(
                         id: "kakao123",
-                        name: "Kakao User",
-                        email: "",
                         provider: .kakao
                     )
                 ))

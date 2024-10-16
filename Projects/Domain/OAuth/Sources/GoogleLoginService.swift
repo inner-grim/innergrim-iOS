@@ -22,8 +22,6 @@ public final class GoogleLoginService: OAuthLoginService {
                 promise(.success(
                     UserEntity(
                         id: "google123",
-                        name: "Google User",
-                        email: "",
                         provider: .google
                     )
                 ))

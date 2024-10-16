@@ -20,7 +20,6 @@ public final class AppleLoginService: NSObject, OAuthLoginService {
     public func login() -> AnyPublisher<UserEntity, OAuthError> {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
@@ -42,18 +41,8 @@ extension AppleLoginService: ASAuthorizationControllerDelegate {
             return
         }
         
-        let userIdentifier = appleIDCredential.user
-        let fullName = appleIDCredential.fullName
-        let email = appleIDCredential.email
-        
-        let name = [fullName?.familyName, fullName?.givenName]
-            .compactMap { $0 }
-            .joined()
-        
         let user = UserEntity(
-            id: userIdentifier,
-            name: name,
-            email: email,
+            id: appleIDCredential.user,
             provider: .apple
         )
         
