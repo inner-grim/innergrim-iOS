@@ -9,5 +9,5 @@ import Combine
 
 public protocol OAuthLoginService {
     var provider: OAuthProvider { get }
-    func login() -> AnyPublisher<UserEntity, OAuthError>
+    func login() -> AnyPublisher<String, OAuthError>
 }

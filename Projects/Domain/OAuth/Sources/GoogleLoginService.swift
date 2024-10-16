@@ -15,16 +15,11 @@ public final class GoogleLoginService: OAuthLoginService {
     
     public init() {}
     
-    public func login() -> AnyPublisher<UserEntity, OAuthError> {
+    public func login() -> AnyPublisher<String, OAuthError> {
         return Future { promise in
             // 실제 Google 로그인 로직 구현
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                promise(.success(
-                    UserEntity(
-                        id: "google123",
-                        provider: .google
-                    )
-                ))
+                promise(.success("hi"))
             }
         }.eraseToAnyPublisher()
     }

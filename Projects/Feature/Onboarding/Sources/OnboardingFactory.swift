@@ -7,13 +7,16 @@
 
 import UIKit
 
+import Core
 import Domain
 
 public final class OnboardingFactory {
     private let loginUseCase: OAuthLoginUseCase
+    private let networkService: NetworkService
     
-    public init(loginUseCase: OAuthLoginUseCase) {
+    public init(loginUseCase: OAuthLoginUseCase, networkService: NetworkService) {
         self.loginUseCase = loginUseCase
+        self.networkService = networkService
     }
     
     public func makeLoginViewController() -> LoginViewController {

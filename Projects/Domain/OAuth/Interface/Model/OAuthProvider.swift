@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum OAuthProvider {
+public enum OAuthProvider: String {
     case kakao
     case apple
     case google

@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 
+import Core
 import Domain
 
 public final class LoginViewModel {
@@ -20,30 +21,12 @@ public final class LoginViewModel {
     
     public func login(provider: OAuthProvider) {
         loginUseCase.login(with: provider)
-            .flatMap { [weak self] result -> AnyPublisher<String, OAuthError> in
-                guard let self = self else {
-                    return Fail(error: .unknown).eraseToAnyPublisher()
-                }
-                return self.createUser(with: result)
+            .catch { error -> AnyPublisher<OAuthResult, Never> in
+                return Just(OAuthResult.failure(error)).eraseToAnyPublisher()
             }
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                if case .failure(let error) = completion {
-                    print("failed: \(error)")
-                }
-            } receiveValue: { accessToken in
-                print("accessToken = \(accessToken)")
+            .sink { string in
+                print("정체가 뭐니? \(string)")
             }
             .store(in: &cancellables)
-    }
-    
-    private func createUser(with userEntity: UserEntity) -> AnyPublisher<String, OAuthError> {
-        // TODO: 회원생성
-        Future<String, OAuthError> { promise in
-            DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-                promise(.success("newAccessToken"))
-            }
-        }
-        .eraseToAnyPublisher()
     }
 }

@@ -13,11 +13,11 @@ import DomainOAuthInterface
 
 public final class AppleLoginService: NSObject, OAuthLoginService {
     public let provider: OAuthProvider = .apple
-    private var subject: PassthroughSubject<UserEntity, OAuthError> = .init()
+    private var subject: PassthroughSubject<String, OAuthError> = .init()
     
     public override init() {}
     
-    public func login() -> AnyPublisher<UserEntity, OAuthError> {
+    public func login() -> AnyPublisher<String, OAuthError> {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         
@@ -37,16 +37,11 @@ extension AppleLoginService: ASAuthorizationControllerDelegate {
     ) {
         guard let appleIDCredential = authorization.credential
                 as? ASAuthorizationAppleIDCredential else {
-            subject.send(completion: .failure(.unknown))
+            subject.send(completion: .failure(.unknown(NSError(domain: "unexpected error", code: 0))))
             return
         }
         
-        let user = UserEntity(
-            id: appleIDCredential.user,
-            provider: .apple
-        )
-        
-        subject.send(user)
+        subject.send(appleIDCredential.user)
         subject.send(completion: .finished)
     }
     
@@ -59,10 +54,10 @@ extension AppleLoginService: ASAuthorizationControllerDelegate {
             case .canceled:
                 break
             default:
-                subject.send(completion: .failure(.unknown))
+                subject.send(completion: .failure(.appleError(error)))
             }
         } else {
-            subject.send(completion: .failure(.unknown))
+            subject.send(completion: .failure(.unknown(NSError(domain: "unexpected error", code: 0))))
         }
     }
 }

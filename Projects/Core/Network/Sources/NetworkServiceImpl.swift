@@ -40,7 +40,7 @@ public class NetworkServiceImpl: NetworkService {
                 case 500...599:
                     throw NetworkError.serverError(statusCode: httpResponse.statusCode)
                 default:
-                    throw NetworkError.unknown(NSError(domain: "HTTPError", code: httpResponse.statusCode, userInfo: nil))
+                    throw NetworkError.unknown(NSError(domain: "HTTPError", code: httpResponse.statusCode))
                 }
             }
             .decode(type: T.self, decoder: JSONDecoder())

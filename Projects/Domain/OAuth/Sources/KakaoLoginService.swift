@@ -15,11 +15,11 @@ import KakaoSDKUser
 
 public final class KakaoLoginService: OAuthLoginService {
     public let provider: OAuthProvider = .kakao
-    private var subject: PassthroughSubject<UserEntity, OAuthError> = .init()
+    private var subject: PassthroughSubject<String, OAuthError> = .init()
     
     public init() {}
     
-    public func login() -> AnyPublisher<UserEntity, OAuthError> {
+    public func login() -> AnyPublisher<String, OAuthError> {
         if UserApi.isKakaoTalkLoginAvailable() {
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                 self?.handleLoginResult(oauthToken: oauthToken, error: error)
@@ -34,13 +34,12 @@ public final class KakaoLoginService: OAuthLoginService {
     }
     
     private func handleLoginResult(oauthToken: OAuthToken?, error: Error?) {
-        if let error = error {
-            let oauthError = mapToOAuthError(error)
-            subject.send(completion: .failure(oauthError))
+        if let error = error as? SdkError {
+            subject.send(completion: .failure(.kakaoError(error)))
         } else if oauthToken != nil {
             getUserInfo()
         } else {
-            subject.send(completion: .failure(.unknown))
+            subject.send(completion: .failure(.unknown(NSError(domain: "unexpected error", code: 0))))
         }
     }
     
@@ -48,44 +47,19 @@ public final class KakaoLoginService: OAuthLoginService {
         UserApi.shared.me() { [weak self] (user, error) in
             guard let self = self else {
                 // self가 없는 경우 subject에 에러를 보내고 종료
-                let subject = PassthroughSubject<UserEntity, OAuthError>()
-                subject.send(completion: .failure(.unknown))
+                let subject = PassthroughSubject<String, OAuthError>()
+                subject.send(completion: .failure(.unknown(NSError(domain: "unexpected error", code: 0))))
                 return
             }
             
-            if let error = error {
-                let oauthError = self.mapToOAuthError(error)
-                self.subject.send(completion: .failure(oauthError))
+            if let error = error as? SdkError {
+                subject.send(completion: .failure(.kakaoError(error)))
             } else if let socialID = user?.id {
-                let user = UserEntity(
-                    id: String(socialID),
-                    provider: .kakao
-                )
-                
-                self.subject.send(user)
-                self.subject.send(completion: .finished)
+                subject.send(String(socialID))
+                subject.send(completion: .finished)
             } else {
-                self.subject.send(completion: .failure(.invalidResponse))
+                subject.send(completion: .failure(.networkError(.invalidResponse)))
             }
-        }
-    }
-}
-
-private extension KakaoLoginService {
-    func mapToOAuthError(_ error: Error) -> OAuthError {
-        if let sdkError = error as? SdkError {
-            switch sdkError {
-            case .ClientFailed:
-                return .clientError
-            case .ApiFailed:
-                return .serverError
-            case .AuthFailed:
-                return .authenticationFailed
-            default:
-                return .unknown
-            }
-        } else {
-            return .unknown
         }
     }
 }

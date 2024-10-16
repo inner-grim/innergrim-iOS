@@ -8,5 +8,5 @@
 import Combine
 
 public protocol OAuthLoginUseCase {
-    func login(with provider: OAuthProvider) -> AnyPublisher<UserEntity, OAuthError>
+    func login(with provider: OAuthProvider) -> AnyPublisher<OAuthResult, OAuthError>
 }

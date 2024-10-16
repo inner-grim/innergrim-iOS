@@ -18,7 +18,7 @@ let appTargets: [Target] = [
             dependencies: [
                 .feature
             ],
-            settings: Project.Environment.defaultSettings
+            settings: Project.Environment.appSettings
         )
     )
 ]
