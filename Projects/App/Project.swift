@@ -14,6 +14,7 @@ let appTargets: [Target] = [
         implements: .iOS,
         factory: .init(
             infoPlist: Project.Environment.appInfoPlist,
+            entitlements: "innergrim.entitlements",
             dependencies: [
                 .feature
             ],
