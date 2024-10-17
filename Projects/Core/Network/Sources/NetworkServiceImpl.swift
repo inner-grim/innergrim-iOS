@@ -11,11 +11,10 @@ import Foundation
 import CoreNetworkInterface
 
 public class NetworkServiceImpl: NetworkService {
-    private let session: URLSession
+    public static let shared = NetworkServiceImpl()
+    private let session = URLSession.shared
     
-    public init(session: URLSession = .shared) {
-        self.session = session
-    }
+    private init() {}
     
     public func request<T: Decodable>(
         _ target: TargetType,

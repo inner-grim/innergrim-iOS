@@ -14,13 +14,17 @@ import Shared
 
 class AppCoordinator: Coordinator {
     private let window: UIWindow
+    
     private let networkService: NetworkService
+    private let keychainStorage: KeyChainStorage
+    
     private var onboardingCoordinator: Coordinator?
     private var mainCoordinator: Coordinator?
 
     init(window: UIWindow) {
         self.window = window
-        self.networkService = NetworkServiceImpl()
+        self.networkService = NetworkServiceImpl.shared
+        self.keychainStorage = Keychain.shared
     }
 
     func start() {
@@ -48,7 +52,11 @@ class AppCoordinator: Coordinator {
         )
         let onboardingCoordinator = OnboardingCoordinator(
             window: window,
-            factory: OnboardingFactory(loginUseCase: loginUseCase, networkService: networkService)
+            factory: OnboardingFactory(
+                loginUseCase: loginUseCase,
+                networkService: networkService,
+                keychainStorage: keychainStorage
+            )
         )
         onboardingCoordinator.delegate = self
         onboardingCoordinator.start()

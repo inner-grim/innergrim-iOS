@@ -5,6 +5,7 @@
 //  Created by 지연 on 10/10/24.
 //
 
+import Combine
 import UIKit
 
 public protocol LoginViewControllerDelegate: AnyObject {
@@ -14,6 +15,7 @@ public protocol LoginViewControllerDelegate: AnyObject {
 public final class LoginViewController: UIViewController {
     private let viewModel: LoginViewModel
     private let loginView = LoginView()
+    private var cancellables = Set<AnyCancellable>()
     weak var delegate: LoginViewControllerDelegate?
     
     // MARK: - Init
@@ -36,12 +38,32 @@ public final class LoginViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
         setupAction()
     }
-    
-    // MARK: - Action Methods
-    
-    private func setupAction() {
+}
+
+// MARK: - Bind
+
+private extension LoginViewController {
+    func bind() {
+        viewModel.state.loginResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoginSuccess in
+                if isLoginSuccess {
+                    self?.delegate?.loginViewControllerDidFinish()
+                } else {
+                    // TODO: Alert
+                }
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: - Setup Methods
+
+private extension LoginViewController {
+    func setupAction() {
         kakaoLoginButton.addTarget(
             self,
             action: #selector(handleKakaoLoginButtonTap),
@@ -53,13 +75,16 @@ public final class LoginViewController: UIViewController {
             for: .touchUpInside
         )
     }
-    
-    @objc private func handleKakaoLoginButtonTap() {
-        viewModel.login(provider: .kakao)
+}
+
+// MARK: - Action Methods
+private extension LoginViewController {
+    @objc func handleKakaoLoginButtonTap() {
+        viewModel.send(.loginButtonTap(.kakao))
     }
     
-    @objc private func handleAppleLoginButtonTap() {
-        viewModel.login(provider: .apple)
+    @objc func handleAppleLoginButtonTap() {
+        viewModel.send(.loginButtonTap(.apple))
     }
 }
 

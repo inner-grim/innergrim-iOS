@@ -13,14 +13,23 @@ import Domain
 public final class OnboardingFactory {
     private let loginUseCase: OAuthLoginUseCase
     private let networkService: NetworkService
+    private let keychainStorage: KeyChainStorage
     
-    public init(loginUseCase: OAuthLoginUseCase, networkService: NetworkService) {
+    public init(
+        loginUseCase: OAuthLoginUseCase,
+        networkService: NetworkService,
+        keychainStorage: KeyChainStorage
+    ) {
         self.loginUseCase = loginUseCase
         self.networkService = networkService
+        self.keychainStorage = keychainStorage
     }
     
     public func makeLoginViewController() -> LoginViewController {
-        let viewModel = LoginViewModel(loginUseCase: loginUseCase)
+        let viewModel = LoginViewModel(
+            loginUseCase: loginUseCase,
+            keychainStorage: keychainStorage
+        )
         return LoginViewController(viewModel: viewModel)
     }
 }
