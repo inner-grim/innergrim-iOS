@@ -15,3 +15,19 @@ public protocol TargetType {
     var task: Task { get }
     var headers: [String: String]? { get }
 }
+
+extension TargetType {
+    public var baseURL: URL {
+        if let urlString = Bundle.main.object(forInfoDictionaryKey: "INGM_URL") as? String,
+           let decodedUrlString = urlString.removingPercentEncoding,
+           let url = URL(string: decodedUrlString) {
+            return url
+        } else {
+            fatalError("INGM_URL 생성 실패")
+        }
+    }
+    
+    public var headers: [String : String]? {
+        ["Content-Type": "application/json"]
+    }
+}

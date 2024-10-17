@@ -12,10 +12,6 @@ public enum MemberAPI {
 }
 
 extension MemberAPI: TargetType {
-    public var baseURL: URL {
-        URL(string: "http://3.39.72.21:8080")!
-    }
-    
     public var path: String {
         switch self {
         case .postMember: "/member"
@@ -36,9 +32,5 @@ extension MemberAPI: TargetType {
                     encoding: .jsonEncoding
                 )
         }
-    }
-    
-    public var headers: [String : String]? {
-        ["Content-Type": "application/json"]
     }
 }
