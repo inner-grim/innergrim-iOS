@@ -24,8 +24,14 @@ public final class LoginViewModel {
             .catch { error -> AnyPublisher<OAuthResult, Never> in
                 return Just(OAuthResult.failure(error)).eraseToAnyPublisher()
             }
-            .sink { string in
-                print("정체가 뭐니? \(string)")
+            .sink { result in
+                switch result {
+                case let .success(authData):
+                    // TODO: 로컬 스토리지 저장
+                    print("\(authData.provider), \(authData.id)")
+                case let .failure(authError):
+                    print("로그인 실패: \(authError)")
+                }
             }
             .store(in: &cancellables)
     }

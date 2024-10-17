@@ -37,21 +37,9 @@ public final class OAuthUseCaseImpl: OAuthLoginUseCase {
         id: String
     ) -> AnyPublisher<OAuthResult, OAuthError> {
         let target = MemberAPI.postMember(socialType: provider.rawValue, socialId: id)
-        return networkService.request(target, responseType: Response<String>.self)
-            .tryMap { response in
-                print("statusCode: \(response.statusCode)")
-                print("message: \(response.message)")
-                print("data: \(response.data)")
-            }
-            .map { _ in
-                return OAuthResult.success(provider)
-            }
-            .mapError { error in
-                guard let networkError = error as? NetworkError else {
-                    return OAuthError.unknown(error)
-                }
-                return OAuthError.networkError(networkError)
-            }
+        return networkService.request(target, responseType: PostMemberResponse.self)
+            .map { _ in OAuthResult.success((provider, id)) }
+            .mapError { OAuthError.networkError($0) }
             .eraseToAnyPublisher()
     }
 }

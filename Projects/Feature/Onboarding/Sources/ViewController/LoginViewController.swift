@@ -47,7 +47,6 @@ public final class LoginViewController: UIViewController {
             action: #selector(handleKakaoLoginButtonTap),
             for: .touchUpInside
         )
-        
         appleLoginButton.addTarget(
             self,
             action: #selector(handleAppleLoginButtonTap),

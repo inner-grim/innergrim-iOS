@@ -8,6 +8,6 @@
 import Foundation
 
 public enum OAuthResult {
-    case success(OAuthProvider)
+    case success((provider: OAuthProvider, id: String))
     case failure(OAuthError)
 }
