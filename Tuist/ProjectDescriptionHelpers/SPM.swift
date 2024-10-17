@@ -13,6 +13,8 @@ extension TargetDependency {
 
 public extension TargetDependency.SPM {
     static let SnapKit = Self.package(product: "SnapKit")
+    static let KakaoSDKAuth = Self.package(product: "KakaoSDKAuth")
+    static let KakaoSDKUser = Self.package(product: "KakaoSDKUser")
 
     private static func external(_ name: String) -> TargetDependency {
         return TargetDependency.external(name: name)

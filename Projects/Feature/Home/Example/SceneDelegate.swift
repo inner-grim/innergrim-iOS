@@ -1,40 +1,26 @@
 //
 //  SceneDelegate.swift
-//  innergrim
+//  FeatureHomeExample
 //
-//  Created by 지연 on 9/21/24.
+//  Created by 지연 on 10/10/24.
 //
 
 import UIKit
 
-import Feature
-import KakaoSDKAuth
+import FeatureHome
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    var appCoordinator: AppCoordinator?
-    
+
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        let window = UIWindow(windowScene: windowScene)
-        window.makeKeyAndVisible()
-        self.window = window
-        
-        appCoordinator = AppCoordinator(window: window)
-        appCoordinator?.start()
-    }
-    
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url {
-            if AuthApi.isKakaoTalkLoginUrl(url) {
-                _ = AuthController.handleOpenUrl(url: url)
-            }
-        }
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = HomeViewController()
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}

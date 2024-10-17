@@ -17,6 +17,15 @@ public extension Project {
                 "ENABLE_USER_SCRIPT_SANDBOXING": "YES"
             ]
         )
+        public static let appSettings: Settings = .settings(
+            base: [
+                "ENABLE_USER_SCRIPT_SANDBOXING": "YES"
+            ],
+            configurations: [
+                .debug(name: "Debug", xcconfig: "Configurations/secrets.xcconfig"),
+                .release(name: "Release", xcconfig: "Configurations/secrets.xcconfig")
+            ]
+        )
         public static let appInfoPlist: InfoPlist = .extendingDefault(with: [
             "ITSAppUsesNonExemptEncryption": false,
             "CFBundleDisplayName": "이너그림",
@@ -33,7 +42,19 @@ public extension Project {
                         "UISceneDelegateClassName": "$(PRODUCT_MODULE_NAME).SceneDelegate"
                     ]]
                 ]
-            ]
+            ],
+            "LSApplicationQueriesSchemes": ["kakaokompassauth"],
+            "CFBundleURLTypes": [
+                [
+                    "CFBundleURLSchemes": ["kakao$(KAKAO_APP_KEY)"],
+                    "CFBundleTypeRole": "Editor"
+                ]
+            ],
+            "NSAppTransportSecurity": [
+                "NSAllowsArbitraryLoads": true
+            ],
+            "INGM_URL": "$(INGM_URL)",
+            "KAKAO_APP_KEY": "$(KAKAO_APP_KEY)"
         ])
     }
 }

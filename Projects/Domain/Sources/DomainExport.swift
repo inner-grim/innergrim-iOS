@@ -7,3 +7,5 @@
 
 @_exported import DomainChat
 @_exported import DomainChatInterface
+@_exported import DomainOAuth
+@_exported import DomainOAuthInterface

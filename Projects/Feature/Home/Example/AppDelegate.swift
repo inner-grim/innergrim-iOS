@@ -1,13 +1,11 @@
 //
 //  AppDelegate.swift
-//  innergrim
+//  FeatureHomeExample
 //
-//  Created by 지연 on 9/21/24.
+//  Created by 지연 on 10/10/24.
 //
 
 import UIKit
-
-import KakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,12 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        if let appKey = Bundle.main.object(forInfoDictionaryKey: "KAKAO_APP_KEY") as? String {
-            KakaoSDK.initSDK(appKey: appKey)
-            return true
-        } else {
-            return false
-        }
+        return true
     }
 
     // MARK: UISceneSession Lifecycle

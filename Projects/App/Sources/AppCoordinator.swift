@@ -7,16 +7,24 @@
 
 import UIKit
 
+import Core
+import Domain
 import Feature
 import Shared
 
 class AppCoordinator: Coordinator {
     private let window: UIWindow
-    private var onboardingCoordinator: OnboardingCoordinator?
-    private var mainCoordinator: MainCoordinator?
+    
+    private let networkService: NetworkService
+    private let keychainStorage: KeyChainStorage
+    
+    private var onboardingCoordinator: Coordinator?
+    private var mainCoordinator: Coordinator?
 
     init(window: UIWindow) {
         self.window = window
+        self.networkService = NetworkServiceImpl.shared
+        self.keychainStorage = Keychain.shared
     }
 
     func start() {
@@ -33,14 +41,33 @@ class AppCoordinator: Coordinator {
     }
 
     private func showOnboarding() {
-        let onboardingCoordinator = OnboardingCoordinator(window: window)
+        let loginServices: [OAuthLoginService] = [
+            KakaoLoginService(),
+            AppleLoginService(),
+            GoogleLoginService()
+        ]
+        let loginUseCase = OAuthUseCaseImpl(
+            loginServices: loginServices,
+            networkService: networkService
+        )
+        let onboardingCoordinator = OnboardingCoordinator(
+            window: window,
+            factory: OnboardingFactory(
+                loginUseCase: loginUseCase,
+                networkService: networkService,
+                keychainStorage: keychainStorage
+            )
+        )
         onboardingCoordinator.delegate = self
         onboardingCoordinator.start()
         self.onboardingCoordinator = onboardingCoordinator
     }
 
     private func showMain() {
-        let mainCoordinator = MainCoordinator(window: window)
+        let mainCoordinator = MainCoordinator(
+            window: window,
+            factory: MainFactory()
+        )
         mainCoordinator.start()
         self.mainCoordinator = mainCoordinator
     }

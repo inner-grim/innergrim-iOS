@@ -15,19 +15,20 @@ public protocol OnboardingCoordinatorDelegate: AnyObject {
 
 public final class OnboardingCoordinator: Coordinator {
     private let window: UIWindow
+    private let factory: OnboardingFactory
     public weak var delegate: OnboardingCoordinatorDelegate?
     
-    public init(window: UIWindow) {
+    public init(window: UIWindow, factory: OnboardingFactory) {
         self.window = window
+        self.factory = factory
     }
     
     public func start() {
         showLoginViewController()
-        window.makeKeyAndVisible()
     }
     
     private func showLoginViewController() {
-        let loginViewController = LoginViewController()
+        let loginViewController = factory.makeLoginViewController()
         loginViewController.delegate = self
         window.rootViewController = UINavigationController(rootViewController: loginViewController)
     }

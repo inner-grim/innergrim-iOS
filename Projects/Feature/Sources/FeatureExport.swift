@@ -5,8 +5,8 @@
 //  Created by 지연 on 9/23/24.
 //
 
-@_exported import FeatureMain
-@_exported import FeatureMainInterface
+@_exported import FeatureHome
+@_exported import FeatureHomeInterface
 @_exported import FeatureOnboarding
 @_exported import FeatureOnboardingInterface
 @_exported import FeatureProfile
