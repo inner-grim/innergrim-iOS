@@ -296,7 +296,7 @@ public extension Target {
             newFactory.product = .staticFramework
             newFactory.resources = ["Resources/**"]
         case .ThirdPartyLib:
-            newFactory.product = .staticFramework
+            newFactory.product = .framework
         case .Util:
             newFactory.product = .staticFramework
         }
