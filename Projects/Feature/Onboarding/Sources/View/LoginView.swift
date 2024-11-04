@@ -17,7 +17,8 @@ public final class LoginView: UIView {
         label.text = "안녕하세요\n카카오 애플 구글"
         label.applyTypography(with: .headingLarge)
         label.numberOfLines = 2
-        label.backgroundColor = .systemPink.withAlphaComponent(0.1)
+        label.textColor = .labelNeutral
+        label.backgroundColor = .coral50
         return label
     }()
     
