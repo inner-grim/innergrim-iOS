@@ -6,6 +6,5 @@
 //
 
 @_exported import SharedDesignSystem
-@_exported import SharedDesignSystemInterface
 @_exported import SharedThirdPartyLib
 @_exported import SharedUtil
