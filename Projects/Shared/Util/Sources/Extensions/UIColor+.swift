@@ -118,6 +118,10 @@ extension UIColor {
         SharedDesignSystemAsset.labelAssistive.color
     }
     
+    public static var labelDisabled: UIColor {
+        SharedDesignSystemAsset.labelDisabled.color
+    }
+    
     public static var labelNeutral: UIColor {
         SharedDesignSystemAsset.labelNeutral.color
     }
