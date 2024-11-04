@@ -12,16 +12,6 @@ import Shared
 public final class LoginView: UIView {
     // MARK: - UI Components
     
-    let label = {
-        let label = UILabel()
-        label.text = "안녕하세요\n카카오 애플 구글"
-        label.applyTypography(with: .headingLarge)
-        label.numberOfLines = 2
-        label.textColor = .labelNeutral
-        label.backgroundColor = .coral50
-        return label
-    }()
-    
     lazy var kakaoLoginButton = createButton("카카오")
     
     lazy var appleLoginButton = createButton("애플")
@@ -52,11 +42,6 @@ public final class LoginView: UIView {
     
     private func setupUI() {
         backgroundColor = .systemBackground
-        
-        addSubview(label)
-        label.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
         
         addSubview(buttonContainer)
         buttonContainer.snp.makeConstraints { make in

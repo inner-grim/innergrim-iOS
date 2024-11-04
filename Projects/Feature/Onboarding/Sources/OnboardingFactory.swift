@@ -25,6 +25,18 @@ public final class OnboardingFactory {
         self.keychainStorage = keychainStorage
     }
     
+    public func makeOnboardingFirstViewController() -> OnboardingFirstViewController {
+        return OnboardingFirstViewController()
+    }
+    
+    public func makeOnboardingSecondViewController() -> OnboardingSecondViewController {
+        return OnboardingSecondViewController()
+    }
+    
+    public func makeOnboardingThirdViewController() -> OnboardingThirdViewController {
+        return OnboardingThirdViewController()
+    }
+    
     public func makeLoginViewController() -> LoginViewController {
         let viewModel = LoginViewModel(
             loginUseCase: loginUseCase,
