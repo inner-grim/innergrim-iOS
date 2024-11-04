@@ -10,13 +10,13 @@ import UIKit
 import Shared
 
 public final class LoginView: UIView {
-    // MARK: - UI Components
+    // MARK: - Components
     
-    lazy var kakaoLoginButton = createButton("카카오")
+    lazy var kakaoLoginButton = SocialLoginButton(socialType: .kakao)
     
-    lazy var appleLoginButton = createButton("애플")
+    lazy var appleLoginButton = SocialLoginButton(socialType: .apple)
     
-    lazy var googleLoginButton = createButton("구글")
+    lazy var googleLoginButton = SocialLoginButton(socialType: .goole)
     
     private let buttonContainer = {
         let stackView = UIStackView()
@@ -46,8 +46,8 @@ public final class LoginView: UIView {
         addSubview(buttonContainer)
         buttonContainer.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(42)
-            make.height.equalTo(184) // 버튼 높이: 56, 간격: 8
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-48)
+            make.height.equalTo(166) // 버튼 높이: 50, 간격: 8
         }
         
         buttonContainer.addArrangedSubview(kakaoLoginButton)

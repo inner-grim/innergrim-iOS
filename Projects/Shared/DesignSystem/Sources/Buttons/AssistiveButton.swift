@@ -8,12 +8,12 @@
 import UIKit
 
 public final class AssistiveButton: UIButton {
-    private let defaultBackgroundColor = SharedDesignSystemAsset.primaryLight.color
-    private let pressedBackgroundColor = SharedDesignSystemAsset.coral100.color
-    private let disabledBackgroundColor = SharedDesignSystemAsset.fillDisabled.color
-    private let defaultTextColor = SharedDesignSystemAsset.primaryNormal.color
-    private let pressedTextColor = SharedDesignSystemAsset.primaryStrong.color
-    private let disabledTextColor = SharedDesignSystemAsset.labelDisabled.color
+    private let defaultBackgroundColor = SharedDesignSystemAsset.Colors.primaryLight.color
+    private let pressedBackgroundColor = SharedDesignSystemAsset.Colors.coral100.color
+    private let disabledBackgroundColor = SharedDesignSystemAsset.Colors.fillDisabled.color
+    private let defaultTextColor = SharedDesignSystemAsset.Colors.primaryNormal.color
+    private let pressedTextColor = SharedDesignSystemAsset.Colors.primaryStrong.color
+    private let disabledTextColor = SharedDesignSystemAsset.Colors.labelDisabled.color
     
     // MARK: - Init
     

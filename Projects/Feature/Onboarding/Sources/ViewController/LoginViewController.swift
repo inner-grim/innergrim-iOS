@@ -13,10 +13,10 @@ public protocol LoginViewControllerDelegate: AnyObject {
 }
 
 public final class LoginViewController: UIViewController {
-    private let viewModel: LoginViewModel
+    public weak var delegate: LoginViewControllerDelegate?
     private let loginView = LoginView()
+    private let viewModel: LoginViewModel
     private var cancellables = Set<AnyCancellable>()
-    weak var delegate: LoginViewControllerDelegate?
     
     // MARK: - Init
     
@@ -30,7 +30,7 @@ public final class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Life Cycle
+    // MARK: - Lifecycle
     
     public override func loadView() {
         view = loginView
@@ -38,15 +38,24 @@ public final class LoginViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
-        setupAction()
+        setupBindings()
     }
-}
-
-// MARK: - Bind
-
-private extension LoginViewController {
-    func bind() {
+    
+    // MARK: - Setup Methods
+    
+    func setupBindings() {
+        kakaoLoginButton.tapPublisher
+            .sink { [weak self] in
+                self?.delegate?.loginViewControllerDidFinish()
+            }
+            .store(in: &cancellables)
+        
+        appleLoginButton.tapPublisher
+            .sink { [weak self] in
+                self?.delegate?.loginViewControllerDidFinish()
+            }
+            .store(in: &cancellables)
+        
         viewModel.state.loginResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isLoginSuccess in
@@ -57,34 +66,6 @@ private extension LoginViewController {
                 }
             }
             .store(in: &cancellables)
-    }
-}
-
-// MARK: - Setup Methods
-
-private extension LoginViewController {
-    func setupAction() {
-        kakaoLoginButton.addTarget(
-            self,
-            action: #selector(handleKakaoLoginButtonTap),
-            for: .touchUpInside
-        )
-        appleLoginButton.addTarget(
-            self,
-            action: #selector(handleAppleLoginButtonTap),
-            for: .touchUpInside
-        )
-    }
-}
-
-// MARK: - Action Methods
-private extension LoginViewController {
-    @objc func handleKakaoLoginButtonTap() {
-        viewModel.send(.loginButtonTap(.kakao))
-    }
-    
-    @objc func handleAppleLoginButtonTap() {
-        viewModel.send(.loginButtonTap(.apple))
     }
 }
 
