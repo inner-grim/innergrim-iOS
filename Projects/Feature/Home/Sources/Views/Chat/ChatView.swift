@@ -10,7 +10,22 @@ import UIKit
 import Shared
 
 public final class ChatView: UIView {
+    private var bottomConstraint: Constraint?
+    
     // MARK: - Components
+    
+    let tableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.backgroundColor = .clear
+        tableView.register(cellType: IncomingMessageCell.self)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderTopPadding = 0
+        tableView.separatorStyle = .none
+        tableView.alwaysBounceVertical = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        return tableView
+    }()
     
     let messageTextField = MessageTextField()
     
@@ -31,8 +46,26 @@ public final class ChatView: UIView {
     private func setupLayout() {
         addSubview(messageTextField)
         messageTextField.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            bottomConstraint = make.bottom.equalToSuperview().constraint
             make.height.equalTo(112)
         }
+        
+        addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(messageTextField.snp.top).offset(-6)
+        }
+    }
+    
+    public func updateBottomConstraint(keyboardHeight: CGFloat) {
+        bottomConstraint?.update(offset: 36 - keyboardHeight)
+        layoutIfNeeded()
+    }
+    
+    public func resetBottomConstraint() {
+        bottomConstraint?.update(offset: 0)
+        layoutIfNeeded()
     }
 }
