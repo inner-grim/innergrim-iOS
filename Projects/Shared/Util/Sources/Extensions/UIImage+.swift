@@ -14,6 +14,10 @@ extension UIImage {
         SharedDesignSystemAsset.Images.apple.image
     }
     
+    public static var arrowUp: UIImage {
+        SharedDesignSystemAsset.Images.arrowUp.image
+    }
+    
     public static var check: UIImage {
         SharedDesignSystemAsset.Images.check.image
     }

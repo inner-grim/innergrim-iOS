@@ -1,0 +1,109 @@
+//
+//  MessageTextField.swift
+//  FeatureHome
+//
+//  Created by 지연 on 11/6/24.
+//
+
+import UIKit
+
+import Shared
+
+public final class MessageTextField: UIView {
+    private let disabledColor = UIColor.fillDisabled
+    private let enabledColor = UIColor.primaryNormal
+    private let pressedColor = UIColor.primaryStrong
+    
+    // MARK: - Components
+    
+    private let containerView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let textField = {
+        let textField = UITextField()
+        textField.placeholder = "메시지 입력"
+        textField.font = .bodyLargeRegular
+        textField.textColor = .labelNormal
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        return textField
+    }()
+    
+    lazy var sendButton = {
+        let button = UIButton()
+        button.setBackgroundImage(imageWithColor(color: disabledColor), for: .disabled)
+        button.setBackgroundImage(imageWithColor(color: enabledColor), for: .normal)
+        button.setBackgroundImage(imageWithColor(color: pressedColor), for: .highlighted)
+        button.setImage(UIImage.arrowUp.withTintColor(.white), for: .normal)
+        button.setImage(UIImage.arrowUp.withTintColor(.white), for: .highlighted)
+        button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        button.clipsToBounds = true
+        button.isEnabled = false
+        return button
+    }()
+    
+    // MARK: - Init
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+        setupLayout()
+        setupTextField()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutIfNeeded()
+        containerView.layer.cornerRadius = containerView.frame.height / 2
+        sendButton.layer.cornerRadius = sendButton.frame.width / 2
+    }
+    
+    // MARK: - Setup Methods
+    
+    private func setupView() {
+        backgroundColor = .fillAssistive
+    }
+    
+    private func setupLayout() {
+        addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(12)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(52)
+        }
+        
+        containerView.addSubview(sendButton)
+        sendButton.snp.makeConstraints { make in
+            make.width.height.equalTo(36)
+            make.trailing.equalToSuperview().inset(12)
+            make.centerY.equalToSuperview()
+        }
+        
+        containerView.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalTo(sendButton.snp.leading).offset(-4)
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    // TODO: sendButton isEnabled 로직 뷰모델로 옮기기
+    private func setupTextField() {
+        textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+    }
+    
+    // MARK: - Action Methods
+    
+    @objc private func editingChanged() {
+        guard let text = textField.text else { return }
+        sendButton.isEnabled = !text.isEmpty
+    }
+}
