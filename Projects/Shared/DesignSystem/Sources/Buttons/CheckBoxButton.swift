@@ -12,12 +12,6 @@ public final class CheckBoxButton: UIButton {
     private let pressedImage = SharedDesignSystemAsset.Images.checkBoxPressed.image
     private let selectedImage = SharedDesignSystemAsset.Images.checkBoxSelected.image
     
-    public override var isSelected: Bool {
-        didSet {
-//            setBackgroundImage()
-        }
-    }
-    
     // MARK: - Init
     
     public init() {
@@ -38,12 +32,4 @@ public final class CheckBoxButton: UIButton {
         setBackgroundImage(defaultImage, for: .normal)
         setBackgroundImage(selectedImage, for: .selected)
     }
-    
-//    private func setBackgroundImage() {
-//        if isSelected {
-//            setB
-//        } else {
-//            
-//        }
-//    }
 }
