@@ -48,4 +48,12 @@ public final class OnboardingFactory {
     public func makeAgreementViewController() -> AgreementViewController {
         return AgreementViewController()
     }
+    
+    public func makeNicknameViewController() -> NicknameViewController {
+        return NicknameViewController()
+    }
+    
+    public func makeGenderViewController() -> GenderViewController {
+        return GenderViewController()
+    }
 }

@@ -10,7 +10,12 @@ import UIKit
 
 import Shared
 
+public protocol NicknameViewControllerDelegate: AnyObject {
+    func nicknameViewControllerDidFinish()
+}
+
 public final class NicknameViewController: BaseViewController<NicknameView> {
+    public weak var delegate: NicknameViewControllerDelegate?
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
@@ -33,6 +38,13 @@ public final class NicknameViewController: BaseViewController<NicknameView> {
             .sink { [weak self] _ in
                 self?.resetNextButtonPosition()
             }.store(in: &cancellables)
+        
+        nextButton.tapPublisher
+            .sink { [weak self] in
+                self?.view.endEditing(true)
+                self?.delegate?.nicknameViewControllerDidFinish()
+            }
+            .store(in: &cancellables)
     }
     
     private func adjustNextButtonPosition(keyboardHeight: CGFloat) {

@@ -57,6 +57,19 @@ public final class OnboardingCoordinator: Coordinator {
     
     private func showAgreementViewController() {
         let viewController = factory.makeAgreementViewController()
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    private func showNicknameViewController() {
+        let viewController = factory.makeNicknameViewController()
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
+    private func showGenderViewController() {
+        let viewController = factory.makeGenderViewController()
+        viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
     }
 }
@@ -82,5 +95,23 @@ extension OnboardingCoordinator: OnboardingThirdViewControllerDelegate {
 extension OnboardingCoordinator: LoginViewControllerDelegate {
     public func loginViewControllerDidFinish() {
         showAgreementViewController()
+    }
+}
+
+extension OnboardingCoordinator: AgreementViewControllerDelegate {
+    public func agreementViewControllerDidFinish() {
+        showNicknameViewController()
+    }
+}
+
+extension OnboardingCoordinator: NicknameViewControllerDelegate {
+    public func nicknameViewControllerDidFinish() {
+        showGenderViewController()
+    }
+}
+
+extension OnboardingCoordinator: GenderViewControllerDelegate {
+    public func genderViewControllerDidFinish() {
+        delegate?.onboardingCoordinatorDidFinish()
     }
 }

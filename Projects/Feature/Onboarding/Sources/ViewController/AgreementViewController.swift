@@ -10,7 +10,12 @@ import UIKit
 
 import Shared
 
+public protocol AgreementViewControllerDelegate: AnyObject {
+    func agreementViewControllerDidFinish()
+}
+
 public final class AgreementViewController: BaseViewController<AgreementView> {
+    public weak var delegate: AgreementViewControllerDelegate?
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
@@ -45,6 +50,12 @@ public final class AgreementViewController: BaseViewController<AgreementView> {
         marketingButton.tapPublisher
             .sink { [weak self] in
                 self?.marketingButton.isSelected.toggle()
+            }
+            .store(in: &cancellables)
+        
+        nextButton.tapPublisher
+            .sink { [weak self] in
+                self?.delegate?.agreementViewControllerDidFinish()
             }
             .store(in: &cancellables)
     }
