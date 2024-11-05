@@ -46,7 +46,7 @@ public final class LoginView: UIView {
         addSubview(buttonContainer)
         buttonContainer.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(48)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-48)
             make.height.equalTo(166) // 버튼 높이: 50, 간격: 8
         }
         

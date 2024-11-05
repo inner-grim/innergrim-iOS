@@ -63,7 +63,7 @@ public final class OnboardingThirdView: UIView {
         addSubview(buttonContainer)
         buttonContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(48)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-48)
             make.height.equalTo(50)
         }
         
