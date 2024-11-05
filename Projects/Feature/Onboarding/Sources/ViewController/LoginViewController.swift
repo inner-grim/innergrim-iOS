@@ -21,7 +21,7 @@ public final class LoginViewController: BaseViewController<LoginView> {
     
     // MARK: - Init
     
-    init(viewModel: LoginViewModel) {
+    public init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

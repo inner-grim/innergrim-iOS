@@ -7,25 +7,26 @@
 
 import UIKit
 
+import Feature
 import Shared
 
-public protocol OnboardingCoordinatorDelegate: AnyObject {
+protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish()
 }
 
-public final class OnboardingCoordinator: Coordinator {
+final class OnboardingCoordinator: Coordinator {
     private let window: UIWindow
     private let navigationController: UINavigationController
     private let factory: OnboardingFactory
-    public weak var delegate: OnboardingCoordinatorDelegate?
+    weak var delegate: OnboardingCoordinatorDelegate?
     
-    public init(window: UIWindow, factory: OnboardingFactory) {
+    init(window: UIWindow, factory: OnboardingFactory) {
         self.window = window
         self.navigationController = UINavigationController()
         self.factory = factory
     }
     
-    public func start() {
+    func start() {
         navigationController.navigationBar.isHidden = true
         window.rootViewController = navigationController
         showOnboardingFirstViewController()
@@ -74,44 +75,46 @@ public final class OnboardingCoordinator: Coordinator {
     }
 }
 
+// MARK: - Delegates
+
 extension OnboardingCoordinator: OnboardingFirstViewControllerDelegate {
-    public func onboardingFirstViewControllerDidFinish() {
+    func onboardingFirstViewControllerDidFinish() {
         showOnboardingSecondViewController()
     }
 }
 
 extension OnboardingCoordinator: OnboardingSecondViewControllerDelegate {
-    public func onboardingSecondViewControllerDidFinish() {
+    func onboardingSecondViewControllerDidFinish() {
         showOnboardingThirdViewController()
     }
 }
 
 extension OnboardingCoordinator: OnboardingThirdViewControllerDelegate {
-    public func onboardingThirdViewControllerDidFinish() {
+    func onboardingThirdViewControllerDidFinish() {
         showLoginViewController()
     }
 }
 
 extension OnboardingCoordinator: LoginViewControllerDelegate {
-    public func loginViewControllerDidFinish() {
+    func loginViewControllerDidFinish() {
         showAgreementViewController()
     }
 }
 
 extension OnboardingCoordinator: AgreementViewControllerDelegate {
-    public func agreementViewControllerDidFinish() {
+    func agreementViewControllerDidFinish() {
         showNicknameViewController()
     }
 }
 
 extension OnboardingCoordinator: NicknameViewControllerDelegate {
-    public func nicknameViewControllerDidFinish() {
+    func nicknameViewControllerDidFinish() {
         showGenderViewController()
     }
 }
 
 extension OnboardingCoordinator: GenderViewControllerDelegate {
-    public func genderViewControllerDidFinish() {
+    func genderViewControllerDidFinish() {
         delegate?.onboardingCoordinatorDidFinish()
     }
 }

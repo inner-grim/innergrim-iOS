@@ -9,13 +9,14 @@ import UIKit
 
 import Core
 import Domain
+import Feature
 
-public final class OnboardingFactory {
+final class OnboardingFactory {
     private let loginUseCase: OAuthLoginUseCase
     private let networkService: NetworkService
     private let keychainStorage: KeyChainStorage
     
-    public init(
+    init(
         loginUseCase: OAuthLoginUseCase,
         networkService: NetworkService,
         keychainStorage: KeyChainStorage
@@ -25,19 +26,19 @@ public final class OnboardingFactory {
         self.keychainStorage = keychainStorage
     }
     
-    public func makeOnboardingFirstViewController() -> OnboardingFirstViewController {
+    func makeOnboardingFirstViewController() -> OnboardingFirstViewController {
         return OnboardingFirstViewController()
     }
     
-    public func makeOnboardingSecondViewController() -> OnboardingSecondViewController {
+    func makeOnboardingSecondViewController() -> OnboardingSecondViewController {
         return OnboardingSecondViewController()
     }
     
-    public func makeOnboardingThirdViewController() -> OnboardingThirdViewController {
+    func makeOnboardingThirdViewController() -> OnboardingThirdViewController {
         return OnboardingThirdViewController()
     }
     
-    public func makeLoginViewController() -> LoginViewController {
+    func makeLoginViewController() -> LoginViewController {
         let viewModel = LoginViewModel(
             loginUseCase: loginUseCase,
             keychainStorage: keychainStorage
@@ -45,15 +46,15 @@ public final class OnboardingFactory {
         return LoginViewController(viewModel: viewModel)
     }
     
-    public func makeAgreementViewController() -> AgreementViewController {
+    func makeAgreementViewController() -> AgreementViewController {
         return AgreementViewController()
     }
     
-    public func makeNicknameViewController() -> NicknameViewController {
+    func makeNicknameViewController() -> NicknameViewController {
         return NicknameViewController()
     }
     
-    public func makeGenderViewController() -> GenderViewController {
+    func makeGenderViewController() -> GenderViewController {
         return GenderViewController()
     }
 }

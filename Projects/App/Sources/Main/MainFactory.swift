@@ -10,6 +10,10 @@ import UIKit
 import Feature
 
 final class MainFactory {
+    func makeChatViewController() -> ChatViewController {
+        return ChatViewController()
+    }
+    
     func makeHomeViewController() -> HomeViewController {
         return HomeViewController()
     }

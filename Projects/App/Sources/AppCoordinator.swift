@@ -9,7 +9,6 @@ import UIKit
 
 import Core
 import Domain
-import Feature
 import Shared
 
 class AppCoordinator: Coordinator {

@@ -85,6 +85,7 @@ open class BaseViewController<View: UIView>: UIViewController {
     
     private func setupViewController() {
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
     }
     
     private func setupLayout() {

@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Feature
 import Shared
 
 final class MainCoordinator: Coordinator {
@@ -19,7 +20,12 @@ final class MainCoordinator: Coordinator {
     }
     
     func start() {
-        showMainTabBarController()
+        showChatViewController()
+    }
+    
+    private func showChatViewController() {
+        let viewController = ChatViewController()
+        window.rootViewController = UINavigationController(rootViewController: viewController)
     }
     
     private func showMainTabBarController() {
