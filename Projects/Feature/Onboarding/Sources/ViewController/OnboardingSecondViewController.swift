@@ -14,16 +14,11 @@ public protocol OnboardingSecondViewControllerDelegate: AnyObject {
     func onboardingSecondViewControllerDidFinish()
 }
 
-public final class OnboardingSecondViewController: UIViewController {
+public final class OnboardingSecondViewController: BaseViewController<OnboardingSecondView> {
     public weak var delegate: OnboardingSecondViewControllerDelegate?
-    private let onboardingSecondView = OnboardingSecondView()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
-    
-    public override func loadView() {
-        self.view = onboardingSecondView
-    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,10 +44,10 @@ public final class OnboardingSecondViewController: UIViewController {
 
 private extension OnboardingSecondViewController {
     var prevButton: AssistiveButton {
-        onboardingSecondView.prevButton
+        contentView.prevButton
     }
     
     var nextButton: SolidButton {
-        onboardingSecondView.nextButton
+        contentView.nextButton
     }
 }

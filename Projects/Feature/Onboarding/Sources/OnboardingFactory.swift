@@ -44,4 +44,8 @@ public final class OnboardingFactory {
         )
         return LoginViewController(viewModel: viewModel)
     }
+    
+    public func makeAgreementViewController() -> AgreementViewController {
+        return AgreementViewController()
+    }
 }

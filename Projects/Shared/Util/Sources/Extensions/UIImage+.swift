@@ -14,6 +14,10 @@ extension UIImage {
         SharedDesignSystemAsset.Images.apple.image
     }
     
+    public static var dismiss: UIImage {
+        SharedDesignSystemAsset.Images.dismiss.image
+    }
+    
     public static var google: UIImage {
         SharedDesignSystemAsset.Images.google.image
     }

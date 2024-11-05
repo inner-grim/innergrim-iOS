@@ -56,14 +56,14 @@ public final class OnboardingThirdView: UIView {
     private func setupLayout() {
         addSubview(label)
         label.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(99)
+            make.top.equalToSuperview().inset(85)
             make.centerX.equalToSuperview()
         }
         
         addSubview(buttonContainer)
         buttonContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-48)
+            make.bottom.equalToSuperview().inset(48)
             make.height.equalTo(50)
         }
         

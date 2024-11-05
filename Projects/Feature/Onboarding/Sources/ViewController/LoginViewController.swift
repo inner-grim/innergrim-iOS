@@ -8,13 +8,14 @@
 import Combine
 import UIKit
 
+import Shared
+
 public protocol LoginViewControllerDelegate: AnyObject {
     func loginViewControllerDidFinish()
 }
 
-public final class LoginViewController: UIViewController {
+public final class LoginViewController: BaseViewController<LoginView> {
     public weak var delegate: LoginViewControllerDelegate?
-    private let loginView = LoginView()
     private let viewModel: LoginViewModel
     private var cancellables = Set<AnyCancellable>()
     
@@ -31,10 +32,6 @@ public final class LoginViewController: UIViewController {
     }
     
     // MARK: - Lifecycle
-    
-    public override func loadView() {
-        view = loginView
-    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,10 +68,10 @@ public final class LoginViewController: UIViewController {
 
 private extension LoginViewController {
     var kakaoLoginButton: UIButton {
-        loginView.kakaoLoginButton
+        contentView.kakaoLoginButton
     }
     
     var appleLoginButton: UIButton {
-        loginView.appleLoginButton
+        contentView.appleLoginButton
     }
 }

@@ -14,16 +14,11 @@ public protocol OnboardingFirstViewControllerDelegate: AnyObject {
     func onboardingFirstViewControllerDidFinish()
 }
 
-public final class OnboardingFirstViewController: UIViewController {
+public final class OnboardingFirstViewController: BaseViewController<OnboardingFirstView> {
     public weak var delegate: OnboardingFirstViewControllerDelegate?
-    private let onboardingFirstView = OnboardingFirstView()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
-    
-    public override func loadView() {
-        self.view = onboardingFirstView
-    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +38,6 @@ public final class OnboardingFirstViewController: UIViewController {
 
 private extension OnboardingFirstViewController {
     var nextButton: SolidButton {
-        onboardingFirstView.nextButton
+        contentView.nextButton
     }
 }

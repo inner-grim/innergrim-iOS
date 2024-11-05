@@ -54,6 +54,11 @@ public final class OnboardingCoordinator: Coordinator {
         viewController.delegate = self
         navigationController.pushViewController(viewController, animated: true)
     }
+    
+    private func showAgreementViewController() {
+        let viewController = factory.makeAgreementViewController()
+        navigationController.pushViewController(viewController, animated: true)
+    }
 }
 
 extension OnboardingCoordinator: OnboardingFirstViewControllerDelegate {
@@ -76,6 +81,6 @@ extension OnboardingCoordinator: OnboardingThirdViewControllerDelegate {
 
 extension OnboardingCoordinator: LoginViewControllerDelegate {
     public func loginViewControllerDidFinish() {
-        delegate?.onboardingCoordinatorDidFinish()
+        showAgreementViewController()
     }
 }

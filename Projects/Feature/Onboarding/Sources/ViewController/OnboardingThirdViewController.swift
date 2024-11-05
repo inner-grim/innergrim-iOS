@@ -14,16 +14,11 @@ public protocol OnboardingThirdViewControllerDelegate: AnyObject {
     func onboardingThirdViewControllerDidFinish()
 }
 
-public final class OnboardingThirdViewController: UIViewController {
+public final class OnboardingThirdViewController: BaseViewController<OnboardingThirdView> {
     public weak var delegate: OnboardingThirdViewControllerDelegate?
-    private let onboardingThirdView = OnboardingThirdView()
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
-    
-    public override func loadView() {
-        self.view = onboardingThirdView
-    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,10 +44,10 @@ public final class OnboardingThirdViewController: UIViewController {
 
 private extension OnboardingThirdViewController {
     var prevButton: AssistiveButton {
-        onboardingThirdView.prevButton
+        contentView.prevButton
     }
     
     var startButton: SolidButton {
-        onboardingThirdView.startButton
+        contentView.startButton
     }
 }
