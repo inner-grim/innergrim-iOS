@@ -71,6 +71,16 @@ open class BaseViewController<View: UIView>: UIViewController {
         }
     }
     
+    public func setNavigationBarHidden() {
+        navigationBar.removeFromSuperview()
+        
+        contentView.snp.remakeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+    }
+    
     // MARK: - Private Setup Methods
     
     private func setupViewController() {
