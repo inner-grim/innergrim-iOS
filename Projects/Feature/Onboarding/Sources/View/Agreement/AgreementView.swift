@@ -39,7 +39,7 @@ public final class AgreementView: UIView {
     lazy var marketingLabel = createUnderlineLabel(with: "마케팅 수신 동의 (선택)")
     
     private lazy var marketingDescriptionLabel = createLabel(
-        with: "이너그림에서 제공하는 맞춤형 일기 분석 및 일기 생성 시 시간 알림 등을 앱 푸시와 메일로 전달해 드립니다.",
+        with: "이너그림에서 제공하는 마케팅 메시지, 일기 알림 등을 앱 푸시로 전달해드립니다.",
         font: .labelSmallMedium,
         color: .labelAssistive
     )
@@ -130,7 +130,7 @@ public final class AgreementView: UIView {
         addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-48)
+            make.bottom.equalToSuperview().inset(48)
             make.height.equalTo(50)
         }
     }

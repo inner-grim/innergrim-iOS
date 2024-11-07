@@ -23,6 +23,13 @@ public final class OnboardingFirstView: UIView {
         return label
     }()
     
+    private let imageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .fillAssistive
+        return imageView
+    }()
+    
     let nextButton = SolidButton(title: "다음", font: .labelLargeSemiBold)
     
     // MARK: - Init
@@ -47,15 +54,22 @@ public final class OnboardingFirstView: UIView {
     private func setupLayout() {
         addSubview(label)
         label.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(85)
+            make.top.equalToSuperview().inset(99)
             make.centerX.equalToSuperview()
         }
         
         addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-48)
+            make.bottom.equalToSuperview().inset(48)
             make.height.equalTo(50)
+        }
+        
+        addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(label.snp.bottom).offset(20)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(nextButton.snp.top).offset(-95)
         }
     }
 }

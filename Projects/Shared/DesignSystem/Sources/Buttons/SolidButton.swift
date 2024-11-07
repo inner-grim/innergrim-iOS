@@ -8,11 +8,11 @@
 import UIKit
 
 public final class SolidButton: UIButton {
-    private let defaultBackgroundColor = SharedDesignSystemAsset.Colors.primaryNormal.color
-    private let pressedBackgroundColor = SharedDesignSystemAsset.Colors.primaryStrong.color
-    private let disabledBackgroundColor = SharedDesignSystemAsset.Colors.fillDisabled.color
+    private let defaultBackgroundColor = UIColor.primaryNormal
+    private let pressedBackgroundColor = UIColor.primaryStrong
+    private let disabledBackgroundColor = UIColor.fillDisabled
     private let defaultTextColor = UIColor.white
-    private let disabledTextColor = SharedDesignSystemAsset.Colors.labelDisabled.color
+    private let disabledTextColor = UIColor.labelDisabled
     
     // MARK: - Init
     

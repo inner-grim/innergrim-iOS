@@ -8,9 +8,9 @@
 import UIKit
 
 public final class CheckBoxButton: UIButton {
-    private let defaultImage = SharedDesignSystemAsset.Images.checkBoxDefault.image
-    private let pressedImage = SharedDesignSystemAsset.Images.checkBoxPressed.image
-    private let selectedImage = SharedDesignSystemAsset.Images.checkBoxSelected.image
+    private let defaultImage = UIImage.checkBoxDefault
+    private let pressedImage = UIImage.checkBoxPressed
+    private let selectedImage = UIImage.checkBoxSelected
     
     // MARK: - Init
     

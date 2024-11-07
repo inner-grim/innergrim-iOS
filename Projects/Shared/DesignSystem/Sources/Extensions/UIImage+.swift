@@ -1,13 +1,11 @@
 //
 //  UIImage+.swift
-//  SharedUtil
+//  SharedDesignSystem
 //
-//  Created by 지연 on 11/5/24.
+//  Created by 지연 on 11/7/24.
 //
 
 import UIKit
-
-import SharedDesignSystem
 
 extension UIImage {
     public static var apple: UIImage {
@@ -20,6 +18,18 @@ extension UIImage {
     
     public static var check: UIImage {
         SharedDesignSystemAsset.Images.check.image
+    }
+    
+    public static var checkBoxDefault: UIImage {
+        SharedDesignSystemAsset.Images.checkBoxDefault.image
+    }
+    
+    public static var checkBoxPressed: UIImage {
+        SharedDesignSystemAsset.Images.checkBoxPressed.image
+    }
+    
+    public static var checkBoxSelected: UIImage {
+        SharedDesignSystemAsset.Images.checkBoxSelected.image
     }
     
     public static var dismiss: UIImage {

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SharedDesignSystem
+
 extension UILabel {
     private func setLineHeightAsPercentage(_ percentage: CGFloat) {
         guard let text = self.text else { return }

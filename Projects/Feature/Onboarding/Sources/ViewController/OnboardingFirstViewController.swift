@@ -22,6 +22,7 @@ public final class OnboardingFirstViewController: BaseViewController<OnboardingF
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBarHidden()
         setupBindings()
     }
     

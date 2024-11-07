@@ -22,6 +22,7 @@ public final class OnboardingThirdViewController: BaseViewController<OnboardingT
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBarHidden()
         setupBindings()
     }
     

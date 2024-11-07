@@ -35,6 +35,7 @@ public final class LoginViewController: BaseViewController<LoginView> {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBarHidden()
         setupBindings()
     }
     

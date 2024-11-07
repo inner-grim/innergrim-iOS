@@ -1,13 +1,11 @@
 //
 //  UIColor+.swift
-//  SharedUtil
+//  SharedDesignSystem
 //
-//  Created by 지연 on 11/5/24.
+//  Created by 지연 on 11/7/24.
 //
 
 import UIKit
-
-import SharedDesignSystem
 
 extension UIColor {
     public static var coral50: UIColor {
