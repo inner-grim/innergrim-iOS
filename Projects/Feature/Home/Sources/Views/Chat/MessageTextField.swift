@@ -41,7 +41,6 @@ public final class MessageTextField: UIView {
         button.setImage(UIImage.arrowUp.withTintColor(.white), for: .highlighted)
         button.imageEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         button.clipsToBounds = true
-        button.isEnabled = false
         return button
     }()
     
@@ -51,7 +50,6 @@ public final class MessageTextField: UIView {
         super.init(frame: frame)
         setupView()
         setupLayout()
-        setupTextField()
     }
     
     @available(*, unavailable)
@@ -93,17 +91,5 @@ public final class MessageTextField: UIView {
             make.trailing.equalTo(sendButton.snp.leading).offset(-4)
             make.centerY.equalToSuperview()
         }
-    }
-    
-    // TODO: sendButton isEnabled 로직 뷰모델로 옮기기
-    private func setupTextField() {
-        textField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-    }
-    
-    // MARK: - Action Methods
-    
-    @objc private func editingChanged() {
-        guard let text = textField.text else { return }
-        sendButton.isEnabled = !text.isEmpty
     }
 }

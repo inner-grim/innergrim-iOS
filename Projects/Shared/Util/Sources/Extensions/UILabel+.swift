@@ -11,21 +11,21 @@ extension UILabel {
     private func setLineHeightAsPercentage(_ percentage: CGFloat) {
         guard let text = self.text else { return }
         
-        // 현재 폰트 크기를 기준으로 라인 높이 계산
-        let lineHeight = font.pointSize * (percentage / 100.0)
+        let fontSize = font.pointSize
+        let lineHeight = fontSize * (percentage / 100.0)
         
-        let attributedString = NSMutableAttributedString(string: text)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.minimumLineHeight = lineHeight
         paragraphStyle.maximumLineHeight = lineHeight
         
-        let baselineOffset = (lineHeight - font.lineHeight) / 2
+        let baselineOffset = (lineHeight - fontSize) / 4
         
-        attributedString.addAttributes(
-            [.paragraphStyle: paragraphStyle, .baselineOffset: baselineOffset],
-            range: NSRange(location: 0, length: attributedString.length)
-        )
+        let attributes: [NSAttributedString.Key: Any] = [
+            .paragraphStyle: paragraphStyle,
+            .baselineOffset: baselineOffset
+        ]
         
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
         self.attributedText = attributedString
     }
     
@@ -43,7 +43,7 @@ extension UILabel {
             setLineHeightAsPercentage(140)
         case .titleMedium:
             setLineHeightAsPercentage(132)
-        case .titleMedium:
+        case .titleSmall:
             setLineHeightAsPercentage(136)
         case .bodyLargeRegular:
             setLineHeightAsPercentage(158)

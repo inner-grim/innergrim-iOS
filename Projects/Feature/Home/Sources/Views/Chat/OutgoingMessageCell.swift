@@ -1,5 +1,5 @@
 //
-//  IncomingMessageCell.swift
+//  OutgoingMessageCell.swift
 //  FeatureHome
 //
 //  Created by 지연 on 11/6/24.
@@ -9,27 +9,19 @@ import UIKit
 
 import Shared
 
-public final class IncomingMessageCell: UITableViewCell, Reusable {
+public final class OutgoingMessageCell: UITableViewCell, Reusable {
     // MARK: - Components
-    
-    private let greemiImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .gray400
-        imageView.clipsToBounds = true
-        return imageView
-    }()
     
     private let messageContainer = {
         let view = UIView()
-        view.backgroundColor = .fillNormal
+        view.backgroundColor = .primaryNormal
         view.layer.masksToBounds = true
         return view
     }()
     
     private let messageLabel = {
         let label = UILabel()
-        label.textColor = .labelNormal
+        label.textColor = .white
         label.numberOfLines = 0
         return label
     }()
@@ -56,7 +48,6 @@ public final class IncomingMessageCell: UITableViewCell, Reusable {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        greemiImageView.layer.cornerRadius = 16
         DispatchQueue.main.async { [weak self] in
             self?.setupMessageContainerCorners()
         }
@@ -76,18 +67,11 @@ public final class IncomingMessageCell: UITableViewCell, Reusable {
     }
     
     private func setupLayout() {
-        contentView.addSubview(greemiImageView)
-        greemiImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(32)
-            make.top.equalToSuperview().inset(10)
-            make.leading.equalToSuperview()
-        }
-        
         contentView.addSubview(messageContainer)
         messageContainer.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(10)
-            make.leading.equalToSuperview().inset(40)
-            make.trailing.lessThanOrEqualToSuperview().inset(70) // timeLabel 너비 + 여유 공간
+            make.trailing.equalToSuperview()
+            make.leading.greaterThanOrEqualToSuperview().inset(70) // timeLabel 너비 + 여유 공간
         }
         
         messageContainer.addSubview(messageLabel)
@@ -98,9 +82,9 @@ public final class IncomingMessageCell: UITableViewCell, Reusable {
         
         contentView.addSubview(timestampLabel)
         timestampLabel.snp.makeConstraints { make in
-            make.leading.equalTo(messageContainer.snp.trailing).offset(2)
+            make.trailing.equalTo(messageContainer.snp.leading).offset(-2)
             make.bottom.equalToSuperview().inset(10)
-            make.trailing.lessThanOrEqualToSuperview().inset(24)
+            make.leading.greaterThanOrEqualToSuperview().inset(24)
         }
     }
     
@@ -117,10 +101,10 @@ public final class IncomingMessageCell: UITableViewCell, Reusable {
         let path = UIBezierPath()
         let containerRect = messageContainer.bounds
         
-        // 좌측 상단 코너 (radius: 4)
-        path.move(to: CGPoint(x: 0, y: 4))
-        path.addArc(withCenter: CGPoint(x: 4, y: 4),
-                    radius: 4,
+        // 좌측 상단 코너 (radius: 20)
+        path.move(to: CGPoint(x: 0, y: 20))
+        path.addArc(withCenter: CGPoint(x: 20, y: 20),
+                    radius: 20,
                     startAngle: .pi,
                     endAngle: .pi * 3/2,
                     clockwise: true)
@@ -133,10 +117,10 @@ public final class IncomingMessageCell: UITableViewCell, Reusable {
                     endAngle: 0,
                     clockwise: true)
         
-        // 우측 하단 코너 (radius: 20)
-        path.addLine(to: CGPoint(x: containerRect.width, y: containerRect.height - 20))
-        path.addArc(withCenter: CGPoint(x: containerRect.width - 20, y: containerRect.height - 20),
-                    radius: 20,
+        // 우측 하단 코너 (radius: 4)
+        path.addLine(to: CGPoint(x: containerRect.width, y: containerRect.height - 4))
+        path.addArc(withCenter: CGPoint(x: containerRect.width - 4, y: containerRect.height - 4),
+                    radius: 4,
                     startAngle: 0,
                     endAngle: .pi/2,
                     clockwise: true)

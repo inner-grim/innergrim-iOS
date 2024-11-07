@@ -27,7 +27,6 @@ public final class GenderCell: UICollectionViewCell, Reusable {
     
     private let typeLabel = {
         let label = UILabel()
-        label.applyTypography(with: .labelLargeSemiBold)
         label.textColor = .primaryNormal
         return label
     }()
@@ -83,5 +82,6 @@ public final class GenderCell: UICollectionViewCell, Reusable {
     
     public func configure(with type: GenderType) {
         typeLabel.text = type.rawValue
+        typeLabel.applyTypography(with: .labelLargeSemiBold)
     }
 }

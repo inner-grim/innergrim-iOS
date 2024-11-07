@@ -13,12 +13,15 @@ import Shared
 public final class ChatViewController: BaseViewController<ChatView> {
     private var cancellables = Set<AnyCancellable>()
     
-    private let incomingMessages = [
-        IncomingMessage(message: "안녕 반가워! 난 그리미야.\n오늘 하루는 어땠어?"),
-        IncomingMessage(message: "오늘 하루 행복한 기분을 느꼈구나!"),
-        IncomingMessage(message: "그렇구나. 이 기분이 너에게 얼마나 크게 다가오고 있어?"),
-        IncomingMessage(message: "행복하다고 답해줘서 나도 기뻐! 어떤 일이 있었는지 얘기해줄래?"),
-        IncomingMessage(message: "요리하는 재미를 발견했구나! 도전해보고 싶은 요리나 추천하는 레시피가 있을까?")
+    private let chatMessages = [
+        ChatMessage(content: "안녕 반가워! 난 그리미야.\n오늘 하루는 어땠어?", isFromUser: false),
+        ChatMessage(content: "🥰 행복해", isFromUser: true),
+        ChatMessage(content: "오늘 하루 행복한 기분을 느꼈구나!", isFromUser: false),
+        ChatMessage(content: "이 기분이 너에게 얼마나 크게 다가오고 있어?", isFromUser: false),
+        ChatMessage(content: "강하게", isFromUser: true),
+        ChatMessage(content: "행복하다고 답해줘서 나도 기뻐! 어떤 일이 있었는지 얘기해줄래?", isFromUser: false),
+        ChatMessage(content: "요즘 새로 시작한 취미가 있는데, 요리 배우기 정말 재미있어요!", isFromUser: true),
+        ChatMessage(content: "요리하는 재미를 발견했구나! 도전해보고 싶은 요리나 추천하는 레시피가 있을까?", isFromUser: false)
     ]
     
     // MARK: - Lifecycle
@@ -47,6 +50,25 @@ public final class ChatViewController: BaseViewController<ChatView> {
             .sink { [weak self] _ in
                 self?.contentView.resetBottomConstraint()
             }.store(in: &cancellables)
+        
+        let tapGesture = UITapGestureRecognizer()
+        chatTableView.addGestureRecognizer(tapGesture)
+        tapGesture.tapPublisher
+            .sink { [weak self] _ in
+                self?.view.endEditing(true)
+            }.store(in: &cancellables)
+        
+        messageTextField.textPublisher
+            .sink { [weak self] text in
+                self?.sendButton.isEnabled = !text.isEmpty
+            }
+            .store(in: &cancellables)
+        
+        sendButton.tapPublisher
+            .sink { [weak self] in
+                self?.messageTextField.text = ""
+            }
+            .store(in: &cancellables)
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,16 +108,29 @@ extension ChatViewController: UITableViewDelegate {
 
 extension ChatViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return incomingMessages.count
+        return chatMessages.count
     }
     
     public func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(for: indexPath, cellType: IncomingMessageCell.self)
-        cell.configure(with: incomingMessages.reversed()[indexPath.row])
-        return cell
+        let chatMessage = chatMessages.reversed()[indexPath.row]
+        if chatMessage.isFromUser {
+            let cell = tableView.dequeueReusableCell(
+                for: indexPath,
+                cellType: OutgoingMessageCell.self
+            )
+            cell.configure(with: chatMessage)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(
+                for: indexPath,
+                cellType: IncomingMessageCell.self
+            )
+            cell.configure(with: chatMessage)
+            return cell
+        }
     }
 }
 
@@ -104,7 +139,11 @@ private extension ChatViewController {
         contentView.tableView
     }
     
-    var messageTextField: MessageTextField {
-        contentView.messageTextField
+    var messageTextField: UITextField {
+        contentView.messageTextField.textField
+    }
+    
+    var sendButton: UIButton {
+        contentView.messageTextField.sendButton
     }
 }

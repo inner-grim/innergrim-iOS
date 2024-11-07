@@ -18,6 +18,7 @@ public final class ChatView: UIView {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .clear
         tableView.register(cellType: IncomingMessageCell.self)
+        tableView.register(cellType: OutgoingMessageCell.self)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none

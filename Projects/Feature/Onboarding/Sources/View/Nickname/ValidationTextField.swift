@@ -46,11 +46,7 @@ public final class ValidationTextField: UIView {
         return textField
     }()
     
-    private let messageLabel = {
-        let label = UILabel()
-        label.applyTypography(with: .labelSmallMedium)
-        return label
-    }()
+    private let messageLabel = UILabel()
     
     // MARK: - Init
     
@@ -122,6 +118,7 @@ public final class ValidationTextField: UIView {
             messageLabel.textColor = .systemRed
         }
         messageLabel.text = message
+        messageLabel.applyTypography(with: .labelSmallMedium)
         messageLabel.isHidden = message == nil
     }
 }

@@ -19,11 +19,7 @@ public final class SocialLoginButton: UIButton {
         return imageView
     }()
     
-    private let socialTitleLabel = {
-        let label = UILabel()
-        label.applyTypography(with: .labelLargeSemiBold)
-        return label
-    }()
+    private let socialTitleLabel = UILabel()
     
     // MARK: - Init
     
@@ -45,6 +41,7 @@ public final class SocialLoginButton: UIButton {
         socialImageView.tintColor = socialType.textColor
         
         socialTitleLabel.text = "\(socialType.rawValue)로 계속하기"
+        socialTitleLabel.applyTypography(with: .labelLargeSemiBold)
         socialTitleLabel.textColor = socialType.textColor
         
         backgroundColor = socialType.backgroundColor
