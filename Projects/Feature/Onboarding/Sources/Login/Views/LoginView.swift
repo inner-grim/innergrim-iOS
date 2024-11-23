@@ -50,7 +50,7 @@ public final class LoginView: UIView {
     private func setupLayout() {
         addSubview(loginButtonStackView)
         loginButtonStackView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(28)
+            make.bottom.equalToSuperview().inset(48)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(166)// 버튼 높이: 50, 간격: 8
         }

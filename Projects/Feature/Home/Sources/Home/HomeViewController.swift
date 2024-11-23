@@ -21,6 +21,11 @@ public final class HomeViewController: BaseViewController<HomeView> {
         super.viewDidLoad()
         setupBindings()
     }
+
+    public override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        configureBottomSafeArea()
+    }
     
     // MARK: - Setup Methods
     

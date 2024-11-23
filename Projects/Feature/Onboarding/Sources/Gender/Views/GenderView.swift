@@ -112,7 +112,7 @@ public final class GenderView: UIView {
         skipButton.snp.makeConstraints { make in
             make.width.equalTo(60)
             make.height.equalTo(28)
-            make.bottom.equalToSuperview().inset(28)
+            make.bottom.equalToSuperview().inset(48)
             make.centerX.equalToSuperview()
         }
         

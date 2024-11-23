@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 
 open class BaseViewController<View: UIView>: UIViewController {
+    private var contentBottomConstraint: Constraint?
+    
     // MARK: - Components
     
     private let navigationBar = UIView()
@@ -49,7 +51,7 @@ open class BaseViewController<View: UIView>: UIViewController {
         contentView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            contentBottomConstraint = make.bottom.equalToSuperview().constraint
         }
     }
     
@@ -100,8 +102,12 @@ open class BaseViewController<View: UIView>: UIViewController {
         contentView.snp.remakeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            contentBottomConstraint = make.bottom.equalToSuperview().constraint
         }
+    }
+    
+    public func configureBottomSafeArea() {
+        contentBottomConstraint?.update(offset: -view.safeAreaInsets.bottom)
     }
     
     // MARK: - Helper Methods
