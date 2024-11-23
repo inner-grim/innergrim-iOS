@@ -30,8 +30,8 @@ public final class ValidationTextField: UIView {
     private lazy var containerView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 8
-        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 8.0
+        view.layer.borderWidth = 1.0
         view.layer.borderColor = normalBorderColor
         return view
     }()

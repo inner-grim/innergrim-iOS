@@ -63,7 +63,7 @@ final class OnboardingFlowCoordinator: Coordinator {
     
     private func showGenderViewController() {
         let viewController = onboardingDIContainer.makeGenderViewController()
-//        viewController.delegate = self
+        viewController.delegate = self
         navigationController.pushViewController(viewController, animated: false)
     }
 }
@@ -89,5 +89,11 @@ extension OnboardingFlowCoordinator: AgreementViewControllerDelegate {
 extension OnboardingFlowCoordinator: NicknameViewControllerDelegate {
     func nicknameViewControllerDidFinish() {
         showGenderViewController()
+    }
+}
+
+extension OnboardingFlowCoordinator: GenderViewControllerDelegate {
+    func genderViewControllerDidFinish() {
+        delegate?.onboardingFlowDidFinish(self)
     }
 }
