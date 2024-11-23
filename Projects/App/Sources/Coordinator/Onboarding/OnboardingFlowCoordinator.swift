@@ -51,6 +51,12 @@ final class OnboardingFlowCoordinator: Coordinator {
     
     private func showAgreementViewController() {
         let viewController = onboardingDIContainer.makeAgreementViewController()
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: false)
+    }
+    
+    private func showNicknameViewController() {
+        let viewController = onboardingDIContainer.makeNicknameViewController()
 //        viewController.delegate = self
         navigationController.pushViewController(viewController, animated: false)
     }
@@ -65,5 +71,11 @@ extension OnboardingFlowCoordinator: OnboardingViewControllerDelegate {
 extension OnboardingFlowCoordinator: LoginViewControllerDelegate {
     func loginViewControllerDidFinish() {
         showAgreementViewController()
+    }
+}
+
+extension OnboardingFlowCoordinator: AgreementViewControllerDelegate {
+    func agreementViewControllerDidFinish() {
+        showNicknameViewController()
     }
 }

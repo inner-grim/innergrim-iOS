@@ -36,4 +36,9 @@ final class OnboardingDIContainer {
         let viewController = AgreementViewController()
         return viewController
     }
+    
+    public func makeNicknameViewController() -> NicknameViewController {
+        let viewController = NicknameViewController()
+        return viewController
+    }
 }
