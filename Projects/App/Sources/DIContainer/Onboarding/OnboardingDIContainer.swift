@@ -5,7 +5,9 @@
 //  Created by 지연 on 11/23/24.
 //
 
-import Foundation
+import UIKit
+
+import Feature
 
 final class OnboardingDIContainer {
     struct Dependencies {}
@@ -20,4 +22,13 @@ final class OnboardingDIContainer {
 
     // MARK: - View Controllers
     
+    public func makeOnboardingViewController() -> OnboardingViewController {
+        let viewController = OnboardingViewController()
+        return viewController
+    }
+    
+    public func makeLoginViewController() -> LoginViewController {
+        let viewController = LoginViewController()
+        return viewController
+    }
 }

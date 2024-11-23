@@ -12,7 +12,8 @@ import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    var appCoordinator: AppCoordinator?
+    var appFlowCoordinator: AppFlowCoordinator?
+    let appIDContainer = AppDIContainer()
     
     func scene(
         _ scene: UIScene,
@@ -20,13 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
         let window = UIWindow(windowScene: windowScene)
         window.makeKeyAndVisible()
         self.window = window
         
-        appCoordinator = AppCoordinator(window: window)
-        appCoordinator?.start()
+        appFlowCoordinator = AppFlowCoordinator(window: window, appDIContainer: appIDContainer)
+        appFlowCoordinator?.start()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -36,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {}
 
     func sceneDidBecomeActive(_ scene: UIScene) {}
