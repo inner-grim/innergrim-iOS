@@ -5,7 +5,7 @@
 //  Created by 지연 on 11/23/24.
 //
 
-import Foundation
+import UIKit
 
 final class MainDIContainer {
     struct Dependencies {}
@@ -37,4 +37,11 @@ final class MainDIContainer {
         let dependencies = ProfileDIContainer.Dependencies()
         return ProfileDIContainer(dependencies: dependencies)
     }
+    
+    func makeChatDIContainer() -> ChatDIContainer {
+        let dependencies = ChatDIContainer.Dependencies()
+        return ChatDIContainer(dependencies: dependencies)
+    }
+    
+    
 }

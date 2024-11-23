@@ -7,6 +7,8 @@
 
 @_exported import FeatureCalendar
 @_exported import FeatureCalendarInterface
+@_exported import FeatureChat
+@_exported import FeatureChatInterface
 @_exported import FeatureHome
 @_exported import FeatureHomeInterface
 @_exported import FeatureOnboarding

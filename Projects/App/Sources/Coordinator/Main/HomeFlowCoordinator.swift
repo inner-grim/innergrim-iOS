@@ -7,10 +7,16 @@
 
 import UIKit
 
+import Feature
 import Shared
+
+protocol HomeFlowCoordinatorDelegate: AnyObject {
+    func homeFlowCoordinatorDidRequestChatFlow()
+}
 
 final class HomeFlowCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
+    weak var delegate: HomeFlowCoordinatorDelegate?
     
     private let navigationController: UINavigationController
     private let homeDIContainer: HomeDIContainer
@@ -29,6 +35,13 @@ final class HomeFlowCoordinator: Coordinator {
     
     private func showHomeViewController() {
         let viewController = homeDIContainer.makeHomeViewController()
-        navigationController.pushViewController(viewController, animated: true)
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: false)
+    }
+}
+
+extension HomeFlowCoordinator: HomeViewControllerDelegate {
+    func homeViewControllerDidRequestChat() {
+        delegate?.homeFlowCoordinatorDidRequestChatFlow()
     }
 }

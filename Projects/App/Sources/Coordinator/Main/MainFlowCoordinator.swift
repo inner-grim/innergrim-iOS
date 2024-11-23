@@ -12,19 +12,25 @@ import Shared
 final class MainFlowCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     
-    private let tabBarController: UITabBarController
+    private let navigationController: UINavigationController
     private let mainDIContainer: MainDIContainer
     
     init(
-        tabBarController: UITabBarController,
+        navigationController: UINavigationController,
         mainDIContainer: MainDIContainer
     ) {
-        self.tabBarController = tabBarController
+        self.navigationController = navigationController
         self.mainDIContainer = mainDIContainer
     }
     
     func start() {
-        // 탭바 설정
+        navigationController.isNavigationBarHidden = true
+        showMainTabBarController()
+    }
+    
+    func showMainTabBarController() {
+        let tabBarController = MainTabBarController()
+        // 각 탭의 NavigationController 설정
         let homeNavigation = UINavigationController()
         let calendarNavigation = UINavigationController()
         let statNavigation = UINavigationController()
@@ -56,32 +62,60 @@ final class MainFlowCoordinator: Coordinator {
             animated: false
         )
         
-        // 코디네이터 설정
+        // 각 탭의 Coordinator 설정
         let homeCoordinator = HomeFlowCoordinator(
             navigationController: homeNavigation,
             homeDIContainer: mainDIContainer.makeHomeDIContainer()
         )
-        let calendarCoordinator = HomeFlowCoordinator(
-            navigationController: calendarNavigation,
-            homeDIContainer: mainDIContainer.makeHomeDIContainer()
-        )
-        let statCoordinator = HomeFlowCoordinator(
-            navigationController: statNavigation,
-            homeDIContainer: mainDIContainer.makeHomeDIContainer()
-        )
-        let profileCoordinator = HomeFlowCoordinator(
-            navigationController: profileNavigation,
-            homeDIContainer: mainDIContainer.makeHomeDIContainer()
-        )
-        
+        homeCoordinator.delegate = self
         store(coordinator: homeCoordinator)
-        store(coordinator: calendarCoordinator)
-        store(coordinator: statCoordinator)
-        store(coordinator: profileCoordinator)
-        
         homeCoordinator.start()
+        
+        let calendarCoordinator = CalendarFlowCoordinator(
+            navigationController: calendarNavigation,
+            calendarDIContainer: mainDIContainer.makeCalendarDIContainer()
+        )
+        store(coordinator: calendarCoordinator)
         calendarCoordinator.start()
+        
+        let statCoordinator = StatFlowCoordinator(
+            navigationController: statNavigation,
+            statDIContainer: mainDIContainer.makeStatDIContainer()
+        )
+        store(coordinator: statCoordinator)
         statCoordinator.start()
+        
+        let profileCoordinator = ProfileFlowCoordinator(
+            navigationController: profileNavigation,
+            profileDIContainer: mainDIContainer.makeProfileDIContainer()
+        )
+        store(coordinator: profileCoordinator)
         profileCoordinator.start()
+        
+        navigationController.pushViewController(tabBarController, animated: false)
+    }
+    
+    private func showChatFlow() {
+        let chatDIContainer = mainDIContainer.makeChatDIContainer()
+        
+        let chatCoordinator = ChatFlowCoordinator(
+            navigationController: navigationController,
+            chatDIContainer: chatDIContainer
+        )
+        
+        store(coordinator: chatCoordinator)
+        chatCoordinator.start()
+    }
+}
+
+extension MainFlowCoordinator: HomeFlowCoordinatorDelegate {
+    func homeFlowCoordinatorDidRequestChatFlow() {
+        showChatFlow()
+    }
+}
+
+extension MainFlowCoordinator: ChatFlowCoordinatorDelegate {
+    func chatFlowDidFinish(_ coordinator: ChatFlowCoordinator) {
+        free(coordinator: coordinator)
     }
 }

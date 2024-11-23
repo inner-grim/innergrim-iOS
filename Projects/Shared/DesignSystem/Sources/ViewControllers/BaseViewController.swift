@@ -48,7 +48,8 @@ open class BaseViewController<View: UIView>: UIViewController {
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     
@@ -98,7 +99,8 @@ open class BaseViewController<View: UIView>: UIViewController {
         
         contentView.snp.remakeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.bottom.trailing.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     

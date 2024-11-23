@@ -15,6 +15,7 @@ let featureTargets: [Target] = [
             dependencies: [
                 .domain,
                 .feature(implements: .Calendar),
+                .feature(implements: .Chat),
                 .feature(implements: .Home),
                 .feature(implements: .Onboarding),
                 .feature(implements: .Profile),

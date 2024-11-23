@@ -32,7 +32,7 @@ final class AppFlowCoordinator: Coordinator {
     
     private func needsOnboarding() -> Bool {
         // TODO: 온보딩 필요 여부 체크 로직
-        return true
+        return false
     }
     
     private func showOnboardingFlow() {
@@ -52,14 +52,13 @@ final class AppFlowCoordinator: Coordinator {
     }
     
     private func showMainFlow() {
-        print("온보딩 완료")
-        let tabBarController = MainTabBarController()
-        window.rootViewController = tabBarController
+        let navigationController = UINavigationController()
+        window.rootViewController = navigationController
         
         let mainDIContainer = appDIContainer.makeMainDIContainer()
         
         let mainCoordinator = MainFlowCoordinator(
-            tabBarController: tabBarController,
+            navigationController: navigationController,
             mainDIContainer: mainDIContainer
         )
         

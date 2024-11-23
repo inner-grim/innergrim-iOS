@@ -1,5 +1,5 @@
 //
-//  HomeDIContainer.swift
+//  ChatDIContainer.swift
 //  innergrim
 //
 //  Created by 지연 on 11/23/24.
@@ -9,7 +9,7 @@ import UIKit
 
 import Feature
 
-final class HomeDIContainer {
+final class ChatDIContainer {
     struct Dependencies {}
 
     private let dependencies: Dependencies
@@ -22,8 +22,7 @@ final class HomeDIContainer {
 
     // MARK: - View Controllers
     
-    func makeHomeViewController() -> HomeViewController {
-        let viewController = HomeViewController()
-        return viewController
+    func makeChatViewController() -> ChatViewController {
+        return ChatViewController()
     }
 }
