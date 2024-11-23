@@ -9,7 +9,7 @@ import UIKit
 
 import Feature
 
-final class OnboardingDIContainer {
+public final class OnboardingDIContainer {
     struct Dependencies {}
 
     private let dependencies: Dependencies
@@ -22,27 +22,27 @@ final class OnboardingDIContainer {
 
     // MARK: - View Controllers
     
-    public func makeOnboardingViewController() -> OnboardingViewController {
+    func makeOnboardingViewController() -> OnboardingViewController {
         let viewController = OnboardingViewController()
         return viewController
     }
     
-    public func makeLoginViewController() -> LoginViewController {
+    func makeLoginViewController() -> LoginViewController {
         let viewController = LoginViewController()
         return viewController
     }
     
-    public func makeAgreementViewController() -> AgreementViewController {
+    func makeAgreementViewController() -> AgreementViewController {
         let viewController = AgreementViewController()
         return viewController
     }
     
-    public func makeNicknameViewController() -> NicknameViewController {
+    func makeNicknameViewController() -> NicknameViewController {
         let viewController = NicknameViewController()
         return viewController
     }
     
-    public func makeGenderViewController() -> GenderViewController {
+    func makeGenderViewController() -> GenderViewController {
         let viewController = GenderViewController()
         return viewController
     }

@@ -24,6 +24,10 @@ extension UIImage {
         SharedDesignSystemAsset.Images.bellBedge.image
     }
     
+    public static var calendar: UIImage {
+        SharedDesignSystemAsset.Images.calendar.image
+    }
+    
     public static var check: UIImage {
         SharedDesignSystemAsset.Images.check.image
     }
@@ -38,5 +42,13 @@ extension UIImage {
     
     public static var kakao: UIImage {
         SharedDesignSystemAsset.Images.kakao.image
+    }
+    
+    public static var profile: UIImage {
+        SharedDesignSystemAsset.Images.profile.image
+    }
+    
+    public static var stat: UIImage {
+        SharedDesignSystemAsset.Images.stat.image
     }
 }

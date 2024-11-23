@@ -1,5 +1,5 @@
 //
-//  HomeDIContainer.swift
+//  StatDIContainer.swift
 //  innergrim
 //
 //  Created by 지연 on 11/23/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeDIContainer {
+final class StatDIContainer {
     struct Dependencies {}
 
     private let dependencies: Dependencies
@@ -20,7 +20,7 @@ final class HomeDIContainer {
 
     // MARK: - View Controllers
     
-    func makeHomeViewController() -> UIViewController {
+    func makeStatViewController() -> UIViewController {
         return UIViewController()
     }
 }

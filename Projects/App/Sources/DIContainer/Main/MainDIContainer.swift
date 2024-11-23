@@ -16,8 +16,25 @@ final class MainDIContainer {
         self.dependencies = dependencies
     }
     
-    // MARK: - View Models
-
-    // MARK: - View Controllers
+    // MARK: - DI Containers
     
+    func makeHomeDIContainer() -> HomeDIContainer {
+        let dependencies = HomeDIContainer.Dependencies()
+        return HomeDIContainer(dependencies: dependencies)
+    }
+    
+    func makeCalendarDIContainer() -> CalendarDIContainer {
+        let dependencies = CalendarDIContainer.Dependencies()
+        return CalendarDIContainer(dependencies: dependencies)
+    }
+    
+    func makeStatDIContainer() -> StatDIContainer {
+        let dependencies = StatDIContainer.Dependencies()
+        return StatDIContainer(dependencies: dependencies)
+    }
+    
+    func makeProfileDIContainer() -> ProfileDIContainer {
+        let dependencies = ProfileDIContainer.Dependencies()
+        return ProfileDIContainer(dependencies: dependencies)
+    }
 }

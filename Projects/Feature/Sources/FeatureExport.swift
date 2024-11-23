@@ -5,6 +5,8 @@
 //  Created by 지연 on 9/23/24.
 //
 
+@_exported import FeatureCalendar
+@_exported import FeatureCalendarInterface
 @_exported import FeatureHome
 @_exported import FeatureHomeInterface
 @_exported import FeatureOnboarding
