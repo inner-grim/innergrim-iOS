@@ -16,6 +16,14 @@ extension UIImage {
         SharedDesignSystemAsset.Images.arrowUp.image
     }
     
+    public static var bell: UIImage {
+        SharedDesignSystemAsset.Images.bell.image
+    }
+    
+    public static var bellBedge: UIImage {
+        SharedDesignSystemAsset.Images.bellBedge.image
+    }
+    
     public static var check: UIImage {
         SharedDesignSystemAsset.Images.check.image
     }

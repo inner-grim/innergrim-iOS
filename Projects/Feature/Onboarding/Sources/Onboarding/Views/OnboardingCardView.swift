@@ -9,8 +9,6 @@ import UIKit
 
 import Shared
 
-import UIKit
-
 public final class OnboardingCardView: UIStackView {
     // MARK: - Components
     

@@ -8,6 +8,10 @@
 import UIKit
 
 extension UIColor {
+    public static var appleFill: UIColor {
+        SharedDesignSystemAsset.Colors.appleFill.color
+    }
+    
     public static var fillAssistive: UIColor {
         SharedDesignSystemAsset.Colors.fillAssistive.color
     }
@@ -18,6 +22,14 @@ extension UIColor {
     
     public static var fillNormal: UIColor {
         SharedDesignSystemAsset.Colors.fillNormal.color
+    }
+    
+    public static var kakaoFill: UIColor {
+        SharedDesignSystemAsset.Colors.kakaoFill.color
+    }
+    
+    public static var kakaoLabel: UIColor {
+        SharedDesignSystemAsset.Colors.kakaoLabel.color
     }
     
     public static var labelAssistive: UIColor {
