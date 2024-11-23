@@ -41,4 +41,9 @@ final class OnboardingDIContainer {
         let viewController = NicknameViewController()
         return viewController
     }
+    
+    public func makeGenderViewController() -> GenderViewController {
+        let viewController = GenderViewController()
+        return viewController
+    }
 }
