@@ -7,10 +7,13 @@
 
 import UIKit
 
+import Domain
 import Feature
 
 public final class OnboardingDIContainer {
-    struct Dependencies {}
+    struct Dependencies {
+        public let loginUseCase: OAuthLoginUseCaseProtocol
+    }
 
     private let dependencies: Dependencies
 
@@ -19,6 +22,11 @@ public final class OnboardingDIContainer {
     }
     
     // MARK: - View Models
+    
+    private func makeLoginViewModel() -> LoginViewModel {
+        let viewModel = LoginViewModel(loginUseCase: dependencies.loginUseCase)
+        return viewModel
+    }
 
     // MARK: - View Controllers
     
@@ -28,7 +36,8 @@ public final class OnboardingDIContainer {
     }
     
     func makeLoginViewController() -> LoginViewController {
-        let viewController = LoginViewController()
+        let viewModel = makeLoginViewModel()
+        let viewController = LoginViewController(viewModel: viewModel)
         return viewController
     }
     

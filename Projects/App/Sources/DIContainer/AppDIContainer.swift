@@ -7,11 +7,30 @@
 
 import Foundation
 
+import Core
+import Domain
+
 final class AppDIContainer {
+    private let networkService: NetworkServiceProtocol
+    private let keychainService: KeychainServiceProtocol
+    private let loginUseCase: OAuthLoginUseCaseProtocol
+    
+    init() {
+        networkService = NetworkService()
+        keychainService = KeychainService()
+        loginUseCase = OAuthUseCase(
+            loginServices: [KakaoLoginService(), AppleLoginService(), GoogleLoginService()],
+            networkService: networkService,
+            keychainService: keychainService
+        )
+    }
+    
     // MARK: - DIContainers of scenes
     
     func makeOnboardingDIContainer() -> OnboardingDIContainer {
-        let dependencies = OnboardingDIContainer.Dependencies()
+        let dependencies = OnboardingDIContainer.Dependencies(
+            loginUseCase: loginUseCase
+        )
         return OnboardingDIContainer(dependencies: dependencies)
     }
     

@@ -13,7 +13,19 @@ import Shared
 
 public final class LoginViewController: BaseViewController<LoginView> {
     public weak var delegate: LoginViewControllerDelegate?
+    private let viewModel: LoginViewModel
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - Init
+    
+    public init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -29,19 +41,23 @@ public final class LoginViewController: BaseViewController<LoginView> {
         // action
         kakaoLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.loginViewControllerDidFinish()
+                self?.viewModel.send(.loginButtonTap(.kakao))
             }
             .store(in: &cancellables)
         
         appleLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.loginViewControllerDidFinish()
+                self?.viewModel.send(.loginButtonTap(.apple))
             }
             .store(in: &cancellables)
         
-        googleLoginButton.tapPublisher
-            .sink { [weak self] in
-                self?.delegate?.loginViewControllerDidFinish()
+        // state
+        viewModel.state.loginResult
+            .receive(on: RunLoop.main)
+            .sink { [weak self] result in
+                if result {
+                    self?.delegate?.loginViewControllerDidFinish()
+                }
             }
             .store(in: &cancellables)
     }
