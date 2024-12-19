@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		906B781B2D1453A3001611C3 /* secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 906B781A2D1453A3001611C3 /* secrets.xcconfig */; };
 		907F56012D144CC900B6E538 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 907F56002D144CC900B6E538 /* SnapKit */; };
 		907F56042D144CD800B6E538 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 907F56032D144CD800B6E538 /* Kingfisher */; };
 		907F56072D144D0800B6E538 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 907F56062D144D0800B6E538 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		906B781A2D1453A3001611C3 /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		907F55C02D1445F300B6E538 /* innergrim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = innergrim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -56,6 +58,7 @@
 			children = (
 				907F55C22D1445F300B6E538 /* innergrim */,
 				907F55C12D1445F300B6E538 /* Products */,
+				906B781A2D1453A3001611C3 /* secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				906B781B2D1453A3001611C3 /* secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +161,7 @@
 /* Begin XCBuildConfiguration section */
 		907F55D42D1445F400B6E538 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 906B781A2D1453A3001611C3 /* secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -189,6 +194,7 @@
 		};
 		907F55D52D1445F400B6E538 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 906B781A2D1453A3001611C3 /* secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
