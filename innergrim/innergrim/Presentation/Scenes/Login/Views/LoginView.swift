@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 final class LoginView: UIView {
     // MARK: - Components
     
