@@ -17,6 +17,10 @@ final class Interceptor: RequestInterceptor {
     ) {
         var request = urlRequest
         
+        if let deviceID = getDeviceID() {
+            request.addValue(deviceID, forHTTPHeaderField: "device-id")
+        }
+        
         if let accessToken = getAccessToken() {
             request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         }
@@ -27,6 +31,11 @@ final class Interceptor: RequestInterceptor {
         completion(.success(request))
     }
     
-    // TODO: 실제 구현이 들어가야 한다.
-    private func getAccessToken() -> String? { return nil }
+    private func getDeviceID() -> String? {
+        return KeychainService.retrieve(for: .deviceID)
+    }
+    
+    private func getAccessToken() -> String? {
+        return KeychainService.retrieve(for: .accessToken)
+    }
 }

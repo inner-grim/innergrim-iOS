@@ -8,14 +8,12 @@
 import Foundation
 
 final class KeychainService {
-    // MARK: - Singleton
-    
-    static let shared = KeychainService()
     private init() {}
     
     // MARK: - CRUD Methods
     
-    func save(_ value: String, for key: KeychainKey) -> Bool {
+    @discardableResult
+    static func save(_ value: String, for key: KeychainKey) -> Bool {
         guard let data = value.data(using: .utf8) else {
             return false
         }
@@ -33,7 +31,7 @@ final class KeychainService {
         return status == noErr
     }
     
-    func retrieve(for key: KeychainKey) -> String? {
+    static func retrieve(for key: KeychainKey) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key.rawValue,
@@ -54,7 +52,7 @@ final class KeychainService {
     }
     
     @discardableResult
-    func delete(for key: KeychainKey) -> Bool {
+    static func delete(for key: KeychainKey) -> Bool {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key.rawValue
@@ -65,7 +63,8 @@ final class KeychainService {
         return status == noErr
     }
     
-    func clear() -> Bool {
+    @discardableResult
+    static func clear() -> Bool {
         let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword]
         
         let status = SecItemDelete(query as CFDictionary)

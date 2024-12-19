@@ -11,6 +11,8 @@ import Foundation
 import Alamofire
 
 final class APIService {
+    private init() {}
+    
     static func request<T: Decodable>(
         _ target: APITarget,
         responseType: T.Type
