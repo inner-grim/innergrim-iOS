@@ -27,6 +27,19 @@ final class HomeFlowCoordinator: Coordinator {
     
     private func showHomeViewController() {
         let viewController = homeDIContainer.makeHomeViewController()
+        viewController.delegate = self
         navigationController.pushViewController(viewController, animated: false)
+    }
+    
+    private func showChatViewController() {
+        let viewController = homeDIContainer.makeChatViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(viewController, animated: true)
+    }
+}
+
+extension HomeFlowCoordinator: HomeViewControllerDelegate {
+    func chatViewControllerWillAppear() {
+        showChatViewController()
     }
 }

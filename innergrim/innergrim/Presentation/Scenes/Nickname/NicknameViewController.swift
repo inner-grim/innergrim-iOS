@@ -8,7 +8,12 @@
 import Combine
 import UIKit
 
+protocol NicknameViewControllerDelegate: AnyObject {
+    func nicknameViewControllerDidFinish()
+}
+
 final class NicknameViewController: BaseViewController<NicknameView> {
+    weak var delegate: NicknameViewControllerDelegate?
     private var cancellabels = Set<AnyCancellable>()
     
     // MARK: - Lifecycle
@@ -25,6 +30,7 @@ final class NicknameViewController: BaseViewController<NicknameView> {
         // action
         nextButton.tapPublisher
             .sink { [weak self] in
+                self?.delegate?.nicknameViewControllerDidFinish()
             }
             .store(in: &cancellabels)
     }

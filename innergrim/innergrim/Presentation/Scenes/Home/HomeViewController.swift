@@ -8,7 +8,12 @@
 import Combine
 import UIKit
 
+protocol HomeViewControllerDelegate: AnyObject {
+    func chatViewControllerWillAppear()
+}
+
 final class HomeViewController: BaseViewController<HomeView> {
+    weak var delegate: HomeViewControllerDelegate?
     private var cancellabels = Set<AnyCancellable>()
     
     // MARK: - Lifeycle
@@ -29,6 +34,7 @@ final class HomeViewController: BaseViewController<HomeView> {
         // action
         shareTodayButton.tapPublisher
             .sink { [weak self] in
+                self?.delegate?.chatViewControllerWillAppear()
             }
             .store(in: &cancellabels)
     }
