@@ -1,0 +1,46 @@
+//
+//  OnboardingFlowCoordinator.swift
+//  innergrim
+//
+//  Created by 지연 on 12/19/24.
+//
+
+import UIKit
+
+protocol OnboardingFlowCoordinatorDelegate: AnyObject {
+    func onboardingFlowDidFinish(_ coordinator: OnboardingFlowCoordinator)
+}
+
+final class OnboardingFlowCoordinator: Coordinator {
+    var childCoordinators: [Coordinator] = []
+    weak var delegate: OnboardingFlowCoordinatorDelegate?
+    
+    private let navigationController: UINavigationController
+    private let onboardingDIContainer: OnboardingDIContainer
+    
+    // MARK: - Init
+    
+    init(
+        navigationController: UINavigationController,
+        onboardingDIContainer: OnboardingDIContainer
+    ) {
+        self.navigationController = navigationController
+        self.onboardingDIContainer = onboardingDIContainer
+    }
+    
+    func start() {
+        showLoginViewController()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func showLoginViewController() {
+        let viewController = onboardingDIContainer.makeLoginViewController()
+        navigationController.pushViewController(viewController, animated: false)
+    }
+    
+    private func showNicknameViewController() {
+        let viewController = onboardingDIContainer.makeNicknameViewController()
+        navigationController.pushViewController(viewController, animated: false)
+    }
+}
