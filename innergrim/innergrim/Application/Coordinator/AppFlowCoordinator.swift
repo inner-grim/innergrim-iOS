@@ -29,8 +29,7 @@ final class AppFlowCoordinator: Coordinator {
     }
     
     private func needsOnboarding() -> Bool {
-        // TODO: 온보딩 필요 여부 체크 로직
-        return true
+        return !UserDataStorage.isOnboardingCompleted
     }
     
     private func showOnboardingFlow() {
@@ -67,7 +66,7 @@ final class AppFlowCoordinator: Coordinator {
 
 extension AppFlowCoordinator: OnboardingFlowCoordinatorDelegate {
     func onboardingFlowDidFinish(_ coordinator: OnboardingFlowCoordinator) {
-        // TODO: UserDefaults isOnboardingCompleted = true
+        UserDataStorage.isOnboardingCompleted = true
         free(coordinator: coordinator)
         showMainFlow()
     }

@@ -11,8 +11,9 @@ import UIKit
 final class SolidButton: UIButton {
     // MARK: - Init
     
-    public init(title: String, font: UIFont) {
+    public init(initialEnabled: Bool = true, title: String, font: UIFont) {
         super.init(frame: .zero)
+        isEnabled = initialEnabled
         setupButton(with: title, font: font)
     }
     
@@ -24,18 +25,33 @@ final class SolidButton: UIButton {
     // MARK: - Setup Methods
     
     private func setupButton(with title: String, font: UIFont) {
-        let attributedString = NSAttributedString(string: title, attributes: [.font: font])
-        setAttributedTitle(attributedString, for: .normal)
+        // 타이틀
+        setupTitle(for: .normal, title, font, .white)
+        setupTitle(for: .highlighted, title, font, .white)
+        setupTitle(for: .disabled, title, font, .labelDisabled)
         // 배경 색상
         setBackgroundImage(image(with: .primaryNormal), for: .normal)
         setBackgroundImage(image(with: .primaryStrong), for: .highlighted)
         setBackgroundImage(image(with: .fillDisabled), for: .disabled)
-        // 타이틀 색상
-        setTitleColor(.white, for: .normal)
-        setTitleColor(.white, for: .highlighted)
-        setTitleColor(.labelDisabled, for: .disabled)
         // 레이어
         clipsToBounds = true
         layer.cornerRadius = 8.0
+    }
+    
+    private func setupTitle(
+        for state: UIControl.State,
+        _ title: String,
+        _ font: UIFont,
+        _ textColor: UIColor
+    ) {
+        let attributedString = NSAttributedString(
+            string: title,
+            attributes:
+                [
+                    .font: font,
+                    .foregroundColor: textColor
+                ]
+        )
+        setAttributedTitle(attributedString, for: state)
     }
 }

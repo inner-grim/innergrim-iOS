@@ -44,7 +44,13 @@ final class ValidationTextField: UIView {
         return textField
     }()
     
-    private let messageLabel = UILabel()
+    private let messageLabel = {
+        let label = UILabel()
+        label.text = "이모지, 특수문자 제외 10자 이내로 입력해 주세요."
+        label.applyTypography(with: .labelSmallMedium)
+        label.textColor = .labelNeutral
+        return label
+    }()
     
     // MARK: - Init
     
@@ -107,7 +113,7 @@ final class ValidationTextField: UIView {
     
     // MARK: - Configure Methods
     
-    func updateValidation(isValid: Bool, message: String?) {
+    func updateValidation(_ isValid: Bool) {
         if isValid {
             status = textField.isEditing ? .focus : .normal
             messageLabel.textColor = .labelNeutral
@@ -115,8 +121,5 @@ final class ValidationTextField: UIView {
             status = .error
             messageLabel.textColor = .systemRed
         }
-        messageLabel.text = message
-        messageLabel.applyTypography(with: .labelSmallMedium)
-        messageLabel.isHidden = message == nil
     }
 }

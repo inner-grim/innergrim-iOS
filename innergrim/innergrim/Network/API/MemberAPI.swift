@@ -10,6 +10,7 @@ import Foundation
 
 enum MemberAPI {
     case signUp(socialType: String, socialId: String)
+    case onboarding(nickname: String)
 }
 
 extension MemberAPI: APITarget {
@@ -17,19 +18,21 @@ extension MemberAPI: APITarget {
         switch self {
         case .signUp:
             "/member"
+        case .onboarding:
+            "/member/on-boarding"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .signUp:
+        case .signUp, .onboarding:
             .post
         }
     }
     
     var task: Task {
         switch self {
-        case .signUp:
+        case .signUp, .onboarding:
             .jsonEncoding
         }
     }
@@ -40,6 +43,10 @@ extension MemberAPI: APITarget {
             [
                 "socialType": socialType,
                 "socialId": socialId
+            ]
+        case let .onboarding(nickname):
+            [
+                "nickname": nickname
             ]
         }
     }

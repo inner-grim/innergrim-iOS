@@ -7,7 +7,11 @@
 
 import UIKit
 
+import SnapKit
+
 final class NicknameView: UIView {
+    private var nextButtonBottomConstraint: Constraint?
+    
     // MARK: - Components
     
     private let progressBar = ProgressBar(progress: .first)
@@ -32,7 +36,7 @@ final class NicknameView: UIView {
     
     let textField = ValidationTextField(placeholder: "닉네임을 입력해주세요")
     
-    let nextButton = SolidButton(title: "다음", font: .labelLargeSemiBold)
+    let nextButton = SolidButton(initialEnabled: false, title: "다음", font: .labelLargeSemiBold)
     
     // MARK: - Init
     
@@ -83,8 +87,18 @@ final class NicknameView: UIView {
         addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(48)
+            nextButtonBottomConstraint = make.bottom.equalToSuperview().inset(48).constraint
             make.height.equalTo(50)
         }
+    }
+    
+    func updateNextButtonBottomConstraint(keyboardHeight: CGFloat) {
+        nextButtonBottomConstraint?.update(offset: -20 - keyboardHeight)
+        layoutIfNeeded()
+    }
+    
+    func resetNextButtonBottomConstraint() {
+        nextButtonBottomConstraint?.update(offset: -48)
+        layoutIfNeeded()
     }
 }

@@ -43,13 +43,19 @@ final class LoginViewController: BaseViewController<LoginView> {
         // action
         kakaoLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.send(.loginButtonTap(.kakao))
+                self?.viewModel.send(.loginButtonDidTap(.kakao))
             }
             .store(in: &cancellables)
         
         appleLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.send(.loginButtonTap(.apple))
+                self?.viewModel.send(.loginButtonDidTap(.apple))
+            }
+            .store(in: &cancellables)
+        
+        googleLoginButton.tapPublisher
+            .sink { [weak self] in
+                self?.delegate?.loginViewControllerDidFinish()
             }
             .store(in: &cancellables)
         
@@ -60,7 +66,7 @@ final class LoginViewController: BaseViewController<LoginView> {
                 if result {
                     self?.delegate?.loginViewControllerDidFinish()
                 } else {
-                    print("fail")
+                    // TODO: Alert
                 }
             }
             .store(in: &cancellables)

@@ -14,7 +14,20 @@ protocol NicknameViewControllerDelegate: AnyObject {
 
 final class NicknameViewController: BaseViewController<NicknameView> {
     weak var delegate: NicknameViewControllerDelegate?
-    private var cancellabels = Set<AnyCancellable>()
+    private let viewModel: NicknameViewModel
+    private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - Init
+    
+    init(viewModel: NicknameViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -28,11 +41,47 @@ final class NicknameViewController: BaseViewController<NicknameView> {
     
     private func setupBindings() {
         // action
+        nicknameTextField.textField.textPublisher
+            .dropFirst()
+            .sink { [weak self] text in
+                self?.viewModel.send(.nicknameDidUpdate(text))
+            }
+            .store(in: &cancellables)
+        
         nextButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.nicknameViewControllerDidFinish()
+                self?.viewModel.send(.nextButtonDidTap)
             }
-            .store(in: &cancellabels)
+            .store(in: &cancellables)
+        
+        keyboardWillShowPublisher
+            .sink { [weak self] keyboardHeight in
+                self?.contentView.updateNextButtonBottomConstraint(keyboardHeight: keyboardHeight)
+            }
+            .store(in: &cancellables)
+        
+        keyboardWillHidePublisher
+            .sink { [weak self] _ in
+                self?.contentView.resetNextButtonBottomConstraint()
+            }
+            .store(in: &cancellables)
+        
+        // state
+        viewModel.state.isNicknameValid
+            .dropFirst()
+            .sink { [weak self] isValid in
+                self?.nicknameTextField.updateValidation(isValid)
+                self?.nextButton.isEnabled = isValid
+            }
+            .store(in: &cancellables)
+        
+        viewModel.state.result
+            .sink { [weak self] result in
+                if result {
+                    self?.delegate?.nicknameViewControllerDidFinish()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -13,10 +13,10 @@ final class OnboardingDIContainer {
     private func makeLoginViewModel() -> LoginViewModel {
         return LoginViewModel()
     }
-//    
-//    private func makeNicknameViewModel() -> NicknameViewModel {
-//        return NicknameViewModel()
-//    }
+    
+    private func makeNicknameViewModel() -> NicknameViewModel {
+        return NicknameViewModel()
+    }
 
     // MARK: - View Controllers
     
@@ -27,7 +27,8 @@ final class OnboardingDIContainer {
     }
     
     func makeNicknameViewController() -> NicknameViewController {
-        let viewController = NicknameViewController()
+        let viewModel = makeNicknameViewModel()
+        let viewController = NicknameViewController(viewModel: viewModel)
         return viewController
     }
 }
