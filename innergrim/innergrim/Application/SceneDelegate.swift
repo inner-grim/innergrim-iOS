@@ -22,11 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         window.makeKeyAndVisible()
-        window.rootViewController = PictureDiaryViewController()
         self.window = window
         
-//        appFlowCoordinator = AppFlowCoordinator(window: window, appDIContainer: appIDContainer)
-//        appFlowCoordinator?.start()
+        appFlowCoordinator = AppFlowCoordinator(window: window, appDIContainer: appIDContainer)
+        appFlowCoordinator?.start()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

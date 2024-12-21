@@ -17,11 +17,16 @@ final class PictureDiaryView: UIView {
     private let keywordScaleView = KeywordScaleView()
     
     private let containerView = {
-        let view = UIView()
-        view.layer.cornerRadius = 16
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.lineNormal.cgColor
-        return view
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.alignment = .center
+        stackView.layoutMargins = UIEdgeInsets(top: 24, left: 24, bottom: 24, right: 24)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layer.cornerRadius = 16
+        stackView.layer.borderWidth = 1
+        stackView.layer.borderColor = UIColor.lineNormal.cgColor
+        return stackView
     }()
     
     private let pictureImageView = {
@@ -90,16 +95,11 @@ final class PictureDiaryView: UIView {
             make.bottom.lessThanOrEqualTo(shareButton.snp.top).offset(-20)
         }
         
-        containerView.addSubview(pictureImageView)
-        pictureImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(24)
-            make.height.equalTo(pictureImageView.snp.width) // 정사각형 비율 유지
-        }
+        [pictureImageView, diaryLabel].forEach { containerView.addArrangedSubview($0) }
         
-        containerView.addSubview(diaryLabel)
-        diaryLabel.snp.makeConstraints { make in
-            make.top.equalTo(pictureImageView.snp.bottom).offset(16)
-            make.leading.bottom.trailing.equalToSuperview().inset(24)
+        pictureImageView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.height.equalTo(pictureImageView.snp.width) // 정사각형 비율 유지
         }
     }
 }

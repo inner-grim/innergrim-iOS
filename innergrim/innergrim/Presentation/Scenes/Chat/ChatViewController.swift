@@ -65,7 +65,15 @@ final class ChatViewController: BaseViewController<ChatView> {
         // action
         dismissButton.tapPublisher
             .sink { [weak self] in
-                self?.dismiss(animated: true)
+                self?.showAlert(
+                    title: "채팅방에서 나가시겠습니까?",
+                    message: "대화 내용은 저장되지 않아요!",
+                    leftActionText: "대화 계속 하기",
+                    rightActionText: "나가기",
+                    rightActionCompletion:  { [weak self] in
+                        self?.dismiss(animated: true)
+                    }
+                )
             }
             .store(in: &cancellables)
         
