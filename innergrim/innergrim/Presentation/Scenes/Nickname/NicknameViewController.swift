@@ -70,6 +70,7 @@ final class NicknameViewController: BaseViewController<NicknameView> {
         
         // state
         viewModel.state.isNicknameValid
+            .receive(on: RunLoop.main)
             .dropFirst()
             .sink { [weak self] isValid in
                 self?.nicknameTextField.updateValidation(isValid)
@@ -78,6 +79,7 @@ final class NicknameViewController: BaseViewController<NicknameView> {
             .store(in: &cancellables)
         
         viewModel.state.result
+            .receive(on: RunLoop.main)
             .sink { [weak self] result in
                 self?.nextButton.isUserInteractionEnabled = true
                 if result {

@@ -92,6 +92,6 @@ extension UIFont {
     }
     
     static var labelDiary: UIFont {
-        return UIFont(name: "HakgyoansimKkokkomaOTFR", size: 20)!
+        return UIFont(name: "OTHakgyoansimKkokkomaR", size: 20)!
     }
 }
