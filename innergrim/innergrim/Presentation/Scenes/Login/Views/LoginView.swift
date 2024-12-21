@@ -29,7 +29,7 @@ final class LoginView: UIView {
         
     let appleLoginButton = LoginButton(socialType: .apple)
         
-    let googleLoginButton = LoginButton(socialType: .goole)
+    let googleLoginButton = LoginButton(socialType: .google)
     
     // MARK: - Init
     

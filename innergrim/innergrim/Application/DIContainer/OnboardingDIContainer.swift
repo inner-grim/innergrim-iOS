@@ -10,9 +10,9 @@ import UIKit
 final class OnboardingDIContainer {
     // MARK: - View Models
     
-//    private func makeLoginViewModel() -> LoginViewModel {
-//        return LoginViewModel()
-//    }
+    private func makeLoginViewModel() -> LoginViewModel {
+        return LoginViewModel()
+    }
 //    
 //    private func makeNicknameViewModel() -> NicknameViewModel {
 //        return NicknameViewModel()
@@ -21,7 +21,8 @@ final class OnboardingDIContainer {
     // MARK: - View Controllers
     
     func makeLoginViewController() -> LoginViewController {
-        let viewController = LoginViewController()
+        let viewModel = makeLoginViewModel()
+        let viewController = LoginViewController(viewModel: viewModel)
         return viewController
     }
     

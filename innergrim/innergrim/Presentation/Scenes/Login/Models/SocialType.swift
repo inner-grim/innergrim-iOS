@@ -7,9 +7,9 @@
 
 import UIKit
 
-enum SocialType {
+enum SocialType: String {
     case apple
-    case goole
+    case google
     case kakao
 }
 
@@ -17,7 +17,7 @@ extension SocialType {
     var description: String {
         switch self {
         case .apple:    "Apple"
-        case .goole:    "Google"
+        case .google:    "Google"
         case .kakao:    "Kakao"
         }
     }
@@ -25,7 +25,7 @@ extension SocialType {
     var image: UIImage {
         switch self {
         case .apple:    .apple
-        case .goole:    .google
+        case .google:    .google
         case .kakao:    .kakao
         }
     }
@@ -33,7 +33,7 @@ extension SocialType {
     var textColor: UIColor {
         switch self {
         case .apple:    .white
-        case .goole:    .labelNeutral
+        case .google:    .labelNeutral
         case .kakao:    .kakaoLabel
         }
     }
@@ -41,7 +41,7 @@ extension SocialType {
     var backgroundColor: UIColor {
         switch self {
         case .apple:    .appleFill
-        case .goole:    .white
+        case .google:    .white
         case .kakao:    .kakaoFill
         }
     }
@@ -49,7 +49,7 @@ extension SocialType {
     var borderColor: UIColor {
         switch self {
         case .apple:    .appleFill
-        case .goole:    .lineNormal
+        case .google:    .lineNormal
         case .kakao:    .kakaoFill
         }
     }

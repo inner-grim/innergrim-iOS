@@ -26,13 +26,12 @@ final class Interceptor: RequestInterceptor {
         }
         
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         completion(.success(request))
     }
     
     private func getDeviceID() -> String? {
-        return KeychainService.retrieve(for: .deviceID)
+        return KeychainService.retrieve(for: .deviceId)
     }
     
     private func getAccessToken() -> String? {

@@ -22,12 +22,11 @@ final class ChatViewModel: ViewModel {
     
     var actionSubject = PassthroughSubject<Action, Never>()
     var cancellables = Set<AnyCancellable>()
-    var state: State
+    var state = State()
     
     // MARK: - Init
     
     init() {
-        self.state = State()
         setupActionBindings()
     }
     

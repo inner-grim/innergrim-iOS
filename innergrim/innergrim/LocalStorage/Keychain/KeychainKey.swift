@@ -8,7 +8,7 @@
 import Foundation
 
 enum KeychainKey: String {
-    case deviceID
+    case deviceId
     case accessToken
     case refreshToken
 }
