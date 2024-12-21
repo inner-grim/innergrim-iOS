@@ -46,7 +46,7 @@ extension MemberAPI: APITarget {
             ]
         case let .onboarding(nickname):
             [
-                "nickname": nickname
+                "nickName": nickname
             ]
         }
     }

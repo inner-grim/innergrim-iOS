@@ -15,4 +15,10 @@ final class UserDataStorage {
     
     @UserDefaultsData(key: "isLogin", defaultValue: false)
     static var isLogin: Bool
+    
+    @UserDefaultsData(key: "lastChatDate", defaultValue: Date())
+    static var lastChatDate: Date
+    
+    @UserDefaultsData(key: "chatMessages", defaultValue: [])
+    static var chatMessages: [ChatMessage]
 }

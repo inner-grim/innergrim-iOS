@@ -72,7 +72,5 @@ final class NicknameViewModel: NSObject, ViewModel {
                 state.result.send(response.statusCode == "OK")
             }
             .store(in: &cancellables)
-        
-        state.result.send(true)
     }
 }

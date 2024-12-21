@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct ChatMessage: Hashable {
-    let id = UUID()
+struct ChatMessage: Hashable, Codable {
+    var id = UUID()
     let content: String
-    let timestamp: Date = .init()
+    var timestamp: Date = .init()
     let isFromUser: Bool
 }

@@ -43,9 +43,17 @@ final class ChatViewModel: ViewModel {
     }
     
     private func startChat() {
+        // 마지막 채팅 날짜 업데이트 및 캐시된 채팅 데이터 초기화
+        let today = Date.now
+        if !Calendar.current.isDate(UserDataStorage.lastChatDate, inSameDayAs: Date()) {
+            UserDataStorage.lastChatDate = today
+            UserDataStorage.chatMessages = []
+        }
+        
         state.chatMessages.send([ChatMessage(content: "첫 대화 내용 텍스트", isFromUser: false)])
     }
     
     private func sendChat(_ message: String) {
+        let target = ChatBotAPI.sendChat(message: message)
     }
 }
