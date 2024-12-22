@@ -10,14 +10,6 @@ import UIKit
 final class IncomingMessageCell: UITableViewCell, Reusable {
     // MARK: - Components
     
-    private let greemiImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .fillAssistive
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-    
     private let messageContainer = {
         let view = UIView()
         view.backgroundColor = .fillNormal
@@ -54,7 +46,6 @@ final class IncomingMessageCell: UITableViewCell, Reusable {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        greemiImageView.layer.cornerRadius = 16
         DispatchQueue.main.async { [weak self] in
             self?.setupMessageContainerCorners()
         }
@@ -73,17 +64,10 @@ final class IncomingMessageCell: UITableViewCell, Reusable {
     }
     
     private func setupLayout() {
-        contentView.addSubview(greemiImageView)
-        greemiImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(32)
-            make.top.equalToSuperview().inset(10)
-            make.leading.equalToSuperview()
-        }
-        
         contentView.addSubview(messageContainer)
         messageContainer.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(10)
-            make.leading.equalToSuperview().inset(40)
+            make.leading.equalToSuperview()
             make.trailing.lessThanOrEqualToSuperview().inset(70) // timeLabel 너비 + 여유 공간
         }
         
