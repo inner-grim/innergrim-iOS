@@ -15,7 +15,7 @@ final class ChatViewModel: ViewModel {
     }
     
     struct State {
-        var chatMessages = PassthroughSubject<[ChatMessage], Never>()
+        var chatMessages = CurrentValueSubject<[ChatMessage], Never>([])
     }
     
     // MARK: - Properties
@@ -50,10 +50,35 @@ final class ChatViewModel: ViewModel {
             UserDataStorage.chatMessages = []
         }
         
-        state.chatMessages.send([ChatMessage(content: "첫 대화 내용 텍스트", isFromUser: false)])
+        appendChatMessage("첫 대화 내용 텍스트", isFromUser: false)
     }
     
+    // TODO: 채팅 내용 로컬 스토리지 저장
     private func sendChat(_ message: String) {
+        appendChatMessage(message, isFromUser: true)
+        
         let target = ChatBotAPI.sendChat(message: message)
+        APIService.request(target, responseType: ChatResponse.self)
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("Chat failed", error.localizedDescription)
+                }
+            } receiveValue: { [weak self] response in
+                guard let self = self else { return }
+                
+                if response.statusCode == "OK",
+                   let message = response.data?.parsedResponse {
+                    appendChatMessage(message, isFromUser: false)
+                } else {
+                    print("채팅 응답 에러", response.message) // TODO: 에러 처리 필요
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func appendChatMessage(_ message: String, isFromUser: Bool) {
+        var chatMessages = state.chatMessages.value
+        chatMessages.append(ChatMessage(content: message, isFromUser: isFromUser))
+        state.chatMessages.send(chatMessages)
     }
 }

@@ -71,6 +71,7 @@ final class ChatViewController: BaseViewController<ChatView> {
                     leftActionText: "대화 계속 하기",
                     rightActionText: "나가기",
                     rightActionCompletion:  { [weak self] in
+                        self?.view.endEditing(true)
                         self?.dismiss(animated: true)
                     }
                 )
@@ -112,6 +113,10 @@ final class ChatViewController: BaseViewController<ChatView> {
         viewModel.state.chatMessages
             .sink { [weak self] chatMessages in
                 self?.applySnapshot(with: chatMessages)
+                // 테이블 뷰의 마지막 행으로 스크롤
+                guard !chatMessages.isEmpty else { return }
+                let lastRow = IndexPath(row: chatMessages.count - 1, section: 0)
+                self?.chatTableView.scrollToRow(at: lastRow, at: .bottom, animated: true)
             }
             .store(in: &cancellables)
     }

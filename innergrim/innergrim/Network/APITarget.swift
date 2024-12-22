@@ -42,7 +42,7 @@ extension APITarget {
         
         switch task {
         case .urlEncoding:
-            return try URLEncoding.default.encode(request, with: parameters)
+            return try URLEncoding(destination: .queryString).encode(request, with: parameters)
         case .jsonEncoding:
             return try JSONEncoding.default.encode(request, with: parameters)
         default:
