@@ -39,7 +39,7 @@ extension AuthAPI: APITarget {
         case let .login(socialType, socialId):
             [
                 "socialType": socialType,
-                "socialId": socialId
+                "loginId": socialId
             ]
         }
     }

@@ -42,7 +42,7 @@ extension MemberAPI: APITarget {
         case let .signUp(socialType, socialId):
             [
                 "socialType": socialType,
-                "socialId": socialId
+                "loginId": socialId
             ]
         case let .onboarding(nickname):
             [

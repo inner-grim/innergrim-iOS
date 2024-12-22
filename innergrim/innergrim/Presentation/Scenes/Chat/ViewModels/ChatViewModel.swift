@@ -53,7 +53,6 @@ final class ChatViewModel: ViewModel {
         appendChatMessage("첫 대화 내용 텍스트", isFromUser: false)
     }
     
-    // TODO: 채팅 내용 로컬 스토리지 저장
     private func sendChat(_ message: String) {
         appendChatMessage(message, isFromUser: true)
         
@@ -77,8 +76,12 @@ final class ChatViewModel: ViewModel {
     }
     
     private func appendChatMessage(_ message: String, isFromUser: Bool) {
+        let newMessage = ChatMessage(content: message, isFromUser: isFromUser)
+        // 뷰에 사용할 데이터 반영
         var chatMessages = state.chatMessages.value
-        chatMessages.append(ChatMessage(content: message, isFromUser: isFromUser))
+        chatMessages.append(newMessage)
         state.chatMessages.send(chatMessages)
+        // 로컬 스토리지 반영
+        UserDataStorage.chatMessages.append(newMessage)
     }
 }

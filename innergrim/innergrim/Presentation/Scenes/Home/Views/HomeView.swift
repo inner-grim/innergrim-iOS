@@ -10,6 +10,8 @@ import UIKit
 final class HomeView: UIView {
     // MARK: - Components
     
+    let calendarView = CalendarView()
+    
     let shareTodayButton = SolidButton(title: "오늘 하루 털어놓기", font: .labelLargeSemiBold)
     
     // MARK: - Init
@@ -32,6 +34,12 @@ final class HomeView: UIView {
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(20)
             make.height.equalTo(50)
+        }
+        
+        addSubview(calendarView)
+        calendarView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(shareTodayButton.snp.top)
         }
     }
 }

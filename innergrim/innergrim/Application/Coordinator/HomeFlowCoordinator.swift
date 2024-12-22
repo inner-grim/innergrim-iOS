@@ -36,10 +36,20 @@ final class HomeFlowCoordinator: Coordinator {
         viewController.modalPresentationStyle = .overFullScreen
         navigationController.present(viewController, animated: true)
     }
+    
+    private func showPictureDiaryViewController() {
+        let viewController = homeDIContainer.makePictureDiaryViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(viewController, animated: true)
+    }
 }
 
 extension HomeFlowCoordinator: HomeViewControllerDelegate {
     func chatViewControllerWillAppear() {
         showChatViewController()
+    }
+    
+    func pictureDiaryViewControllerWillAppear() {
+        showPictureDiaryViewController()
     }
 }
