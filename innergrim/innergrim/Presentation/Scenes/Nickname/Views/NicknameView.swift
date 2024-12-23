@@ -23,7 +23,7 @@ final class NicknameView: UIView {
         return label
     }()
     
-    let textField = ValidationTextField(placeholder: "닉네임을 입력해주세요")
+    let textField = ValidationTextField(placeholder: "특수문자 제외 20자 이내")
     
     let nextButton = SolidButton(initialEnabled: false, title: "다음", font: .labelLargeSemiBold)
     

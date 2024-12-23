@@ -50,8 +50,6 @@ final class NicknameViewController: BaseViewController<NicknameView> {
         
         nextButton.tapPublisher
             .sink { [weak self] in
-                self?.nicknameTextField.textField.resignFirstResponder()
-                self?.nextButton.isUserInteractionEnabled = false
                 self?.viewModel.send(.nextButtonDidTap)
             }
             .store(in: &cancellables)
@@ -78,10 +76,9 @@ final class NicknameViewController: BaseViewController<NicknameView> {
             }
             .store(in: &cancellables)
         
-        viewModel.state.result
+        viewModel.state.onboardingResult
             .receive(on: RunLoop.main)
             .sink { [weak self] result in
-                self?.nextButton.isUserInteractionEnabled = true
                 if result {
                     self?.delegate?.nicknameViewControllerDidFinish()
                 }

@@ -79,11 +79,14 @@ final class ChatViewController: BaseViewController<ChatView> {
             .store(in: &cancellables)
         
         keyboardWillShowPublisher
+            .receive(on: RunLoop.main)
             .sink { [weak self] keyboardHeight in
                 self?.contentView.updateBottomConstraint(keyboardHeight: keyboardHeight)
+                self?.scrollToBottom()
             }.store(in: &cancellables)
         
         keyboardWillHidePublisher
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.contentView.resetBottomConstraint()
             }.store(in: &cancellables)
@@ -111,12 +114,10 @@ final class ChatViewController: BaseViewController<ChatView> {
         
         // state
         viewModel.state.chatMessages
+            .receive(on: RunLoop.main)
             .sink { [weak self] chatMessages in
                 self?.applySnapshot(with: chatMessages)
-                // 테이블 뷰의 마지막 행으로 스크롤
-                guard !chatMessages.isEmpty else { return }
-                let lastRow = IndexPath(row: chatMessages.count - 1, section: 0)
-                self?.chatTableView.scrollToRow(at: lastRow, at: .bottom, animated: true)
+                self?.scrollToBottom()
             }
             .store(in: &cancellables)
     }
@@ -126,6 +127,15 @@ final class ChatViewController: BaseViewController<ChatView> {
         snapshot.appendSections([0])
         snapshot.appendItems(chatMessages, toSection: 0)
         chatDataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func scrollToBottom() {
+        let rowCount = chatDataSource.snapshot().itemIdentifiers.count
+        
+        guard rowCount > 0 else { return }
+        
+        let lastRow = IndexPath(row: rowCount - 1, section: 0)
+        chatTableView.scrollToRow(at: lastRow, at: .bottom, animated: false)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

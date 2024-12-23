@@ -11,6 +11,7 @@ import Foundation
 enum MemberAPI {
     case signUp(socialType: String, socialId: String)
     case onboarding(nickname: String)
+    case checkNicknameDuplicated(nickname: String)
 }
 
 extension MemberAPI: APITarget {
@@ -20,6 +21,8 @@ extension MemberAPI: APITarget {
             "/member"
         case .onboarding:
             "/member/on-boarding"
+        case .checkNicknameDuplicated:
+            "/member/duplicate/nickname"
         }
     }
     
@@ -27,6 +30,8 @@ extension MemberAPI: APITarget {
         switch self {
         case .signUp, .onboarding:
             .post
+        case .checkNicknameDuplicated:
+            .get
         }
     }
     
@@ -34,6 +39,8 @@ extension MemberAPI: APITarget {
         switch self {
         case .signUp, .onboarding:
             .jsonEncoding
+        case .checkNicknameDuplicated:
+            .urlEncoding
         }
     }
     
@@ -44,9 +51,9 @@ extension MemberAPI: APITarget {
                 "socialType": socialType,
                 "loginId": socialId
             ]
-        case let .onboarding(nickname):
+        case let .onboarding(nickname), let .checkNicknameDuplicated(nickname):
             [
-                "nickName": nickname
+                "nickname": nickname
             ]
         }
     }
