@@ -8,9 +8,37 @@
 import UIKit
 
 final class MainDIContainer {
-    // MARK: - DI Containers
+    // MARK: - View Models
     
-    func makeHomeDIContainer() -> HomeDIContainer {
-        return HomeDIContainer()
+    private func makeHomeViewModel() -> HomeViewModel {
+        return HomeViewModel()
+    }
+    
+    private func makeChatViewModel() -> ChatViewModel {
+        return ChatViewModel()
+    }
+
+    // MARK: - View Controllers
+    
+    func makeHomeViewController() -> HomeViewController {
+        let viewModel = makeHomeViewModel()
+        let viewController = HomeViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    func makeChatViewController() -> ChatViewController {
+        let viewModel = makeChatViewModel()
+        let viewController = ChatViewController(viewModel: viewModel)
+        return viewController
+    }
+    
+    func makePictureDiaryViewController() -> PictureDiaryViewController {
+        let viewController = PictureDiaryViewController()
+        return viewController
+    }
+    
+    func makeSettingsViewController() -> SettingsViewController {
+        let viewController = SettingsViewController()
+        return viewController
     }
 }

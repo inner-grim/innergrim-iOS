@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol MainFlowCoordinatorDelegate: AnyObject {
+    func mainFlowDidFinish(_ coordinator: MainFlowCoordinator)
+}
+
 final class MainFlowCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
+    weak var delegate: MainFlowCoordinatorDelegate?
     
     private let navigationController: UINavigationController
     private let mainDIContainer: MainDIContainer
@@ -23,42 +28,51 @@ final class MainFlowCoordinator: Coordinator {
     
     func start() {
         navigationController.isNavigationBarHidden = true
-        showMainTabBarController()
+        showHomeViewController()
     }
     
-    func showMainTabBarController() {
-        let tabBarController = MainTabBarController()
-        
-        // 각 탭의 NavigationController 설정
-        let homeNavigation = UINavigationController()
-        let calendarNavigation = UINavigationController()
-        let statNavigation = UINavigationController()
-        let profileNavigation = UINavigationController()
-        
-        homeNavigation.tabBarItem = UITabBarItem(
-            title: "홈",
-            image: .calendar,
-            selectedImage: .calendar
-        )
-        profileNavigation.tabBarItem = UITabBarItem(
-            title: "프로필",
-            image: .profile,
-            selectedImage: .profile
-        )
-        
-        tabBarController.setViewControllers(
-            [homeNavigation, profileNavigation],
-            animated: false
-        )
-        
-        // 각 탭의 Coordinator 설정
-        let homeCoordinator = HomeFlowCoordinator(
-            navigationController: homeNavigation,
-            homeDIContainer: mainDIContainer.makeHomeDIContainer()
-        )
-        store(coordinator: homeCoordinator)
-        homeCoordinator.start()
-        
-        navigationController.pushViewController(tabBarController, animated: false)
+    private func showHomeViewController() {
+        let viewController = mainDIContainer.makeHomeViewController()
+        viewController.delegate = self
+        navigationController.pushViewController(viewController, animated: false)
+    }
+    
+    private func showChatViewController() {
+        let viewController = mainDIContainer.makeChatViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(viewController, animated: true)
+    }
+    
+    private func showPictureDiaryViewController() {
+        let viewController = mainDIContainer.makePictureDiaryViewController()
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(viewController, animated: true)
+    }
+    
+    private func showSettingsViewController() {
+        let viewController = mainDIContainer.makeSettingsViewController()
+        viewController.delegate = self
+        viewController.modalPresentationStyle = .overFullScreen
+        navigationController.present(viewController, animated: true)
+    }
+}
+
+extension MainFlowCoordinator: HomeViewControllerDelegate {
+    func chatViewControllerWillAppear() {
+        showChatViewController()
+    }
+    
+    func pictureDiaryViewControllerWillAppear() {
+        showPictureDiaryViewController()
+    }
+    
+    func settingsViewControllerWillAppear() {
+        showSettingsViewController()
+    }
+}
+
+extension MainFlowCoordinator: SettingsViewControllerDelegate {
+    func moveToLogin() {
+        delegate?.mainFlowDidFinish(self)
     }
 }

@@ -10,6 +10,13 @@ import UIKit
 final class HomeView: UIView {
     // MARK: - Components
     
+    let settingsButton = {
+        let button = UIButton()
+        button.setImage(.settings, for: .normal)
+        button.backgroundColor = .clear
+        return button
+    }()
+    
     let calendarView = CalendarView()
     
     let shareTodayButton = SolidButton(title: "오늘 하루 털어놓기", font: .labelLargeSemiBold)
@@ -29,6 +36,13 @@ final class HomeView: UIView {
     // MARK: - Setup Methods
     
     private func setupLayout() {
+        addSubview(settingsButton)
+        settingsButton.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview().inset(24)
+        }
+        
         addSubview(shareTodayButton)
         shareTodayButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
@@ -38,7 +52,8 @@ final class HomeView: UIView {
         
         addSubview(calendarView)
         calendarView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.equalTo(settingsButton.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(shareTodayButton.snp.top)
         }
     }

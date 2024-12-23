@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Type=Graph, Filled=True.png",
+      "filename" : "Type=Setting, Filled=False.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Type=Graph, Filled=True@2x.png",
+      "filename" : "Type=Setting, Filled=False@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Type=Graph, Filled=True@3x.png",
+      "filename" : "Type=Setting, Filled=False@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

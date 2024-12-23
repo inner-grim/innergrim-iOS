@@ -60,6 +60,7 @@ final class AppFlowCoordinator: Coordinator {
             mainDIContainer: mainDIContainer
         )
         
+        mainCoordinator.delegate = self
         store(coordinator: mainCoordinator)
         mainCoordinator.start()
     }
@@ -68,7 +69,15 @@ final class AppFlowCoordinator: Coordinator {
 extension AppFlowCoordinator: OnboardingFlowCoordinatorDelegate {
     func onboardingFlowDidFinish(_ coordinator: OnboardingFlowCoordinator) {
         UserDataStorage.isOnboardingCompleted = true
+        UserDataStorage.isLogin = true
         free(coordinator: coordinator)
         showMainFlow()
+    }
+}
+
+extension AppFlowCoordinator: MainFlowCoordinatorDelegate {
+    func mainFlowDidFinish(_ coordinator: MainFlowCoordinator) {
+        free(coordinator: coordinator)
+        showOnboardingFlow()
     }
 }

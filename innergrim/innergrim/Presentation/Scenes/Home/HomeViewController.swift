@@ -11,6 +11,7 @@ import UIKit
 protocol HomeViewControllerDelegate: AnyObject {
     func chatViewControllerWillAppear()
     func pictureDiaryViewControllerWillAppear()
+    func settingsViewControllerWillAppear()
 }
 
 final class HomeViewController: BaseViewController<HomeView> {
@@ -35,6 +36,7 @@ final class HomeViewController: BaseViewController<HomeView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setNavigationBarHidden()
         setupCalendarView()
         setupBindings()
     }
@@ -64,6 +66,12 @@ final class HomeViewController: BaseViewController<HomeView> {
     
     private func setupBindings() {
         // action
+        settingsButton.tapPublisher
+            .sink { [weak self] in
+                self?.delegate?.settingsViewControllerWillAppear()
+            }
+            .store(in: &cancellabels)
+        
         shareTodayButton.tapPublisher
             .sink { [weak self] in
                 self?.delegate?.chatViewControllerWillAppear()
@@ -101,10 +109,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumInteritemSpacingForSectionAt section: Int
     ) -> CGFloat {
-        // 아이템 간 간격 (7개의 아이템이 들어가도록 설정)
-        let totalItemWidth: CGFloat = 40 * 7 // 한 줄의 아이템 너비
+        // 7개의 아이템이 들어가도록 설정
+        let totalItemWidth: CGFloat = 40 * 7
         let totalSpacingWidth: CGFloat = collectionView.bounds.width - totalItemWidth
-        let interitemSpacing = totalSpacingWidth / 6 // 아이템 사이 간격
+        let interitemSpacing = totalSpacingWidth / 6
         return max(0, interitemSpacing)
     }
     
@@ -122,6 +130,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 private extension HomeViewController {
+    var settingsButton: UIButton {
+        contentView.settingsButton
+    }
+    
     var calendarView: UICollectionView {
         contentView.calendarView.collectionView
     }
