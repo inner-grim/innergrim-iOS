@@ -30,7 +30,7 @@ final class ChatViewController: BaseViewController<ChatView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationBar(title: "채팅")
+        configureNavigationBar(title: "채팅", backImage: .dismiss)
         setupChatTableView()
         setupBindings()
         viewModel.send(.viewDidLoad)
@@ -63,7 +63,7 @@ final class ChatViewController: BaseViewController<ChatView> {
     
     private func setupBindings() {
         // action
-        dismissButton.tapPublisher
+        backButton.tapPublisher
             .sink { [weak self] in
                 self?.showAlert(
                     title: "채팅방에서 나가시겠습니까?",

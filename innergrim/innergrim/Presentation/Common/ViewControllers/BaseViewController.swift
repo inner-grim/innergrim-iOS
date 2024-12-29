@@ -20,7 +20,7 @@ class BaseViewController<View: UIView>: UIViewController {
     
     private lazy var titleLabel = createTitleLabel()
     
-    lazy var dismissButton = createButton(with: .dismiss)
+    lazy var backButton = createButton()
     
     lazy var actionButton = createButton()
     
@@ -58,36 +58,29 @@ class BaseViewController<View: UIView>: UIViewController {
     // MARK: - Configure Methods
     
     func configureNavigationBar(
-        isDismissButtonHidden: Bool = false,
         title: String? = nil,
-        isTitleCenter: Bool = true,
+        backImage: UIImage? = nil,
         actionImage: UIImage? = nil
     ) {
-        if !isDismissButtonHidden {
-            navigationBar.addSubview(dismissButton)
-            dismissButton.snp.makeConstraints { make in
+        if let title = title {
+            titleLabel.text = title
+            navigationBar.addSubview(titleLabel)
+            titleLabel.snp.makeConstraints { make in
+                make.center.equalToSuperview()
+            }
+        }
+        
+        if let backImage = backImage {
+            backButton.setImage(backImage, for: .normal)
+            navigationBar.addSubview(backButton)
+            backButton.snp.makeConstraints { make in
                 make.leading.equalToSuperview().inset(16)
                 make.centerY.equalToSuperview()
             }
         }
         
-        if let title = title {
-            titleLabel.text = title
-            navigationBar.addSubview(titleLabel)
-            if isTitleCenter {
-                titleLabel.snp.makeConstraints { make in
-                    make.center.equalToSuperview()
-                }
-            } else {
-                titleLabel.snp.makeConstraints { make in
-                    make.leading.equalTo(dismissButton.snp.trailing).offset(20)
-                    make.centerY.equalToSuperview()
-                }
-            }
-        }
-        
-        if let image = actionImage {
-            actionButton.setImage(image, for: .normal)
+        if let actionImage = actionImage {
+            actionButton.setImage(actionImage, for: .normal)
             navigationBar.addSubview(actionButton)
             actionButton.snp.makeConstraints { make in
                 make.trailing.equalToSuperview().inset(24)

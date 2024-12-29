@@ -16,8 +16,10 @@ final class EmotionViewController: BaseViewController<EmotionView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationBar()
+        configureNavigationBar(backImage: .arrowLeft)
         setupEmotionCollectionView()
+        setupBindings()
+        
         // 임시
         let sectionViewModels: [EmotionSectionViewModel] = [
             EmotionSectionViewModel(
@@ -74,7 +76,7 @@ final class EmotionViewController: BaseViewController<EmotionView> {
     
     private func setupBindings() {
         // action
-        dismissButton.tapPublisher
+        backButton.tapPublisher
             .sink { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }

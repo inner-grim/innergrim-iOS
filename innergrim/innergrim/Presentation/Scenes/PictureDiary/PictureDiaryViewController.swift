@@ -15,7 +15,7 @@ final class PictureDiaryViewController: BaseViewController<PictureDiaryView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationBar(title: "그림일기") // TODO: 타이틀 변경
+        configureNavigationBar(title: "그림일기", backImage: .dismiss) // TODO: 타이틀 변경
         setupBindings()
     }
     
@@ -23,7 +23,7 @@ final class PictureDiaryViewController: BaseViewController<PictureDiaryView> {
     
     private func setupBindings() {
         // action
-        dismissButton.tapPublisher
+        backButton.tapPublisher
             .sink { [weak self] in
                 self?.dismiss(animated: true)
             }

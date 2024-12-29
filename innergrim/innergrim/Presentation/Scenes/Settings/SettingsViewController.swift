@@ -20,7 +20,7 @@ final class SettingsViewController: BaseViewController<SettingsView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureNavigationBar(title: "설정")
+        configureNavigationBar(title: "설정", backImage: .dismiss)
         setupBindings()
     }
     
@@ -28,7 +28,7 @@ final class SettingsViewController: BaseViewController<SettingsView> {
     
     private func setupBindings() {
         // action
-        dismissButton.tapPublisher
+        backButton.tapPublisher
             .sink { [weak self] in
                 self?.dismiss(animated: true)
             }
