@@ -46,7 +46,7 @@ final class ValidationTextField: UIView {
     
     private let messageLabel = {
         let label = UILabel()
-        label.text = "이모지, 특수문자 제외 10자 이내로 입력해 주세요."
+        label.text = "이모지, 특수문자 제외 20자 이내로 입력해 주세요."
         label.applyTypography(with: .labelSmallMedium)
         label.textColor = .labelNeutral
         return label
