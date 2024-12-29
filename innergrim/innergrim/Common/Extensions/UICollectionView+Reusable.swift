@@ -8,8 +8,7 @@
 import UIKit
 
 extension UICollectionView {
-    final func register<Cell: UICollectionViewCell>(cellType: Cell.Type)
-    where Cell: Reusable {
+    final func registerCell<Cell: UICollectionViewCell>(cellType: Cell.Type) where Cell: Reusable {
         self.register(cellType.self, forCellWithReuseIdentifier: cellType.reuseIdentifier)
     }
     
@@ -24,5 +23,29 @@ extension UICollectionView {
             fatalError("Could not dequeue cell with identifier: \(cellType.reuseIdentifier)")
         }
         return cell
+    }
+    
+    final func registerHeader<Header: UICollectionReusableView>(
+        viewType: Header.Type
+    ) where Header: Reusable {
+        self.register(
+            viewType.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: viewType.reuseIdentifier
+        )
+    }
+    
+    final func dequeueReusableHeader<Header: UICollectionReusableView>(
+        for indexPath: IndexPath,
+        viewType: Header.Type = Header.self
+    ) -> Header where Header: Reusable {
+        guard let view = self.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: viewType.reuseIdentifier,
+            for: indexPath
+        ) as? Header else {
+            fatalError("Could not dequeue header with identifier: \(viewType.reuseIdentifier)")
+        }
+        return view
     }
 }

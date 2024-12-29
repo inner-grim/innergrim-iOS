@@ -20,7 +20,7 @@ final class CalendarView: UIView {
     let collectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(cellType: CalendarCell.self)
+        collectionView.registerCell(cellType: CalendarCell.self)
         collectionView.backgroundColor = .clear
         return collectionView
     }()

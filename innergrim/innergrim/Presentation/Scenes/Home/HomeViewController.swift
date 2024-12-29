@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol HomeViewControllerDelegate: AnyObject {
-    func chatViewControllerWillAppear()
+    func keywordViewControllerWillAppear()
     func pictureDiaryViewControllerWillAppear()
     func settingsViewControllerWillAppear()
 }
@@ -74,7 +74,7 @@ final class HomeViewController: BaseViewController<HomeView> {
         
         shareTodayButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.chatViewControllerWillAppear()
+                self?.delegate?.keywordViewControllerWillAppear()
             }
             .store(in: &cancellabels)
         

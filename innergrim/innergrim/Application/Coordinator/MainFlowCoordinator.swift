@@ -37,6 +37,11 @@ final class MainFlowCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: false)
     }
     
+    private func showKeywordViewController() {
+        let viewController = mainDIContainer.makeKeywordViewController()
+        navigationController.pushViewController(viewController, animated: true)
+    }
+    
     private func showChatViewController() {
         let viewController = mainDIContainer.makeChatViewController()
         viewController.modalPresentationStyle = .overFullScreen
@@ -58,8 +63,8 @@ final class MainFlowCoordinator: Coordinator {
 }
 
 extension MainFlowCoordinator: HomeViewControllerDelegate {
-    func chatViewControllerWillAppear() {
-        showChatViewController()
+    func keywordViewControllerWillAppear() {
+        showKeywordViewController()
     }
     
     func pictureDiaryViewControllerWillAppear() {
