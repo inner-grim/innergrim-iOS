@@ -10,7 +10,11 @@ import UIKit
 final class EmotionCell: UICollectionViewCell, Reusable {
     // MARK: - Components
     
-    private let emotionLabel = UILabel()
+    private let emotionLabel = {
+        let label = UILabel()
+        label.textColor = .labelNeutral
+        return label
+    }()
     
     // MARK: - Init
     

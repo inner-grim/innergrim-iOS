@@ -47,9 +47,9 @@ final class EmotionView: UIView {
     }()
     
     let collectionView = {
-        let layout = UICollectionViewFlowLayout()
+        let layout = LeftAlignedCollectionViewFlowLayout()
         layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
+        layout.minimumInteritemSpacing = 12
         layout.sectionInset = .init(top: 0, left: 0, bottom: 32, right: 0)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.registerCell(cellType: EmotionCell.self)
@@ -76,9 +76,17 @@ final class EmotionView: UIView {
     // MARK: - Setup Methods
     
     private func setupLayout() {
+        addSubview(doneButton)
+        doneButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(48)
+        }
+        
         addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(doneButton.snp.top)
         }
         
         scrollView.addSubview(contentView)
@@ -118,14 +126,55 @@ final class EmotionView: UIView {
             make.height.equalTo(580)
             make.top.equalTo(guideContainer.snp.bottom).offset(32)
             make.leading.trailing.equalToSuperview().inset(16)
-        }
-        
-        contentView.addSubview(doneButton)
-        doneButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
-            make.top.equalTo(collectionView.snp.bottom).offset(32)
-            make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(48)
         }
+    }
+}
+
+class LeftAlignedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    override func layoutAttributesForElements(
+        in rect: CGRect
+    ) -> [UICollectionViewLayoutAttributes]? {
+        let attributes = super.layoutAttributesForElements(in: rect)
+
+        var leftMargin = sectionInset.left
+        var maxY: CGFloat = -1.0
+        
+        attributes?.forEach { layoutAttribute in
+            // 헤더는 위치를 변경하지 않음
+            if layoutAttribute.representedElementKind == UICollectionView.elementKindSectionHeader {
+                return
+            }
+            
+            if layoutAttribute.frame.origin.y >= maxY {
+                leftMargin = sectionInset.left
+            }
+
+            layoutAttribute.frame.origin.x = leftMargin
+
+            leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+            maxY = max(layoutAttribute.frame.maxY, maxY)
+        }
+        
+        return attributes
+    }
+
+    override func layoutAttributesForItem(
+        at indexPath: IndexPath
+    ) -> UICollectionViewLayoutAttributes? {
+        let attributes = super.layoutAttributesForItem(at: indexPath)
+        
+        if let attributes = attributes {
+            var leftMargin = sectionInset.left
+            let maxY: CGFloat = -1.0
+            
+            if attributes.frame.origin.y >= maxY {
+                leftMargin = sectionInset.left
+            }
+            
+            attributes.frame.origin.x = leftMargin
+        }
+        
+        return attributes
     }
 }
