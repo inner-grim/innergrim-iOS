@@ -125,9 +125,9 @@ final class EmotionKeywordViewModel: ViewModel {
     
     private func validateSelectedEmotionKeywords() {
         if selectedCellCount < 1 {
-            // 최소 1개 이상 선택해 주세요
+            Toaster.makeToast("최소 1개 이상 선택해 주세요")
         } else if selectedCellCount > 3 {
-            // 최대 3개까지 선택 가능해요
+            Toaster.makeToast("최대 3개까지 선택 가능해요")
         } else {
             // 바텀시트
         }
