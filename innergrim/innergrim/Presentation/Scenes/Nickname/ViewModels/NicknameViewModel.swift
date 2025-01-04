@@ -31,30 +31,36 @@ final class NicknameViewModel: NSObject, ViewModel {
     
     override init() {
         super.init()
-        setupActionBindings()
-    }
-    
-    private func setupActionBindings() {
         actionSubject.sink { [weak self] action in
-            switch action {
-            case .nicknameDidUpdate(let nickname):
-                self?.verifyNickname(nickname)
-            case .nextButtonDidTap:
-                self?.checkNicknameDuplicated()
-            }
+            self?.handleAction(action)
         }
         .store(in: &cancellables)
     }
     
-    private func verifyNickname(_ nickname: String) {
-        self.nickname = nickname
+    private func handleAction(_ action: Action) {
+        switch action {
+        case .nicknameDidUpdate(let nickname):
+            self.nickname = nickname
+            state.isNicknameValid.send(true)
+        case .nextButtonDidTap:
+            verifyNickname()
+        }
+    }
+    
+    private func verifyNickname() {
+        guard let nickname = nickname else { return }
         
         let pattern = "^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]{1,20}$"
         let regex = try? NSRegularExpression(pattern: pattern)
         let range = NSRange(location: 0, length: nickname.utf16.count)
         
         let isValid = regex?.firstMatch(in: nickname, options: [], range: range) != nil
-        state.isNicknameValid.send(isValid)
+        if isValid {
+            checkNicknameDuplicated()
+        } else {
+            Toaster.makeToast("특수문자 제외 20자 이내로 입력해 주세요")
+            state.isNicknameValid.send(isValid)
+        }
     }
     
     private func checkNicknameDuplicated() {
@@ -67,15 +73,17 @@ final class NicknameViewModel: NSObject, ViewModel {
                     print("Check Nickname failed:", error)
                 }
             } receiveValue: { [weak self] response in
+                guard let self = self else { return }
                 if response.statusCode == "OK",
                    let result = response.data {
                     if result { // 닉네임 중복
                         Toaster.makeToast("이미 사용중인 닉네임이에요")
+                        state.isNicknameValid.send(false)
                     } else { // 사용 가능한 닉네임
-                        self?.sendOnboardingInfo()
+                        sendOnboardingInfo()
                     }
                 } else {
-                    self?.state.onboardingResult.send(false)
+                    state.onboardingResult.send(false)
                 }
             }
             .store(in: &cancellables)

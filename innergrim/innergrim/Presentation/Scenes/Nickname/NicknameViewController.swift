@@ -44,7 +44,9 @@ final class NicknameViewController: BaseViewController<NicknameView> {
         nicknameTextField.textField.textPublisher
             .dropFirst()
             .sink { [weak self] text in
-                self?.viewModel.send(.nicknameDidUpdate(text))
+                guard let self = self else { return }
+                nextButton.isEnabled = !text.isEmpty
+                viewModel.send(.nicknameDidUpdate(text))
             }
             .store(in: &cancellables)
         
@@ -74,7 +76,6 @@ final class NicknameViewController: BaseViewController<NicknameView> {
             .dropFirst()
             .sink { [weak self] isValid in
                 self?.nicknameTextField.updateValidation(isValid)
-                self?.nextButton.isEnabled = isValid
             }
             .store(in: &cancellables)
         

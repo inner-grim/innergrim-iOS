@@ -44,14 +44,6 @@ final class ValidationTextField: UIView {
         return textField
     }()
     
-    private let messageLabel = {
-        let label = UILabel()
-        label.text = "이모지, 특수문자 제외 20자 이내로 입력해 주세요."
-        label.applyTypography(with: .labelSmallMedium)
-        label.textColor = .labelNeutral
-        return label
-    }()
-    
     // MARK: - Init
     
     init(placeholder: String) {
@@ -76,20 +68,13 @@ final class ValidationTextField: UIView {
     private func setupLayout() {
         addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(52)
+            make.edges.equalToSuperview()
         }
         
         containerView.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.centerY.equalToSuperview()
-        }
-        
-        addSubview(messageLabel)
-        messageLabel.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.bottom).offset(8)
-            make.leading.bottom.equalToSuperview()
         }
     }
     
@@ -116,10 +101,8 @@ final class ValidationTextField: UIView {
     func updateValidation(_ isValid: Bool) {
         if isValid {
             status = textField.isEditing ? .focus : .normal
-            messageLabel.textColor = .labelNeutral
         } else {
             status = .error
-            messageLabel.textColor = .systemRed
         }
     }
 }

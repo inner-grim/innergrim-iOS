@@ -51,6 +51,7 @@ final class NicknameView: UIView {
         textField.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(52)
         }
         
         addSubview(nextButton)
