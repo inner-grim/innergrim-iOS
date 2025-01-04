@@ -22,8 +22,8 @@ final class MainDIContainer {
         return EmotionScaleViewModel(emotionKeywords: emotionKeywords)
     }
     
-    private func makeChatViewModel() -> ChatViewModel {
-        return ChatViewModel()
+    private func makeChatViewModel(chatStartMessage: String) -> ChatViewModel {
+        return ChatViewModel(chatStartMessage: chatStartMessage)
     }
 
     // MARK: - View Controllers
@@ -35,19 +35,19 @@ final class MainDIContainer {
     }
     
     func makeEmotionKeywordViewController() -> EmotionKeywordViewController {
-        let viewController = EmotionKeywordViewController(viewModel: makeEmotionKeywordViewModel())
+        let viewModel = makeEmotionKeywordViewModel()
+        let viewController = EmotionKeywordViewController(viewModel: viewModel)
         return viewController
     }
     
     func makeEmotionScaleViewController(emotionKeywords: [String]) -> EmotionScaleViewController {
-        let viewController = EmotionScaleViewController(
-            viewModel: makeEmotionScaleViewModel(emotionKeywords: emotionKeywords)
-        )
+        let viewModel = makeEmotionScaleViewModel(emotionKeywords: emotionKeywords)
+        let viewController = EmotionScaleViewController(viewModel: viewModel)
         return viewController
     }
     
-    func makeChatViewController() -> ChatViewController {
-        let viewModel = makeChatViewModel()
+    func makeChatViewController(chatStartMessage: String) -> ChatViewController {
+        let viewModel = makeChatViewModel(chatStartMessage: chatStartMessage)
         let viewController = ChatViewController(viewModel: viewModel)
         return viewController
     }

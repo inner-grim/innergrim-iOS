@@ -51,8 +51,10 @@ final class MainFlowCoordinator: Coordinator {
         navigationController.present(viewController, animated: false)
     }
     
-    private func showChatViewController() {
-        let viewController = mainDIContainer.makeChatViewController()
+    private func showChatViewController(chatStartMessage: String) {
+        let viewController = mainDIContainer.makeChatViewController(
+            chatStartMessage: chatStartMessage
+        )
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -91,8 +93,8 @@ extension MainFlowCoordinator: EmotionKeywordViewControllerDelegate {
 }
 
 extension MainFlowCoordinator: EmotionScaleViewControllerDelegate {
-    func navigateToChatViewController() {
-        showChatViewController()
+    func navigateToChatViewController(chatStartMessage: String) {
+        showChatViewController(chatStartMessage: chatStartMessage)
     }
 }
 

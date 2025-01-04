@@ -24,22 +24,28 @@ final class ChatViewModel: ViewModel {
     var cancellables = Set<AnyCancellable>()
     var state = State()
     
+    private let chatStartMessage: String
+    
     // MARK: - Init
     
-    init() {
-        setupActionBindings()
-    }
-    
-    private func setupActionBindings() {
+    init(chatStartMessage: String) {
+        self.chatStartMessage = chatStartMessage
         actionSubject.sink { [weak self] action in
-            switch action {
-            case .viewDidLoad:
-                self?.startChat()
-            case .sendButtonDidTap(let message):
-                self?.sendChat(message)
-            }
+            self?.handleAction(action)
         }
         .store(in: &cancellables)
+    }
+    
+    // MARK: - Handle Action Methods
+    
+    private func handleAction(_ action: Action) {
+        switch action {
+        case .viewDidLoad:
+            startChat()
+        case .sendButtonDidTap(let message):
+            appendChatMessage(message, isFromUser: true)
+            sendChat(message)
+        }
     }
     
     private func startChat() {
@@ -47,16 +53,28 @@ final class ChatViewModel: ViewModel {
         let today = Date.now
         if !Calendar.current.isDate(UserDataStorage.lastChatDate, inSameDayAs: Date()) {
             UserDataStorage.lastChatDate = today
-            UserDataStorage.chatMessages = []
+            UserDataStorage.chatMessages = [
+                ChatMessage(content: chatStartMessage, isFromUser: true)
+            ]
         }
-        
-        appendChatMessage("첫 대화 내용 텍스트", isFromUser: false)
+        sendChat(chatStartMessage)
+    }
+    
+    private func appendChatMessage(_ message: String, isFromUser: Bool) {
+        let newMessage = ChatMessage(content: message, isFromUser: isFromUser)
+        // 뷰에 사용할 데이터 반영
+        var chatMessages = state.chatMessages.value
+        chatMessages.append(newMessage)
+        state.chatMessages.send(chatMessages)
+        // 로컬 스토리지 반영
+        UserDataStorage.chatMessages.append(newMessage)
     }
     
     private func sendChat(_ message: String) {
-        appendChatMessage(message, isFromUser: true)
-        
-        let target = ChatBotAPI.sendChat(message: message)
+        let target = ChatBotAPI.sendChat(
+            previousConversionList: UserDataStorage.chatMessages.map { $0.toEntity() },
+            question: message
+        )
         APIService.request(target, responseType: ChatResponse.self)
             .sink { completion in
                 if case let .failure(error) = completion {
@@ -73,15 +91,5 @@ final class ChatViewModel: ViewModel {
                 }
             }
             .store(in: &cancellables)
-    }
-    
-    private func appendChatMessage(_ message: String, isFromUser: Bool) {
-        let newMessage = ChatMessage(content: message, isFromUser: isFromUser)
-        // 뷰에 사용할 데이터 반영
-        var chatMessages = state.chatMessages.value
-        chatMessages.append(newMessage)
-        state.chatMessages.send(chatMessages)
-        // 로컬 스토리지 반영
-        UserDataStorage.chatMessages.append(newMessage)
     }
 }

@@ -12,4 +12,11 @@ struct ChatMessage: Hashable, Codable {
     let content: String
     var timestamp: Date = .init()
     let isFromUser: Bool
+    
+    func toEntity() -> ChatEntity {
+        return ChatEntity(
+            role: isFromUser ? "user" : "assistant",
+            content: content
+        )
+    }
 }

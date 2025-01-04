@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum ChatBotAPI {
-    case sendChat(message: String)
+    case sendChat(previousConversionList: [ChatEntity], question: String)
 }
 
 extension ChatBotAPI: APITarget {
@@ -30,13 +30,16 @@ extension ChatBotAPI: APITarget {
     var task: Task {
         switch self {
         case .sendChat:
-            .urlEncoding
+            .jsonEncoding
         }
     }
     
     var parameters: Parameters {
         switch self {
-        case let .sendChat(message): ["chat": message]
+        case let .sendChat(previousConversionList, question): [
+            "previousConversionList": previousConversionList,
+            "question": question
+        ]
         }
     }
 }

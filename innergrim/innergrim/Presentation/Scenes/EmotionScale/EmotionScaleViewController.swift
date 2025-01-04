@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol EmotionScaleViewControllerDelegate: AnyObject {
-    func navigateToChatViewController()
+    func navigateToChatViewController(chatStartMessage: String)
 }
 
 final class EmotionScaleViewController: BottomSheetViewController<EmotionScaleView> {
@@ -47,7 +47,7 @@ final class EmotionScaleViewController: BottomSheetViewController<EmotionScaleVi
         // state
         viewModel.state.chatStartMessage
             .sink { [weak self] message in
-                print(message)
+                self?.delegate?.navigateToChatViewController(chatStartMessage: message)
             }
             .store(in: &cancellables)
     }
