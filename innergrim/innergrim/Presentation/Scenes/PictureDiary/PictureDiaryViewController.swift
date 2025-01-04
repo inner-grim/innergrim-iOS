@@ -25,7 +25,9 @@ final class PictureDiaryViewController: BaseViewController<PictureDiaryView> {
         // action
         backButton.tapPublisher
             .sink { [weak self] in
-                self?.dismiss(animated: true)
+                guard let self = self else { return }
+                generateHaptic()
+                dismiss(animated: true)
             }
             .store(in: &cancellables)
     }

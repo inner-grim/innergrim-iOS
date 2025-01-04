@@ -30,13 +30,17 @@ final class SettingsViewController: BaseViewController<SettingsView> {
         // action
         backButton.tapPublisher
             .sink { [weak self] in
-                self?.dismiss(animated: true)
+                guard let self = self else { return }
+                generateHaptic()
+                dismiss(animated: true)
             }
             .store(in: &cancellables)
         
         logoutButton.tapPublisher
             .sink { [weak self] in
-                self?.showAlert(
+                guard let self = self else { return }
+                generateHaptic()
+                showAlert(
                     title: "로그아웃 하시겠어요?",
                     message: "",
                     leftActionText: "돌아가기",
@@ -44,7 +48,7 @@ final class SettingsViewController: BaseViewController<SettingsView> {
                     rightActionCompletion:  {
                         KeychainService.clear()
                         UserDataStorage.isLogin = false
-                        self?.delegate?.moveToLogin()
+                        self.delegate?.moveToLogin()
                     }
                 )
             }
@@ -52,7 +56,9 @@ final class SettingsViewController: BaseViewController<SettingsView> {
         
         withdrawButton.tapPublisher
             .sink { [weak self] in
-                self?.showAlert(
+                guard let self = self else { return }
+                generateHaptic()
+                showAlert(
                     title: "정말 회원탈퇴 하시겠어요?",
                     message: "탈퇴할 경우, 데이터 복구가 불가능합니다.\n다시 한번 확인해 주세요.",
                     leftActionText: "돌아가기",

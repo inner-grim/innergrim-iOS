@@ -30,14 +30,18 @@ final class EmotionScaleViewController: BottomSheetViewController<EmotionScaleVi
     private func setupBindings() {
         // action
         slider.valuePublisher
+            .removeDuplicates()
             .sink { [weak self] value in
-                self?.viewModel.send(.sliderValueDidChange(value: Int(value)))
+                guard let self = self else { return }
+                generateHaptic()
+                viewModel.send(.sliderValueDidChange(value: Int(value)))
             }
             .store(in: &cancellables)
         
         doneButton.tapPublisher
             .sink { [weak self] in
                 guard let self = self else { return }
+                generateHaptic()
                 dismiss(animated: false) {
                     self.viewModel.send(.doneButtonDidTap)
                 }

@@ -50,7 +50,9 @@ final class NicknameViewController: BaseViewController<NicknameView> {
         
         nextButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.send(.nextButtonDidTap)
+                guard let self = self else { return }
+                generateHaptic()
+                viewModel.send(.nextButtonDidTap)
             }
             .store(in: &cancellables)
         

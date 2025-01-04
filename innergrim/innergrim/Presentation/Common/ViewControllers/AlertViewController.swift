@@ -181,10 +181,12 @@ final class AlertViewController: UIViewController {
     // MARK: - Action Methods
     
     @objc private func leftButtonTapped() {
+        generateHaptic()
         dismiss(animated: true, completion: leftActionCompletion)
     }
     
     @objc private func rightButtonTapped() {
+        generateHaptic()
         dismiss(animated: true, completion: rightActionCompletion)
     }
 }

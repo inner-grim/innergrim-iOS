@@ -65,7 +65,9 @@ final class ChatViewController: BaseViewController<ChatView> {
         // action
         backButton.tapPublisher
             .sink { [weak self] in
-                self?.showAlert(
+                guard let self = self else { return }
+                generateHaptic()
+                showAlert(
                     title: "채팅방에서 나가시겠습니까?",
                     message: "대화 내용은 저장되지 않아요!",
                     leftActionText: "대화 계속 하기",
@@ -109,6 +111,7 @@ final class ChatViewController: BaseViewController<ChatView> {
         sendButton.tapPublisher
             .sink { [weak self] in
                 guard let self = self, let message = messageTextField.text else { return }
+                generateHaptic()
                 viewModel.send(.sendButtonDidTap(message))
                 messageTextField.text = ""
             }

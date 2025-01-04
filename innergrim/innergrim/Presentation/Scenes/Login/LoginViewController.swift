@@ -43,19 +43,25 @@ final class LoginViewController: BaseViewController<LoginView> {
         // action
         kakaoLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.send(.loginButtonDidTap(.kakao))
+                guard let self = self else { return }
+                generateHaptic()
+                viewModel.send(.loginButtonDidTap(.kakao))
             }
             .store(in: &cancellables)
         
         appleLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.send(.loginButtonDidTap(.apple))
+                guard let self = self else { return }
+                generateHaptic()
+                viewModel.send(.loginButtonDidTap(.apple))
             }
             .store(in: &cancellables)
         
         googleLoginButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.loginViewControllerDidFinish()
+                guard let self = self else { return }
+                generateHaptic()
+                delegate?.loginViewControllerDidFinish()
             }
             .store(in: &cancellables)
         

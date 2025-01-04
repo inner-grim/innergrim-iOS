@@ -7,6 +7,8 @@
 
 import UIKit
 
+extension UIViewController: HapticFeedbackable{}
+
 extension UIViewController {
     func showAlert(
         title: String,

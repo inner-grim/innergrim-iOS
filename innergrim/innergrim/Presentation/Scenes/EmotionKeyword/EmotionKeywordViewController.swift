@@ -77,13 +77,17 @@ final class EmotionKeywordViewController: BaseViewController<EmotionKeywordView>
         // action
         backButton.tapPublisher
             .sink { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                guard let self = self else { return }
+                generateHaptic()
+                navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)
         
         doneButton.tapPublisher
             .sink { [weak self] in
-                self?.viewModel.send(.doneButtonDidTap)
+                guard let self = self else { return }
+                generateHaptic()
+                viewModel.send(.doneButtonDidTap)
             }
             .store(in: &cancellables)
         
@@ -147,6 +151,7 @@ extension EmotionKeywordViewController: UICollectionViewDelegateFlowLayout {
     }
     // 셀 선택
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        generateHaptic()
         viewModel.send(.emotionKeywordCellDidTap(indexPath: indexPath))
     }
 }

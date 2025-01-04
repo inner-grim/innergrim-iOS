@@ -68,13 +68,17 @@ final class HomeViewController: BaseViewController<HomeView> {
         // action
         settingsButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.navigateToSettingsViewController()
+                guard let self = self else { return }
+                generateHaptic()
+                delegate?.navigateToSettingsViewController()
             }
             .store(in: &cancellabels)
         
         shareTodayButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.navigateToKeywordViewController()
+                guard let self = self else { return }
+                generateHaptic()
+                delegate?.navigateToKeywordViewController()
             }
             .store(in: &cancellabels)
         
