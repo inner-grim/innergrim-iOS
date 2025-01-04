@@ -7,15 +7,23 @@
 
 import Foundation
 
+enum ChatMessageState: Codable {
+    case user
+    case assistant
+    case loading
+    case end
+    case networkError
+}
+
 struct ChatMessage: Hashable, Codable {
     var id = UUID()
     let content: String
     var timestamp: Date = .init()
-    let isFromUser: Bool
+    let state: ChatMessageState
     
     func toEntity() -> ChatEntity {
         return ChatEntity(
-            role: isFromUser ? "user" : "assistant",
+            role: state == .user ? "user" : "assistant",
             content: content
         )
     }

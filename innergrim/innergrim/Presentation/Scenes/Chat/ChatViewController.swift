@@ -44,7 +44,7 @@ final class ChatViewController: BaseViewController<ChatView> {
         chatDataSource = UITableViewDiffableDataSource<Int, ChatMessage>(
             tableView: chatTableView
             , cellProvider: { (tableView, indexPath, viewModel) -> UITableViewCell? in
-                if viewModel.isFromUser {
+                if viewModel.state == .user {
                     let cell = tableView.dequeueReusableCell(
                         for: indexPath,
                         cellType: OutgoingMessageCell.self)

@@ -43,7 +43,7 @@ final class ChatViewModel: ViewModel {
         case .viewDidLoad:
             startChat()
         case .sendButtonDidTap(let message):
-            appendChatMessage(message, isFromUser: true)
+            appendChatMessage(message, chatMessageState: .user)
             sendChat(message)
         }
     }
@@ -54,14 +54,14 @@ final class ChatViewModel: ViewModel {
         if !Calendar.current.isDate(UserDataStorage.lastChatDate, inSameDayAs: Date()) {
             UserDataStorage.lastChatDate = today
             UserDataStorage.chatMessages = [
-                ChatMessage(content: chatStartMessage, isFromUser: true)
+                ChatMessage(content: chatStartMessage, state: .user)
             ]
         }
         sendChat(chatStartMessage)
     }
     
-    private func appendChatMessage(_ message: String, isFromUser: Bool) {
-        let newMessage = ChatMessage(content: message, isFromUser: isFromUser)
+    private func appendChatMessage(_ message: String, chatMessageState: ChatMessageState) {
+        let newMessage = ChatMessage(content: message, state: chatMessageState)
         // 뷰에 사용할 데이터 반영
         var chatMessages = state.chatMessages.value
         chatMessages.append(newMessage)
@@ -85,7 +85,7 @@ final class ChatViewModel: ViewModel {
                 
                 if response.statusCode == "OK",
                    let message = response.data?.parsedResponse {
-                    appendChatMessage(message, isFromUser: false)
+                    appendChatMessage(message, chatMessageState: .assistant)
                 } else {
                     print("채팅 응답 에러", response.message) // TODO: 에러 처리 필요
                 }
