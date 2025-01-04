@@ -14,6 +14,10 @@ final class MainDIContainer {
         return HomeViewModel()
     }
     
+    private func makeEmotionKeywordViewModel() -> EmotionKeywordViewModel {
+        return EmotionKeywordViewModel()
+    }
+    
     private func makeChatViewModel() -> ChatViewModel {
         return ChatViewModel()
     }
@@ -26,8 +30,8 @@ final class MainDIContainer {
         return viewController
     }
     
-    func makeKeywordViewController() -> EmotionViewController {
-        let viewController = EmotionViewController()
+    func makeEmotionKeywordViewController() -> EmotionKeywordViewController {
+        let viewController = EmotionKeywordViewController(viewModel: makeEmotionKeywordViewModel())
         return viewController
     }
     

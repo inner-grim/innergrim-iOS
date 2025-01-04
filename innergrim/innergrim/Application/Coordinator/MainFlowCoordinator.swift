@@ -37,8 +37,8 @@ final class MainFlowCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: false)
     }
     
-    private func showKeywordViewController() {
-        let viewController = mainDIContainer.makeKeywordViewController()
+    private func showEmotionKeywordViewController() {
+        let viewController = mainDIContainer.makeEmotionKeywordViewController()
         navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -64,7 +64,7 @@ final class MainFlowCoordinator: Coordinator {
 
 extension MainFlowCoordinator: HomeViewControllerDelegate {
     func keywordViewControllerWillAppear() {
-        showKeywordViewController()
+        showEmotionKeywordViewController()
     }
     
     func pictureDiaryViewControllerWillAppear() {

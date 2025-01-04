@@ -9,5 +9,5 @@ import Foundation
 
 struct EmotionKeywordCellViewModel: Hashable {
     let emotion: EmotionKeyword
-    var isSelected: Bool = false
+    var state: EmotionKeywordCellState = .normal
 }

@@ -1,5 +1,5 @@
 //
-//  EmotionViewController.swift
+//  EmotionKeywordViewController.swift
 //  innergrim
 //
 //  Created by 지연 on 12/29/24.
@@ -8,12 +8,25 @@
 import Combine
 import UIKit
 
-final class EmotionViewController: BaseViewController<EmotionKeywordView> {
+final class EmotionKeywordViewController: BaseViewController<EmotionKeywordView> {
+    private let viewModel: EmotionKeywordViewModel
     private var cancellables = Set<AnyCancellable>()
     private var dataSource: UICollectionViewDiffableDataSource<
         EmotionKeywordSectionViewModel,
         EmotionKeywordCellViewModel
     >!
+    
+    // MARK: - Init
+    
+    init(viewModel: EmotionKeywordViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -22,29 +35,7 @@ final class EmotionViewController: BaseViewController<EmotionKeywordView> {
         configureNavigationBar(backImage: .arrowLeft)
         setupEmotionCollectionView()
         setupBindings()
-        
-        // 임시
-        let sectionViewModels: [EmotionKeywordSectionViewModel] = [
-            EmotionKeywordSectionViewModel(
-                category: EmotionKeyword.Category.positive,
-                cellViewModels: EmotionKeyword.allCases
-                    .filter { $0.category == .positive }
-                    .map { EmotionKeywordCellViewModel(emotion: $0) }
-            ),
-            EmotionKeywordSectionViewModel(
-                category: EmotionKeyword.Category.negative,
-                cellViewModels: EmotionKeyword.allCases
-                    .filter { $0.category == .negative }
-                    .map { EmotionKeywordCellViewModel(emotion: $0) }
-            ),
-            EmotionKeywordSectionViewModel(
-                category: EmotionKeyword.Category.neutral,
-                cellViewModels: EmotionKeyword.allCases
-                    .filter { $0.category == .neutral }
-                    .map { EmotionKeywordCellViewModel(emotion: $0) }
-            )
-        ]
-        applySnapshot(with: sectionViewModels)
+        viewModel.send(.viewDidLoad)
     }
     
     // MARK: - Setup Methods
@@ -84,6 +75,19 @@ final class EmotionViewController: BaseViewController<EmotionKeywordView> {
                 self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)
+        
+        doneButton.tapPublisher
+            .sink { [weak self] in
+                self?.viewModel.send(.doneButtonDidTap)
+            }
+            .store(in: &cancellables)
+        
+        // state
+        viewModel.state.emotionKeywords
+            .sink { [weak self] emotionKeywords in
+                self?.applySnapshot(with: emotionKeywords)
+            }
+            .store(in: &cancellables)
     }
     
     private func applySnapshot(with sectionViewModels: [EmotionKeywordSectionViewModel]) {
@@ -97,12 +101,12 @@ final class EmotionViewController: BaseViewController<EmotionKeywordView> {
             snapshot.appendItems(sectionViewModel.cellViewModels, toSection: sectionViewModel)
         }
         
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
-extension EmotionViewController: UICollectionViewDelegateFlowLayout {
-    // cell
+extension EmotionKeywordViewController: UICollectionViewDelegateFlowLayout {
+    // 셀 크기
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -120,7 +124,7 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: dummyCell.frame.width + 24, height: dummyCell.frame.height + 10)
     }
-    // header
+    // 헤더 크기
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -128,10 +132,18 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: 24)
     }
+    // 셀 선택
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.send(.emotionKeywordCellDidTap(indexPath: indexPath))
+    }
 }
 
-private extension EmotionViewController {
+private extension EmotionKeywordViewController {
     var emotionCollectionView: UICollectionView {
         contentView.collectionView
+    }
+    
+    var doneButton: SolidButton {
+        contentView.doneButton
     }
 }

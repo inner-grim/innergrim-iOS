@@ -52,7 +52,7 @@ enum EmotionKeyword: String, CaseIterable {
 }
 
 extension EmotionKeyword {
-    enum Category: String {
+    enum Category: String, CaseIterable {
         case positive = "긍정"
         case negative = "부정"
         case neutral = "중립"

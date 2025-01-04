@@ -7,14 +7,16 @@
 
 import UIKit
 
+enum EmotionKeywordCellState {
+    case normal
+    case selected
+    case disabled
+}
+
 final class EmotionKeywordCell: UICollectionViewCell, Reusable {
     // MARK: - Components
     
-    private let emotionLabel = {
-        let label = UILabel()
-        label.textColor = .labelNeutral
-        return label
-    }()
+    private let emotionLabel = UILabel()
     
     // MARK: - Init
     
@@ -48,9 +50,20 @@ final class EmotionKeywordCell: UICollectionViewCell, Reusable {
     func configure(with viewModel: EmotionKeywordCellViewModel) {
         emotionLabel.text = viewModel.emotion.rawValue
         emotionLabel.applyTypography(with: .labelLargeMedium)
-        backgroundColor = viewModel.isSelected ? .primaryLight : .clear
-        layer.borderColor = viewModel.isSelected ?
-        UIColor.primaryNormal.cgColor :
-        UIColor.lineNormal.cgColor
+        
+        switch viewModel.state {
+        case .normal:
+            emotionLabel.textColor = .labelNeutral
+            backgroundColor = .clear
+            layer.borderColor = UIColor.lineNormal.cgColor
+        case .selected:
+            emotionLabel.textColor = .primaryNormal
+            backgroundColor = .primaryLight
+            layer.borderColor = UIColor.primaryNormal.cgColor
+        case .disabled:
+            emotionLabel.textColor = .labelDisabled
+            backgroundColor = .clear
+            layer.borderColor = UIColor.lineNormal.cgColor
+        }
     }
 }
