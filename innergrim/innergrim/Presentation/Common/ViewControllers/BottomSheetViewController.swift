@@ -100,7 +100,7 @@ class BottomSheetViewController<View: UIView>: UIViewController {
             make.leading.trailing.equalToSuperview()
         }
         
-        view.addSubview(indicator)
+        contentView.addSubview(indicator)
         indicator.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
             make.width.equalTo(48)

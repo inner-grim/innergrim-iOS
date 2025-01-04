@@ -71,8 +71,9 @@ final class ChatViewController: BaseViewController<ChatView> {
                     leftActionText: "대화 계속 하기",
                     rightActionText: "나가기",
                     rightActionCompletion:  { [weak self] in
-                        self?.view.endEditing(true)
-                        self?.dismiss(animated: true)
+                        guard let self = self else { return }
+                        view.endEditing(true)
+                        navigationController?.popToRootViewController(animated: true)
                     }
                 )
             }
@@ -81,8 +82,9 @@ final class ChatViewController: BaseViewController<ChatView> {
         keyboardWillShowPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] keyboardHeight in
-                self?.contentView.updateBottomConstraint(keyboardHeight: keyboardHeight)
-                self?.scrollToBottom()
+                guard let self = self else { return }
+                contentView.updateBottomConstraint(keyboardHeight: keyboardHeight)
+                scrollToBottom()
             }.store(in: &cancellables)
         
         keyboardWillHidePublisher

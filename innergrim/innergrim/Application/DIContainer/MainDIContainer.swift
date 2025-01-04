@@ -35,6 +35,11 @@ final class MainDIContainer {
         return viewController
     }
     
+    func makeEmotionScaleViewController() -> EmotionScaleViewController {
+        let viewController = EmotionScaleViewController()
+        return viewController
+    }
+    
     func makeChatViewController() -> ChatViewController {
         let viewModel = makeChatViewModel()
         let viewController = ChatViewController(viewModel: viewModel)

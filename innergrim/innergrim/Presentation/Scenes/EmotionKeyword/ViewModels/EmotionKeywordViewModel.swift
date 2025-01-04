@@ -17,6 +17,7 @@ final class EmotionKeywordViewModel: ViewModel {
     
     struct State {
         var emotionKeywords = CurrentValueSubject<[EmotionKeywordSectionViewModel], Never>([])
+        var showEmotionScale = PassthroughSubject<Void, Never>()
     }
     
     // MARK: - Properties
@@ -129,7 +130,7 @@ final class EmotionKeywordViewModel: ViewModel {
         } else if selectedCellCount > 3 {
             Toaster.makeToast("최대 3개까지 선택 가능해요")
         } else {
-            // 바텀시트
+            state.showEmotionScale.send()
         }
     }
 }

@@ -8,7 +8,12 @@
 import Combine
 import UIKit
 
+protocol EmotionKeywordViewControllerDelegate: AnyObject {
+    func emotionScaleViewControllerWillAppear()
+}
+
 final class EmotionKeywordViewController: BaseViewController<EmotionKeywordView> {
+    weak var delegate: EmotionKeywordViewControllerDelegate?
     private let viewModel: EmotionKeywordViewModel
     private var cancellables = Set<AnyCancellable>()
     private var dataSource: UICollectionViewDiffableDataSource<
@@ -86,6 +91,12 @@ final class EmotionKeywordViewController: BaseViewController<EmotionKeywordView>
         viewModel.state.emotionKeywords
             .sink { [weak self] emotionKeywords in
                 self?.applySnapshot(with: emotionKeywords)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.state.showEmotionScale
+            .sink { [weak self] in
+                self?.delegate?.emotionScaleViewControllerWillAppear()
             }
             .store(in: &cancellables)
     }
