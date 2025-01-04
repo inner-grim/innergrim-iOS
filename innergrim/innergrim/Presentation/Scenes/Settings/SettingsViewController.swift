@@ -49,11 +49,29 @@ final class SettingsViewController: BaseViewController<SettingsView> {
                 )
             }
             .store(in: &cancellables)
+        
+        withdrawButton.tapPublisher
+            .sink { [weak self] in
+                self?.showAlert(
+                    title: "정말 회원탈퇴 하시겠어요?",
+                    message: "탈퇴할 경우, 데이터 복구가 불가능합니다.\n다시 한번 확인해 주세요.",
+                    leftActionText: "돌아가기",
+                    rightActionText: "회원 탈퇴",
+                    rightActionCompletion:  {
+                        
+                    }
+                )
+            }
+            .store(in: &cancellables)
     }
 }
 
 private extension SettingsViewController {
     var logoutButton: UIButton {
         contentView.logoutButton
+    }
+    
+    var withdrawButton: UIButton {
+        contentView.withdrawtButton
     }
 }
