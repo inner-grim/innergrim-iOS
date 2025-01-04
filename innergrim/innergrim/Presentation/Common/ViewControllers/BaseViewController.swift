@@ -103,6 +103,10 @@ class BaseViewController<View: UIView>: UIViewController {
         contentBottomConstraint?.update(offset: -view.safeAreaInsets.bottom)
     }
     
+    func configureBackgroundColor(with color: UIColor) {
+        view.backgroundColor = color
+    }
+    
     // MARK: - Helper Methods
     
     private func createTitleLabel() -> UILabel {

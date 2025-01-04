@@ -12,7 +12,6 @@ import KakaoSDKAuth
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var appFlowCoordinator: AppFlowCoordinator?
-    let appIDContainer = AppDIContainer()
 
     func scene(
         _ scene: UIScene,
@@ -20,12 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.makeKeyAndVisible()
-        self.window = window
+        window = UIWindow(windowScene: windowScene)
         
-        appFlowCoordinator = AppFlowCoordinator(window: window, appDIContainer: appIDContainer)
-        appFlowCoordinator?.start()
+        let splashViewController = SplashViewController()
+        splashViewController.delegate = self
+        window?.rootViewController = splashViewController
+        
+        window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -45,4 +45,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {}
 
     func sceneDidEnterBackground(_ scene: UIScene) {}
+}
+
+extension SceneDelegate: SplashViewControllerDelegate {
+    func splashDidFinish() {
+        guard let window = window else { return }
+        // 앱 플로우 시작
+        appFlowCoordinator = AppFlowCoordinator(window: window, appDIContainer: AppDIContainer())
+        appFlowCoordinator?.start()
+    }
 }
