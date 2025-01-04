@@ -8,9 +8,12 @@
 import Combine
 import UIKit
 
-final class EmotionViewController: BaseViewController<EmotionView> {
+final class EmotionViewController: BaseViewController<EmotionKeywordView> {
     private var cancellables = Set<AnyCancellable>()
-    private var dataSource: UICollectionViewDiffableDataSource<EmotionSectionViewModel, EmotionCellViewModel>!
+    private var dataSource: UICollectionViewDiffableDataSource<
+        EmotionKeywordSectionViewModel,
+        EmotionKeywordCellViewModel
+    >!
     
     // MARK: - Lifecycle
     
@@ -21,24 +24,24 @@ final class EmotionViewController: BaseViewController<EmotionView> {
         setupBindings()
         
         // 임시
-        let sectionViewModels: [EmotionSectionViewModel] = [
-            EmotionSectionViewModel(
-                category: Emotion.Category.positive,
-                cellViewModels: Emotion.allCases.filter { $0.category == .positive }.map {
-                    EmotionCellViewModel(emotion: $0)
-                }
+        let sectionViewModels: [EmotionKeywordSectionViewModel] = [
+            EmotionKeywordSectionViewModel(
+                category: EmotionKeyword.Category.positive,
+                cellViewModels: EmotionKeyword.allCases
+                    .filter { $0.category == .positive }
+                    .map { EmotionKeywordCellViewModel(emotion: $0) }
             ),
-            EmotionSectionViewModel(
-                category: Emotion.Category.negative,
-                cellViewModels: Emotion.allCases.filter { $0.category == .negative }.map {
-                    EmotionCellViewModel(emotion: $0)
-                }
+            EmotionKeywordSectionViewModel(
+                category: EmotionKeyword.Category.negative,
+                cellViewModels: EmotionKeyword.allCases
+                    .filter { $0.category == .negative }
+                    .map { EmotionKeywordCellViewModel(emotion: $0) }
             ),
-            EmotionSectionViewModel(
-                category: Emotion.Category.neutral,
-                cellViewModels: Emotion.allCases.filter { $0.category == .neutral }.map {
-                    EmotionCellViewModel(emotion: $0)
-                }
+            EmotionKeywordSectionViewModel(
+                category: EmotionKeyword.Category.neutral,
+                cellViewModels: EmotionKeyword.allCases
+                    .filter { $0.category == .neutral }
+                    .map { EmotionKeywordCellViewModel(emotion: $0) }
             )
         ]
         applySnapshot(with: sectionViewModels)
@@ -54,7 +57,7 @@ final class EmotionViewController: BaseViewController<EmotionView> {
             cellProvider: { collectionView, indexPath, viewModel in
                 let cell = collectionView.dequeueReusableCell(
                     for: indexPath,
-                    cellType: EmotionCell.self
+                    cellType: EmotionKeywordCell.self
                 )
                 cell.configure(with: viewModel)
                 return cell
@@ -66,7 +69,7 @@ final class EmotionViewController: BaseViewController<EmotionView> {
             }
             let headerView = collectionView.dequeueReusableHeader(
                 for: indexPath,
-                viewType: EmotionHeader.self
+                viewType: EmotionKeywordHeader.self
             )
             let sectionViewModel = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             headerView.configure(with: sectionViewModel)
@@ -83,8 +86,11 @@ final class EmotionViewController: BaseViewController<EmotionView> {
             .store(in: &cancellables)
     }
     
-    private func applySnapshot(with sectionViewModels: [EmotionSectionViewModel]) {
-        var snapshot = NSDiffableDataSourceSnapshot<EmotionSectionViewModel, EmotionCellViewModel>()
+    private func applySnapshot(with sectionViewModels: [EmotionKeywordSectionViewModel]) {
+        var snapshot = NSDiffableDataSourceSnapshot<
+            EmotionKeywordSectionViewModel,
+                EmotionKeywordCellViewModel
+        >()
         
         sectionViewModels.forEach { sectionViewModel in
             snapshot.appendSections([sectionViewModel])

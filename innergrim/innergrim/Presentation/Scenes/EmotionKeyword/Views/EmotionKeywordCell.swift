@@ -1,5 +1,5 @@
 //
-//  EmotionCell.swift
+//  EmotionKeywordCell.swift
 //  innergrim
 //
 //  Created by 지연 on 12/29/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EmotionCell: UICollectionViewCell, Reusable {
+final class EmotionKeywordCell: UICollectionViewCell, Reusable {
     // MARK: - Components
     
     private let emotionLabel = {
@@ -45,7 +45,7 @@ final class EmotionCell: UICollectionViewCell, Reusable {
     
     // MARK: - Configure Methods
     
-    func configure(with viewModel: EmotionCellViewModel) {
+    func configure(with viewModel: EmotionKeywordCellViewModel) {
         emotionLabel.text = viewModel.emotion.rawValue
         emotionLabel.applyTypography(with: .labelLargeMedium)
         backgroundColor = viewModel.isSelected ? .primaryLight : .clear

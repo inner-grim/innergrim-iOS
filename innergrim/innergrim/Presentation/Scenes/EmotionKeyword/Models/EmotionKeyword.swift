@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Emotion: String, CaseIterable {
+enum EmotionKeyword: String, CaseIterable {
     case touched = "감동적이야"
     case grateful = "감사해"
     case goodMood = "기분 좋아"
@@ -51,7 +51,7 @@ enum Emotion: String, CaseIterable {
     case annoyed = "귀찮아"
 }
 
-extension Emotion {
+extension EmotionKeyword {
     enum Category: String {
         case positive = "긍정"
         case negative = "부정"

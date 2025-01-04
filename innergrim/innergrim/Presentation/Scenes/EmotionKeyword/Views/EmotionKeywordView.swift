@@ -1,5 +1,5 @@
 //
-//  EmotionView.swift
+//  EmotionKeywordView.swift
 //  innergrim
 //
 //  Created by 지연 on 12/29/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EmotionView: UIView {
+final class EmotionKeywordView: UIView {
     // MARK: - Components
     
     private let scrollView = UIScrollView()
@@ -52,8 +52,8 @@ final class EmotionView: UIView {
         layout.minimumInteritemSpacing = 12
         layout.sectionInset = .init(top: 0, left: 0, bottom: 32, right: 0)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.registerCell(cellType: EmotionCell.self)
-        collectionView.registerHeader(viewType: EmotionHeader.self)
+        collectionView.registerCell(cellType: EmotionKeywordCell.self)
+        collectionView.registerHeader(viewType: EmotionKeywordHeader.self)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         return collectionView

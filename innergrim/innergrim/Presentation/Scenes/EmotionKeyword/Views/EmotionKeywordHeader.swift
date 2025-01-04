@@ -1,5 +1,5 @@
 //
-//  EmotionHeader.swift
+//  EmotionKeywordHeader.swift
 //  innergrim
 //
 //  Created by 지연 on 12/29/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EmotionHeader: UICollectionReusableView, Reusable {
+final class EmotionKeywordHeader: UICollectionReusableView, Reusable {
     private let label = {
         let label = UILabel()
         label.textColor = .labelAssistive
@@ -38,7 +38,7 @@ final class EmotionHeader: UICollectionReusableView, Reusable {
     
     // MARK: - Configure Methods
     
-    func configure(with viewModel: EmotionSectionViewModel) {
+    func configure(with viewModel: EmotionKeywordSectionViewModel) {
         label.text = viewModel.category.rawValue
         label.applyTypography(with: .labelSmallMedium)
     }
