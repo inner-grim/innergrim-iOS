@@ -97,8 +97,12 @@ final class AlertViewController: UIViewController {
     ) {
         titleLabel.text = title
         titleLabel.applyTypography(with: .titleSmall)
-        messageLabel.text = message
-        messageLabel.applyTypography(with: .bodyLargeRegular)
+        if message.isEmpty {
+            messageLabel.isHidden = true
+        } else {
+            messageLabel.text = message
+            messageLabel.applyTypography(with: .bodyLargeRegular)
+        }
         
         leftButton = AssistiveButton(title: leftActionText, font: .labelLargeSemiBold)
         rightButton = SolidButton(title: rightActionText, font: .labelLargeSemiBold)
