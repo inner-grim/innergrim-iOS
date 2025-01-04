@@ -12,7 +12,7 @@ final class LoginView: UIView {
     
     private let imageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .fillAssistive
+        imageView.image = .logoCoral
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

@@ -30,7 +30,8 @@ final class AppFlowCoordinator: Coordinator {
     
     private func needsOnboarding() -> Bool {
 //        return !UserDataStorage.isLogin
-        return false
+//        return false
+        return true
     }
     
     private func showOnboardingFlow() {
