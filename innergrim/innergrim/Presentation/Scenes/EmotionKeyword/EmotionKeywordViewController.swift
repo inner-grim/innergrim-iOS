@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 protocol EmotionKeywordViewControllerDelegate: AnyObject {
-    func emotionScaleViewControllerWillAppear()
+    func navigateToEmotionScaleViewController(emotionKeywords: [String])
 }
 
 final class EmotionKeywordViewController: BaseViewController<EmotionKeywordView> {
@@ -94,9 +94,11 @@ final class EmotionKeywordViewController: BaseViewController<EmotionKeywordView>
             }
             .store(in: &cancellables)
         
-        viewModel.state.showEmotionScale
-            .sink { [weak self] in
-                self?.delegate?.emotionScaleViewControllerWillAppear()
+        viewModel.state.selectedEmotionKeywords
+            .sink { [weak self] selectedEmotionKeywords in
+                self?.delegate?.navigateToEmotionScaleViewController(
+                    emotionKeywords: selectedEmotionKeywords
+                )
             }
             .store(in: &cancellables)
     }

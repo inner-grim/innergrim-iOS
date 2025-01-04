@@ -9,9 +9,9 @@ import Combine
 import UIKit
 
 protocol HomeViewControllerDelegate: AnyObject {
-    func keywordViewControllerWillAppear()
-    func pictureDiaryViewControllerWillAppear()
-    func settingsViewControllerWillAppear()
+    func navigateToKeywordViewController()
+    func navigateToPictureDiaryViewController()
+    func navigateToSettingsViewController()
 }
 
 final class HomeViewController: BaseViewController<HomeView> {
@@ -68,13 +68,13 @@ final class HomeViewController: BaseViewController<HomeView> {
         // action
         settingsButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.settingsViewControllerWillAppear()
+                self?.delegate?.navigateToSettingsViewController()
             }
             .store(in: &cancellabels)
         
         shareTodayButton.tapPublisher
             .sink { [weak self] in
-                self?.delegate?.keywordViewControllerWillAppear()
+                self?.delegate?.navigateToKeywordViewController()
             }
             .store(in: &cancellabels)
         
@@ -125,7 +125,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.pictureDiaryViewControllerWillAppear()
+        delegate?.navigateToPictureDiaryViewController()
     }
 }
 

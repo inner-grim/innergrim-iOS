@@ -43,8 +43,10 @@ final class MainFlowCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    private func showEmotionScaleViewController() {
-        let viewController = mainDIContainer.makeEmotionScaleViewController()
+    private func showEmotionScaleViewController(emotionKeywords: [String]) {
+        let viewController = mainDIContainer.makeEmotionScaleViewController(
+            emotionKeywords: emotionKeywords
+        )
         viewController.delegate = self
         navigationController.present(viewController, animated: false)
     }
@@ -69,27 +71,27 @@ final class MainFlowCoordinator: Coordinator {
 }
 
 extension MainFlowCoordinator: HomeViewControllerDelegate {
-    func keywordViewControllerWillAppear() {
+    func navigateToKeywordViewController() {
         showEmotionKeywordViewController()
     }
     
-    func pictureDiaryViewControllerWillAppear() {
+    func navigateToPictureDiaryViewController() {
         showPictureDiaryViewController()
     }
     
-    func settingsViewControllerWillAppear() {
+    func navigateToSettingsViewController() {
         showSettingsViewController()
     }
 }
 
 extension MainFlowCoordinator: EmotionKeywordViewControllerDelegate {
-    func emotionScaleViewControllerWillAppear() {
-        showEmotionScaleViewController()
+    func navigateToEmotionScaleViewController(emotionKeywords: [String]) {
+        showEmotionScaleViewController(emotionKeywords: emotionKeywords)
     }
 }
 
 extension MainFlowCoordinator: EmotionScaleViewControllerDelegate {
-    func chatViewControllerWillAppear() {
+    func navigateToChatViewController() {
         showChatViewController()
     }
 }

@@ -17,7 +17,7 @@ final class EmotionKeywordViewModel: ViewModel {
     
     struct State {
         var emotionKeywords = CurrentValueSubject<[EmotionKeywordSectionViewModel], Never>([])
-        var showEmotionScale = PassthroughSubject<Void, Never>()
+        var selectedEmotionKeywords = PassthroughSubject<[String], Never>()
     }
     
     // MARK: - Properties
@@ -32,11 +32,10 @@ final class EmotionKeywordViewModel: ViewModel {
     // MARK: - Init
     
     init() {
-        actionSubject
-            .sink { [weak self] action in
-                self?.handleAction(action)
-            }
-            .store(in: &cancellables)
+        actionSubject.sink { [weak self] action in
+            self?.handleAction(action)
+        }
+        .store(in: &cancellables)
     }
     
     // MARK: - Handle Action Methods
@@ -130,7 +129,12 @@ final class EmotionKeywordViewModel: ViewModel {
         } else if selectedCellCount > 3 {
             Toaster.makeToast("최대 3개까지 선택 가능해요")
         } else {
-            state.showEmotionScale.send()
+            guard let selectedSectionIndex = selectedSectionIndex else { return }
+            let selectedEmotionSection = state.emotionKeywords.value[selectedSectionIndex]
+            let selectedEmotionKeywords = selectedEmotionSection.cellViewModels
+                .filter { $0.state == .selected }
+                .map { $0.emotion.rawValue }
+            state.selectedEmotionKeywords.send(selectedEmotionKeywords)
         }
     }
 }
