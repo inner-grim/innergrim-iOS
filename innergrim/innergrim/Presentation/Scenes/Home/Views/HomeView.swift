@@ -19,7 +19,11 @@ final class HomeView: UIView {
     
     let calendarView = CalendarView()
     
-    let shareTodayButton = SolidButton(title: "오늘 하루 털어놓기", font: .labelLargeSemiBold)
+    let shareTodayButton = SolidButton(
+        title: "오늘 하루 털어놓기",
+        disabledTitle: "내일 또 만나자!",
+        font: .labelLargeSemiBold
+    )
     
     // MARK: - Init
     

@@ -94,7 +94,7 @@ final class LoginViewModel: NSObject, ViewModel {
     
     private func signUp(_ socialId: String) {
         guard let provider = provider else { return }
-        print(#function)
+        
         let target = MemberAPI.signUp(socialType: provider.rawValue, socialId: socialId)
         APIService.request(target, responseType: CommonResponse.self)
             .sink { [weak self] completion in

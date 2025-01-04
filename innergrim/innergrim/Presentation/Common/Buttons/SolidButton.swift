@@ -11,10 +11,15 @@ import UIKit
 final class SolidButton: UIButton {
     // MARK: - Init
     
-    public init(initialEnabled: Bool = true, title: String, font: UIFont) {
+    init(
+        initialEnabled: Bool = true,
+        title: String,
+        disabledTitle: String? = nil,
+        font: UIFont
+    ) {
         super.init(frame: .zero)
         isEnabled = initialEnabled
-        setupButton(with: title, font: font)
+        setupButton(with: title, disabledTitle: disabledTitle, font: font)
     }
     
     @available(*, unavailable)
@@ -24,11 +29,11 @@ final class SolidButton: UIButton {
     
     // MARK: - Setup Methods
     
-    private func setupButton(with title: String, font: UIFont) {
+    private func setupButton(with title: String, disabledTitle: String?, font: UIFont) {
         // 타이틀
         setupTitle(for: .normal, title, font, .white)
         setupTitle(for: .highlighted, title, font, .white)
-        setupTitle(for: .disabled, title, font, .labelDisabled)
+        setupTitle(for: .disabled, disabledTitle ?? title, font, .labelDisabled)
         // 배경 색상
         setBackgroundImage(image(with: .primaryNormal), for: .normal)
         setBackgroundImage(image(with: .primaryStrong), for: .highlighted)
