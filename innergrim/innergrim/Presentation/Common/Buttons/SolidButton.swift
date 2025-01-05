@@ -1,0 +1,62 @@
+//
+//  SolidButton.swift
+//  innergrim
+//
+//  Created by 지연 on 12/19/24.
+//
+
+
+import UIKit
+
+final class SolidButton: UIButton {
+    // MARK: - Init
+    
+    init(
+        initialEnabled: Bool = true,
+        title: String,
+        disabledTitle: String? = nil,
+        font: UIFont
+    ) {
+        super.init(frame: .zero)
+        isEnabled = initialEnabled
+        setupButton(with: title, disabledTitle: disabledTitle, font: font)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Setup Methods
+    
+    private func setupButton(with title: String, disabledTitle: String?, font: UIFont) {
+        // 타이틀
+        setupTitle(for: .normal, title, font, .white)
+        setupTitle(for: .highlighted, title, font, .white)
+        setupTitle(for: .disabled, disabledTitle ?? title, font, .labelDisabled)
+        // 배경 색상
+        setBackgroundImage(image(with: .primaryNormal), for: .normal)
+        setBackgroundImage(image(with: .primaryStrong), for: .highlighted)
+        setBackgroundImage(image(with: .fillDisabled), for: .disabled)
+        // 레이어
+        clipsToBounds = true
+        layer.cornerRadius = 8.0
+    }
+    
+    private func setupTitle(
+        for state: UIControl.State,
+        _ title: String,
+        _ font: UIFont,
+        _ textColor: UIColor
+    ) {
+        let attributedString = NSAttributedString(
+            string: title,
+            attributes:
+                [
+                    .font: font,
+                    .foregroundColor: textColor
+                ]
+        )
+        setAttributedTitle(attributedString, for: state)
+    }
+}
