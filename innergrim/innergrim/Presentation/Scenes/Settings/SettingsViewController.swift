@@ -45,7 +45,7 @@ final class SettingsViewController: BaseViewController<SettingsView> {
             .sink { [weak self] in
                 guard let self = self else { return }
                 generateHaptic()
-                dismiss(animated: true)
+                navigationController?.popViewController(animated: true)
             }
             .store(in: &cancellables)
         

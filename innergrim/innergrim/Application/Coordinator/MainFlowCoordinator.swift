@@ -67,8 +67,7 @@ final class MainFlowCoordinator: Coordinator {
     private func showSettingsViewController() {
         let viewController = mainDIContainer.makeSettingsViewController()
         viewController.delegate = self
-        viewController.modalPresentationStyle = .overFullScreen
-        navigationController.present(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }
 
