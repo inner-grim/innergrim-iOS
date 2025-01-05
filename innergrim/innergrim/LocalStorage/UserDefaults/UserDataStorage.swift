@@ -21,4 +21,11 @@ final class UserDataStorage {
     
     @UserDefaultsData(key: "chatMessages", defaultValue: [])
     static var chatMessages: [ChatMessage]
+    
+    static func clear() {
+        isOnboardingCompleted = false
+        isLogin = false
+        lastChatDate = Date()
+        chatMessages = []
+    }
 }

@@ -14,7 +14,20 @@ protocol SettingsViewControllerDelegate: AnyObject {
 
 final class SettingsViewController: BaseViewController<SettingsView> {
     weak var delegate: SettingsViewControllerDelegate?
+    private let viewModel: SettingsViewModel
     private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - Init
+    
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     
@@ -46,9 +59,7 @@ final class SettingsViewController: BaseViewController<SettingsView> {
                     leftActionText: "돌아가기",
                     rightActionText: "로그아웃",
                     rightActionCompletion:  {
-                        KeychainService.clear()
-                        UserDataStorage.isLogin = false
-                        self.delegate?.moveToLogin()
+                        self.viewModel.send(.logout)
                     }
                 )
             }
@@ -64,9 +75,16 @@ final class SettingsViewController: BaseViewController<SettingsView> {
                     leftActionText: "돌아가기",
                     rightActionText: "회원 탈퇴",
                     rightActionCompletion:  {
-                        
+                        self.viewModel.send(.withdraw)
                     }
                 )
+            }
+            .store(in: &cancellables)
+        
+        // state
+        viewModel.state.moveToLogin
+            .sink { [weak self] in
+                self?.delegate?.moveToLogin()
             }
             .store(in: &cancellables)
     }

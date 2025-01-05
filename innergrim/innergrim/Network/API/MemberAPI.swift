@@ -12,12 +12,13 @@ enum MemberAPI {
     case signUp(socialType: String, socialId: String)
     case onboarding(nickname: String)
     case checkNicknameDuplicated(nickname: String)
+    case withdraw
 }
 
 extension MemberAPI: APITarget {
     var endPoint: String {
         switch self {
-        case .signUp:
+        case .signUp, .withdraw:
             "/member"
         case .onboarding:
             "/member/on-boarding"
@@ -32,6 +33,8 @@ extension MemberAPI: APITarget {
             .post
         case .checkNicknameDuplicated:
             .get
+        case .withdraw:
+            .delete
         }
     }
     
@@ -41,6 +44,8 @@ extension MemberAPI: APITarget {
             .jsonEncoding
         case .checkNicknameDuplicated:
             .urlEncoding
+        case .withdraw:
+            .plain
         }
     }
     
@@ -55,6 +60,8 @@ extension MemberAPI: APITarget {
             [
                 "nickname": nickname
             ]
+        case .withdraw:
+            [:]
         }
     }
 }

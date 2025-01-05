@@ -25,6 +25,10 @@ final class MainDIContainer {
     private func makeChatViewModel(chatStartMessage: String) -> ChatViewModel {
         return ChatViewModel(chatStartMessage: chatStartMessage)
     }
+    
+    private func makeSettingsViewModel() -> SettingsViewModel {
+        return SettingsViewModel()
+    }
 
     // MARK: - View Controllers
     
@@ -58,7 +62,8 @@ final class MainDIContainer {
     }
     
     func makeSettingsViewController() -> SettingsViewController {
-        let viewController = SettingsViewController()
+        let viewModel = makeSettingsViewModel()
+        let viewController = SettingsViewController(viewModel: viewModel)
         return viewController
     }
 }
