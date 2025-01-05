@@ -43,7 +43,7 @@ final class AlertViewController: UIViewController {
     init(
         title: String,
         message: String,
-        leftActionText: String,
+        leftActionText: String?,
         rightActionText: String,
         leftActionCompletion: (() -> Void)? = nil,
         rightActionCompletion: (() -> Void)? = nil
@@ -92,7 +92,7 @@ final class AlertViewController: UIViewController {
     private func setupAlertView(
         title: String,
         message: String,
-        leftActionText: String,
+        leftActionText: String?,
         rightActionText: String
     ) {
         titleLabel.text = title
@@ -103,25 +103,27 @@ final class AlertViewController: UIViewController {
             messageLabel.text = message
             messageLabel.applyTypography(with: .bodyLargeRegular)
         }
+        if let leftActionText = leftActionText {
+            leftButton = AssistiveButton(title: leftActionText, font: .labelLargeSemiBold)
+            buttonContainer.addArrangedSubview(leftButton!)
+        }
         
-        leftButton = AssistiveButton(title: leftActionText, font: .labelLargeSemiBold)
         rightButton = SolidButton(title: rightActionText, font: .labelLargeSemiBold)
-        
-        guard let leftButton = leftButton, let rightButton = rightButton else { return }
-        [leftButton, rightButton].forEach { buttonContainer.addArrangedSubview($0) }
+        buttonContainer.addArrangedSubview(rightButton!)
     }
     
     private func setupActions(
         leftActionCompletion: (() -> Void)? = nil,
         rightActionCompletion: (() -> Void)? = nil
     ) {
-        guard let leftButton = leftButton, let rightButton = rightButton else { return }
-        
-        self.leftActionCompletion = leftActionCompletion
-        self.rightActionCompletion = rightActionCompletion
-        
-        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
-        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        if let leftButton = leftButton {
+            self.leftActionCompletion = leftActionCompletion
+            leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        }
+        if let rightButton = rightButton {
+            self.rightActionCompletion = rightActionCompletion
+            rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        }
     }
     
     private func setupLayout() {

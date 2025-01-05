@@ -61,7 +61,7 @@ final class LoginViewController: BaseViewController<LoginView> {
             .sink { [weak self] in
                 guard let self = self else { return }
                 generateHaptic()
-                delegate?.loginViewControllerDidFinish()
+                viewModel.send(.loginButtonDidTap(.google))
             }
             .store(in: &cancellables)
         
@@ -69,10 +69,16 @@ final class LoginViewController: BaseViewController<LoginView> {
         viewModel.state.loginResult
             .receive(on: RunLoop.main)
             .sink { [weak self] result in
+                print(result)
+                guard let self = self else { return }
                 if result {
-                    self?.delegate?.loginViewControllerDidFinish()
+                    delegate?.loginViewControllerDidFinish()
                 } else {
-                    // TODO: Alert
+                    showAlert(
+                        title: "로그인 오류",
+                        message: "일시적인 오류가 발생했습니다.\n잠시 후 다시 시도해 주세요.",
+                        rightActionText: "확인"
+                    )
                 }
             }
             .store(in: &cancellables)

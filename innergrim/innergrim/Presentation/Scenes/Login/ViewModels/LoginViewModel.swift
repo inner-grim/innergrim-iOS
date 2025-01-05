@@ -53,7 +53,8 @@ final class LoginViewModel: NSObject, ViewModel {
         case .apple:
             executeAppleLogin()
         case .google:
-            executeGoogleLogin()
+//            executeGoogleLogin()
+            state.loginResult.send(false)
         case .kakao:
             executeKakaoLogin()
         }

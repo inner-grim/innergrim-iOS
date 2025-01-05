@@ -13,7 +13,7 @@ extension UIViewController {
     func showAlert(
         title: String,
         message: String,
-        leftActionText: String,
+        leftActionText: String? = nil,
         rightActionText: String,
         leftActionCompletion: (() -> Void)? = nil,
         rightActionCompletion: (() -> Void)? = nil
