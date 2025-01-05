@@ -23,6 +23,7 @@ final class ValidationTextField: UIView {
             setupBorderColor()
         }
     }
+    
     // MARK: - Components
     
     private lazy var containerView = {

@@ -49,14 +49,18 @@ final class ChatViewModel: ViewModel {
     }
     
     private func startChat() {
-        // 마지막 채팅 날짜 업데이트 및 캐시된 채팅 데이터 초기화
-        let today = Date.now
-        if !Calendar.current.isDate(UserDataStorage.lastChatDate, inSameDayAs: Date()) {
-            UserDataStorage.lastChatDate = today
-            UserDataStorage.chatMessages = [
-                ChatMessage(content: chatStartMessage, state: .user)
-            ]
-        }
+        UserDataStorage.lastChatDate = Date.now
+        UserDataStorage.chatMessages = [
+            ChatMessage(content: "", state: .assistant)
+        ]
+//        // 마지막 채팅 날짜 업데이트 및 캐시된 채팅 데이터 초기화
+//        let today = Date.now
+//        if !Calendar.current.isDate(UserDataStorage.lastChatDate, inSameDayAs: Date()) {
+//            UserDataStorage.lastChatDate = today
+//            UserDataStorage.chatMessages = [
+//                ChatMessage(content: chatStartMessage, state: .user)
+//            ]
+//        }
         sendChat(chatStartMessage)
     }
     
@@ -71,8 +75,13 @@ final class ChatViewModel: ViewModel {
     }
     
     private func sendChat(_ message: String) {
+        let entity = UserDataStorage.chatMessages.map { $0.toEntity() }
+        guard let jsonData = try? JSONEncoder().encode(entity),
+              let jsonString = String(data: jsonData, encoding: .utf8)
+        else { return }
+        
         let target = ChatBotAPI.sendChat(
-            previousConversionList: UserDataStorage.chatMessages.map { $0.toEntity() },
+            previousConversionList: jsonString,
             question: message
         )
         APIService.request(target, responseType: ChatResponse.self)
@@ -84,10 +93,10 @@ final class ChatViewModel: ViewModel {
                 guard let self = self else { return }
                 
                 if response.statusCode == "OK",
-                   let message = response.data?.parsedResponse {
+                   let message = response.data?.question {
                     appendChatMessage(message, chatMessageState: .assistant)
                 } else {
-                    print("채팅 응답 에러", response.message) // TODO: 에러 처리 필요
+                    print("채팅 응답 에러") // TODO: 에러 처리 필요
                 }
             }
             .store(in: &cancellables)

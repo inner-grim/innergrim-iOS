@@ -66,7 +66,7 @@ final class LoginViewModel: NSObject, ViewModel {
         APIService.request(target, responseType: LoginResponse.self)
             .sink { [weak self] completion in
                 if case let .failure(error) = completion {
-                    print("Login failed:", error)
+                    print("Login failed:", error.localizedDescription)
                     self?.state.loginResult.send(false)
                 }
             } receiveValue: { [weak self] response in
@@ -85,7 +85,6 @@ final class LoginViewModel: NSObject, ViewModel {
                     // 회원가입
                     signUp(socialId)
                 } else {
-                    print("Login failed:", response.message)
                     state.loginResult.send(false)
                 }
             }
@@ -108,7 +107,7 @@ final class LoginViewModel: NSObject, ViewModel {
                 if response.statusCode == "OK" {
                     verifyUser(socialId)
                 } else {
-                    print("Login failed: \(response.message)")
+                    print("Login failed")
                     state.loginResult.send(false)
                 }
             }

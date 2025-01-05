@@ -70,7 +70,7 @@ final class NicknameViewModel: NSObject, ViewModel {
         APIService.request(target, responseType: CheckNicknameResponse.self)
             .sink { completion in
                 if case let .failure(error) = completion {
-                    print("Check Nickname failed:", error)
+                    print("Check Nickname failed:", error.localizedDescription)
                 }
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }
@@ -96,7 +96,7 @@ final class NicknameViewModel: NSObject, ViewModel {
         APIService.request(target, responseType: CommonResponse.self)
             .sink { completion in
                 if case let .failure(error) = completion {
-                    print("Onboarding failed:", error)
+                    print("Onboarding failed:", error.localizedDescription)
                 }
             } receiveValue: { [weak self] response in
                 guard let self = self else { return }

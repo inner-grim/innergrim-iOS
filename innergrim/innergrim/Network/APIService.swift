@@ -19,6 +19,10 @@ final class APIService {
     ) -> AnyPublisher<T, AFError> {
         return AF
             .request(target, interceptor: Interceptor())
+            .responseString { response in // NOTE: 디버깅용
+                guard case let .success(rawString) = response.result else { return }
+                print("🌐 endpoint: \"\(target.endPoint)\"\n\(rawString)\n")
+            }
             .publishDecodable(type: responseType)
             .value()
             .eraseToAnyPublisher()

@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum ChatBotAPI {
-    case sendChat(previousConversionList: [ChatEntity], question: String)
+    case sendChat(previousConversionList: String, question: String)
 }
 
 extension ChatBotAPI: APITarget {
