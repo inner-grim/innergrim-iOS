@@ -73,7 +73,7 @@ final class Toaster {
         [warningImageView, messageLabel].forEach { backView.addArrangedSubview($0) }
         
         warningImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(20)
+            make.width.equalTo(20)
         }
     }
     
@@ -91,7 +91,7 @@ final class Toaster {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
             window.alpha = 1.0
         }) { _ in
-            UIView.animate(withDuration: 0.3, delay: 2.5, options: .curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.3, delay: 1.5, options: .curveEaseIn, animations: {
                 window.alpha = 0.0
             }) { _ in
                 window.isHidden = true

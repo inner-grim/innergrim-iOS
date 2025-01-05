@@ -61,7 +61,7 @@ final class MainFlowCoordinator: Coordinator {
     private func showPictureDiaryViewController() {
         let viewController = mainDIContainer.makePictureDiaryViewController()
         viewController.modalPresentationStyle = .overFullScreen
-        navigationController.present(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     private func showSettingsViewController() {

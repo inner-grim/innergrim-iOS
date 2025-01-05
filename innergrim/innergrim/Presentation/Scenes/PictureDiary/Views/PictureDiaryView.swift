@@ -43,6 +43,8 @@ final class PictureDiaryView: UIView {
         return label
     }()
     
+    let moveToHomeButton = SolidButton(title: "홈으로 이동하기", font: .labelLargeSemiBold)
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -77,11 +79,18 @@ final class PictureDiaryView: UIView {
             make.height.equalTo(80)
         }
         
+        contentView.addSubview(moveToHomeButton)
+        moveToHomeButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(48)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(50)
+        }
+        
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.top.equalTo(keywordScaleView.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(48)
+            make.bottom.equalTo(moveToHomeButton.snp.top).offset(-20)
         }
         
         [pictureImageView, diaryLabel].forEach { containerView.addArrangedSubview($0) }

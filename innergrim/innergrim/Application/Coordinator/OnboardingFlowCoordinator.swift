@@ -49,12 +49,11 @@ final class OnboardingFlowCoordinator: Coordinator {
 
 extension OnboardingFlowCoordinator: LoginViewControllerDelegate {
     func loginViewControllerDidFinish() {
-        showNicknameViewController()
-//        if UserDataStorage.isOnboardingCompleted {
-//            delegate?.onboardingFlowDidFinish(self)
-//        } else {
-//            showNicknameViewController()
-//        }
+        if UserDataStorage.isOnboardingCompleted {
+            delegate?.onboardingFlowDidFinish(self)
+        } else {
+            showNicknameViewController()
+        }
     }
 }
 

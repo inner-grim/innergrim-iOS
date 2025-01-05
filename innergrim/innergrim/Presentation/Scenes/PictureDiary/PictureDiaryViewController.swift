@@ -27,8 +27,22 @@ final class PictureDiaryViewController: BaseViewController<PictureDiaryView> {
             .sink { [weak self] in
                 guard let self = self else { return }
                 generateHaptic()
-                dismiss(animated: true)
+                navigationController?.popToRootViewController(animated: true)
             }
             .store(in: &cancellables)
+        
+        moveToHomeButton.tapPublisher
+            .sink { [weak self] in
+                guard let self = self else { return }
+                generateHaptic()
+                navigationController?.popToRootViewController(animated: true)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+private extension PictureDiaryViewController {
+    var moveToHomeButton: SolidButton {
+        contentView.moveToHomeButton
     }
 }
