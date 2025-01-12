@@ -25,6 +25,7 @@ final class ChatViewModel: ViewModel {
     var state = State()
     
     private let chatStartMessage: String
+    private let endMessage = "이제 대화를 마무리해도 될까?"
     
     // MARK: - Init
     
@@ -65,23 +66,28 @@ final class ChatViewModel: ViewModel {
     }
     
     private func appendChatMessage(_ message: String, chatMessageState: ChatMessageState) {
-        let newMessage = ChatMessage(content: message, state: chatMessageState)
         // 뷰에 사용할 데이터 반영
         var chatMessages = state.chatMessages.value
-        chatMessages.append(newMessage)
+        // 대화 종료 판단
+        if chatMessageState == .assistant, message.contains(endMessage) {
+            chatMessages.append(
+                ChatMessage(
+                    content: message.replacingOccurrences(of: endMessage, with: ""),
+                    state: .assistant
+                )
+            )
+            chatMessages.append(ChatMessage(content: endMessage, state: .end))
+        } else {
+            chatMessages.append(ChatMessage(content: message, state: chatMessageState))
+        }
+        // 뷰 및 로컬 스토리지 반영
         state.chatMessages.send(chatMessages)
-        // 로컬 스토리지 반영
-        UserDataStorage.chatMessages.append(newMessage)
+        UserDataStorage.chatMessages = chatMessages
     }
     
     private func sendChat(_ message: String) {
-        let entity = UserDataStorage.chatMessages.map { $0.toEntity() }
-        guard let jsonData = try? JSONEncoder().encode(entity),
-              let jsonString = String(data: jsonData, encoding: .utf8)
-        else { return }
-        
         let target = ChatBotAPI.sendChat(
-            previousConversionList: jsonString,
+            previousConversionList: UserDataStorage.chatMessages.map { $0.toEntity() },
             question: message
         )
         APIService.request(target, responseType: ChatResponse.self)
@@ -93,7 +99,7 @@ final class ChatViewModel: ViewModel {
                 guard let self = self else { return }
                 
                 if response.statusCode == "OK",
-                   let message = response.data?.question {
+                   let message = response.data?.answer {
                     appendChatMessage(message, chatMessageState: .assistant)
                 } else {
                     print("채팅 응답 에러") // TODO: 에러 처리 필요

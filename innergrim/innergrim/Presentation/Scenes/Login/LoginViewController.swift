@@ -69,7 +69,6 @@ final class LoginViewController: BaseViewController<LoginView> {
         viewModel.state.loginResult
             .receive(on: RunLoop.main)
             .sink { [weak self] result in
-                print(result)
                 guard let self = self else { return }
                 if result {
                     delegate?.loginViewControllerDidFinish()

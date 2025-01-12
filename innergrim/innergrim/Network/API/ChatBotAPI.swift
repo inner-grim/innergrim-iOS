@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum ChatBotAPI {
-    case sendChat(previousConversionList: String, question: String)
+    case sendChat(previousConversionList: [ChatEntity], question: String)
 }
 
 extension ChatBotAPI: APITarget {
@@ -37,7 +37,7 @@ extension ChatBotAPI: APITarget {
     var parameters: Parameters {
         switch self {
         case let .sendChat(previousConversionList, question): [
-            "previousConversionList": previousConversionList,
+            "previousConversionList": previousConversionList.map { $0.dictionary },
             "question": question
         ]
         }

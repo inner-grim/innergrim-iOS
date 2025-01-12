@@ -47,13 +47,22 @@ final class ChatViewController: BaseViewController<ChatView> {
                 if viewModel.state == .user {
                     let cell = tableView.dequeueReusableCell(
                         for: indexPath,
-                        cellType: OutgoingMessageCell.self)
+                        cellType: OutgoingMessageCell.self
+                    )
+                    cell.configure(with: viewModel)
+                    return cell
+                } else if viewModel.state == .assistant {
+                    let cell = tableView.dequeueReusableCell(
+                        for: indexPath,
+                        cellType: IncomingMessageCell.self
+                    )
                     cell.configure(with: viewModel)
                     return cell
                 } else {
                     let cell = tableView.dequeueReusableCell(
                         for: indexPath,
-                        cellType: IncomingMessageCell.self)
+                        cellType: ChatEndCell.self
+                    )
                     cell.configure(with: viewModel)
                     return cell
                 }

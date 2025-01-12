@@ -19,6 +19,7 @@ final class ChatView: UIView {
         tableView.backgroundColor = .clear
         tableView.register(cellType: IncomingMessageCell.self)
         tableView.register(cellType: OutgoingMessageCell.self)
+        tableView.register(cellType: ChatEndCell.self)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderTopPadding = 0
         tableView.sectionFooterHeight = 0

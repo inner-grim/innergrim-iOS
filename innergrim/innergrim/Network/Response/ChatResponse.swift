@@ -14,5 +14,5 @@ struct ChatResponse: Decodable {
 }
 
 struct Answer: Decodable {
-    let question: String
+    let answer: String
 }
